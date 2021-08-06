@@ -2,7 +2,9 @@ namespace WebCRM.Shared
 {
     using System;
     using System.Collections.Generic;
+    using System.Threading.Tasks;
     using WebCRM.Data;
+
     /// <summary>
     /// Create, Read, Update, and Delete implementations for basic CRM repositories
     /// </summary>
@@ -15,12 +17,18 @@ namespace WebCRM.Shared
     {
         (bool, ViewModel) Create(ViewModel model);
 
+        Task<(bool, ViewModel)> CreateAsync(ViewModel model);
+
         IEnumerable<ViewModel> Retrieve(Func<Model, bool> selector);
 
         (bool, ViewModel) RetrieveById(int id);
 
         (bool, ViewModel) Update(ViewModel modelToUpdate);
 
+        Task<(bool, ViewModel)> UpdateAsync(ViewModel modelToUpdate);
+
         bool Delete(ViewModel modelToDelete);
+
+        Task<bool> DeleteAsync(ViewModel modelToDelete);
     }
 }

@@ -4,6 +4,7 @@ namespace WebCRM.Shared
     using System.Linq;
     using WebCRM.Data;
     using System.Collections.Generic;
+    using System.Threading.Tasks;
     using Microsoft.Extensions.Logging;
     using Microsoft.EntityFrameworkCore;
     /// <summary>
@@ -41,6 +42,36 @@ namespace WebCRM.Shared
                             .Set<Model>()
                             .Add(modelToAdd);
                         var success = (ctx.SaveChanges() > 0);
+                        var viewModel = new ViewModel();
+                        viewModel.SetModelValues(modelToAdd);
+                        return (success, viewModel);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    if (_logger != null)
+                    {
+                        _logger.LogError(ex, $"Failed to create {typeof(Model).Name}");
+                    }
+                }
+            }
+            return (false, model);
+        }
+
+        public virtual async Task<(bool, ViewModel)> CreateAsync(ViewModel model)
+        {
+            if (model != null)
+            {
+                try
+                {
+                    using (ctx = new Context())
+                    {
+                        var modelToAdd = model.GetBaseModel();
+                        await ctx
+                            .Set<Model>()
+                            .AddAsync(modelToAdd);
+                        var savedRecords = await ctx.SaveChangesAsync();
+                        var success = (savedRecords > 0);
                         var viewModel = new ViewModel();
                         viewModel.SetModelValues(modelToAdd);
                         return (success, viewModel);
@@ -112,7 +143,45 @@ namespace WebCRM.Shared
                         if (modelToUpdate != null)
                         {
                             modelToUpdate.RestrictedModelUpdate(model.GetBaseModel());
+                            ctx.Update(modelToUpdate);
                             var success = ctx.SaveChanges() > 0;
+                            var viewModel = new ViewModel();
+                            viewModel.SetModelValues(modelToUpdate);
+                            return (success, viewModel);
+                        }
+                    }
+                }
+                catch (Exception ex) 
+                { 
+                    if (_logger != null)
+                    {
+                        _logger.LogError(ex, $"Failed to update {typeof(Model).Name}, Id:{model?.Id}");
+                    }
+                }
+            }
+            return (false, model);
+        }
+
+        public virtual async Task<(bool, ViewModel)> UpdateAsync(ViewModel model)
+        {
+            if (model != null)
+            {
+                try
+                {
+                    using (var ctx = new CRMDBContext())
+                    {
+                        var modelToUpdate = 
+                            ctx
+                                .Set<Model>()
+                                .Where(w => w.Id == model.Id)
+                                .FirstOrDefault();
+                        if (modelToUpdate != null)
+                        {
+                            modelToUpdate.RestrictedModelUpdate(model.GetBaseModel());
+                            ctx.Update(modelToUpdate);
+                            var savedRecords = await ctx.SaveChangesAsync();
+
+                            var success = savedRecords > 0;
                             var viewModel = new ViewModel();
                             viewModel.SetModelValues(modelToUpdate);
                             return (success, viewModel);
@@ -149,6 +218,40 @@ namespace WebCRM.Shared
                                 .Set<Model>()
                                 .Remove(modelToDelete);
                             return (ctx.SaveChanges() > 0);
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    if (_logger != null)
+                    {
+                        _logger.LogError(ex, $"Failed to delete {typeof(Model).Name}, Id:{model?.Id}");
+                    }
+                }
+            }
+            return false;
+        }
+
+        public virtual async Task<bool> DeleteAsync(ViewModel model)
+        {
+            if (model != null)
+            {
+                try
+                {
+                    using (var ctx = new CRMDBContext())
+                    {
+                        var modelToDelete = 
+                            ctx
+                                .Set<Model>()
+                                .Where(w => w.Id == model.Id)
+                                .FirstOrDefault();
+                        if (modelToDelete != null)
+                        {
+                            ctx
+                                .Set<Model>()
+                                .Remove(modelToDelete);
+                            var deletedRecords = await ctx.SaveChangesAsync();
+                            return (deletedRecords > 0);
                         }
                     }
                 }
