@@ -32,6 +32,8 @@ namespace WebCRM.Shared
 
         public string TransactionEnteredBy { get; set; }
 
+        public DateTime TransactionEnteredDate { get; set; }
+
         public DateTime? TransactionCancelDate { get; set; }
 
         public string TransactionCanceledBy { get; set; }
@@ -50,7 +52,7 @@ namespace WebCRM.Shared
             {
                 this.ValidationErrorMessages.Add("Cannot enter a transaction with a zero amount");
             }
-            if (this.TransactionCancelDate <= DateTime.Now.AddYears(-5))
+            if (this.TransactionDate <= DateTime.Now.AddYears(-5))
             {
                 this.ValidationErrorMessages.Add("Transaction must be within the last 10 years to be entered or updated");
             }
@@ -64,6 +66,7 @@ namespace WebCRM.Shared
             this.TransactionAmount = model.TransactionAmount;
             this.TransactionDate = model.TransactionDate;
             this.TransactionEnteredBy = XSSFilterHelper.FilterForXSS(model.TransactionEnteredBy);
+            this.TransactionEnteredDate = model.TransactionEnteredDate;
             this.TransactionCancelDate = model.TransactionCancelDate;
             this.TransactionCanceledBy = XSSFilterHelper.FilterForXSS(model.TransactionCanceledBy);
         }
@@ -85,6 +88,7 @@ namespace WebCRM.Shared
                 TransactionAmount = this.TransactionAmount,
                 TransactionDate = this.TransactionDate,
                 TransactionEnteredBy = this.TransactionEnteredBy,
+                TransactionEnteredDate = this.TransactionEnteredDate,
                 TransactionCancelDate = this.TransactionCancelDate,
                 TransactionCanceledBy = this.TransactionCanceledBy
             };

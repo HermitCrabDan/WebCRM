@@ -4,11 +4,11 @@ namespace WebCRM.Data
     using Microsoft.EntityFrameworkCore;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
+
     /// <summary>
     /// CRM data model for contract transactions
     /// </summary>
     /// <author>Daniel Lee Graf</author>
-    
     [Index(nameof(ContractID))]
     public class ContractTransaction: ICRMDataModel<ContractTransaction>
     {
@@ -23,6 +23,8 @@ namespace WebCRM.Data
         public decimal TransactionAmount { get; set; }
 
         public string TransactionEnteredBy { get; set; }
+
+        public DateTime TransactionEnteredDate { get; set; }
 
         public DateTime? TransactionCancelDate { get; set; }
 

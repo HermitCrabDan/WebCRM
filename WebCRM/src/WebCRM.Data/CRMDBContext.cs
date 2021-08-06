@@ -19,13 +19,11 @@ namespace WebCRM.Data
 
         public DbSet<ContractTransaction> ContractTransactions { get; set; }
 
+        public DbSet<ContractExpense> ContractExpenses { get; set; }
+
         public DbSet<Member> Members { get; set; }
 
         public DbSet<MemberTestimonial> MemberTestimonials { get; set; }
-
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-            => optionsBuilder.UseSqlite("Data Source=webcrm.db");
-        
         
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -35,12 +33,14 @@ namespace WebCRM.Data
             modelBuilder.Entity<AccountNote>().HasKey(k => k.Id);
             modelBuilder.Entity<Contract>().HasKey(k => k.Id);
             modelBuilder.Entity<ContractTransaction>().HasKey(k => k.Id);
+            modelBuilder.Entity<ContractExpense>().HasKey(k => k.Id);
             modelBuilder.Entity<Member>().HasKey(k => k.Id);
             modelBuilder.Entity<MemberTestimonial>().HasKey(k => k.Id);
 
             modelBuilder.Entity<AccountMembership>().HasIndex(k => new { k.AccountID, k.MemberID });
             modelBuilder.Entity<AccountNote>().HasIndex(k => k.AccountID);
             modelBuilder.Entity<ContractTransaction>().HasIndex(k => k.ContractID);
+            modelBuilder.Entity<ContractExpense>().HasIndex(k => k.ContractID);
             modelBuilder.Entity<MemberTestimonial>().HasIndex(k => k.MemberID);
             modelBuilder.Entity<Contract>().HasKey(k => new { k.AccountID, k.MemberID });
 
@@ -49,6 +49,7 @@ namespace WebCRM.Data
             modelBuilder.Entity<AccountNote>().ToTable("AccountNote");
             modelBuilder.Entity<Contract>().ToTable("Contract");
             modelBuilder.Entity<ContractTransaction>().ToTable("ContractTransaction");
+            modelBuilder.Entity<ContractExpense>().ToTable("ContractExpense");
             modelBuilder.Entity<Member>().ToTable("Member");
             modelBuilder.Entity<MemberTestimonial>().ToTable("MemberTestimonial");
         }

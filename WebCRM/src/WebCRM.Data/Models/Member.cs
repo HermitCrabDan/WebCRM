@@ -3,6 +3,7 @@ namespace WebCRM.Data
     using System;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
+    
     /// <summary>
     /// CRM data model for members
     /// </summary>

@@ -4,11 +4,11 @@ namespace WebCRM.Data
     using Microsoft.EntityFrameworkCore;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
+    
     /// <summary>
     /// CRM data model for account memberships
     /// </summary>
     /// <author>Daniel Lee Graf</author>
-    
     [Index(nameof(AccountID),nameof(MemberID))]
     public class AccountMembership: ICRMDataModel<AccountMembership>
     {
