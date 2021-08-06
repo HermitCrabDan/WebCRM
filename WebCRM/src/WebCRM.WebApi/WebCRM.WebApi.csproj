@@ -16,6 +16,7 @@
   <ItemGroup>
     <ProjectReference Include="..\WebCRM.Data\WebCRM.Data.csproj" />
     <ProjectReference Include="..\WebCRM.Shared\WebCRM.Shared.csproj" />
+    <ProjectReference Include="..\WebCRM.RoleSecurity\WebCRM.RoleSecurity.csproj" />
   </ItemGroup>
 
 </Project>
