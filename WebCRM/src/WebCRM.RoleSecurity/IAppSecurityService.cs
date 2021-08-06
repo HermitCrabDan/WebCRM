@@ -6,7 +6,7 @@ namespace WebCRM.RoleSecurity
     ///<summary>
     ///CRM Security Interface
     ///</summary>
-    ///<author>Daniel L. Graf</author>
+    ///<author>Daniel Lee Graf</author>
     public interface IAppSecurityService
     {
         int UserID { get; }
