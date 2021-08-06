@@ -1,0 +1,12 @@
+/Users/danielgraf/Documents/GitHub/WebCRM/WebCRM/src/WebCRM.Data/obj/Debug/net5.0/WebCRM.Data.csproj.AssemblyReference.cache
+/Users/danielgraf/Documents/GitHub/WebCRM/WebCRM/src/WebCRM.Data/obj/Debug/net5.0/WebCRM.Data.GeneratedMSBuildEditorConfig.editorconfig
+/Users/danielgraf/Documents/GitHub/WebCRM/WebCRM/src/WebCRM.Data/obj/Debug/net5.0/WebCRM.Data.AssemblyInfoInputs.cache
+/Users/danielgraf/Documents/GitHub/WebCRM/WebCRM/src/WebCRM.Data/obj/Debug/net5.0/WebCRM.Data.AssemblyInfo.cs
+/Users/danielgraf/Documents/GitHub/WebCRM/WebCRM/src/WebCRM.Data/obj/Debug/net5.0/WebCRM.Data.csproj.CoreCompileInputs.cache
+/Users/danielgraf/Documents/GitHub/WebCRM/WebCRM/src/WebCRM.Data/bin/Debug/net5.0/WebCRM.Data.deps.json
+/Users/danielgraf/Documents/GitHub/WebCRM/WebCRM/src/WebCRM.Data/bin/Debug/net5.0/WebCRM.Data.dll
+/Users/danielgraf/Documents/GitHub/WebCRM/WebCRM/src/WebCRM.Data/bin/Debug/net5.0/ref/WebCRM.Data.dll
+/Users/danielgraf/Documents/GitHub/WebCRM/WebCRM/src/WebCRM.Data/bin/Debug/net5.0/WebCRM.Data.pdb
+/Users/danielgraf/Documents/GitHub/WebCRM/WebCRM/src/WebCRM.Data/obj/Debug/net5.0/WebCRM.Data.dll
+/Users/danielgraf/Documents/GitHub/WebCRM/WebCRM/src/WebCRM.Data/obj/Debug/net5.0/ref/WebCRM.Data.dll
+/Users/danielgraf/Documents/GitHub/WebCRM/WebCRM/src/WebCRM.Data/obj/Debug/net5.0/WebCRM.Data.pdb

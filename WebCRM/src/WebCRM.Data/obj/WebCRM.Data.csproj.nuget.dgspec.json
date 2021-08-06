@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "/Users/danielgraf/Documents/GitHub/DotNet5MVCVue/WebCRM/src/WebCRM.Data/WebCRM.Data.csproj": {}
+    "/Users/danielgraf/Documents/GitHub/WebCRM/WebCRM/src/WebCRM.Data/WebCRM.Data.csproj": {}
   },
   "projects": {
-    "/Users/danielgraf/Documents/GitHub/DotNet5MVCVue/WebCRM/src/WebCRM.Data/WebCRM.Data.csproj": {
+    "/Users/danielgraf/Documents/GitHub/WebCRM/WebCRM/src/WebCRM.Data/WebCRM.Data.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/danielgraf/Documents/GitHub/DotNet5MVCVue/WebCRM/src/WebCRM.Data/WebCRM.Data.csproj",
+        "projectUniqueName": "/Users/danielgraf/Documents/GitHub/WebCRM/WebCRM/src/WebCRM.Data/WebCRM.Data.csproj",
         "projectName": "WebCRM.Data",
-        "projectPath": "/Users/danielgraf/Documents/GitHub/DotNet5MVCVue/WebCRM/src/WebCRM.Data/WebCRM.Data.csproj",
+        "projectPath": "/Users/danielgraf/Documents/GitHub/WebCRM/WebCRM/src/WebCRM.Data/WebCRM.Data.csproj",
         "packagesPath": "/Users/danielgraf/.nuget/packages/",
-        "outputPath": "/Users/danielgraf/Documents/GitHub/DotNet5MVCVue/WebCRM/src/WebCRM.Data/obj/",
+        "outputPath": "/Users/danielgraf/Documents/GitHub/WebCRM/WebCRM/src/WebCRM.Data/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/Users/danielgraf/.nuget/NuGet/NuGet.Config"

@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "S/Xs3BQiY43A/7J2ngK4fhrBAhVoX+L4EpMBxU6w0/+R/ELoDvcrdGvt098sHdbZAjqXCAD/W3PERO16U5HjVQ==",
+  "dgSpecHash": "lCUTh1iNIGq7ROuhTs3jNhr8MH/Q6Mg1HAxpexXeH9S3x2vcHMcKikzNZpiS75GEFiDvpWowYqU619/b0JVHhg==",
   "success": true,
-  "projectFilePath": "/Users/danielgraf/Documents/GitHub/DotNet5MVCVue/WebCRM/src/WebCRM.WebApi/WebCRM.WebApi.csproj",
+  "projectFilePath": "/Users/danielgraf/Documents/GitHub/WebCRM/WebCRM/src/WebCRM.WebApi/WebCRM.WebApi.csproj",
   "expectedPackageFiles": [
     "/Users/danielgraf/.nuget/packages/humanizer.core/2.8.26/humanizer.core.2.8.26.nupkg.sha512",
     "/Users/danielgraf/.nuget/packages/microsoft.aspnetcore.spaservices.extensions/5.0.1/microsoft.aspnetcore.spaservices.extensions.5.0.1.nupkg.sha512",

@@ -3,6 +3,7 @@ namespace WebCRM.Shared
     using System;
     using WebCRM.Data;
     using WebCRM.Helpers;
+    using System.Collections.Generic;
 
     /// <summary>
     /// CRM view model for contract expenses

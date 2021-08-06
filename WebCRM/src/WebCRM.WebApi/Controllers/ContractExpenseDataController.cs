@@ -15,7 +15,7 @@ namespace WebCRM.WebApi.Controllers
     public class ContractExpenseDataController
         :CRMApiControllerBase<ContractExpense, ContractExpenseViewModel, ICRMRepository<ContractExpense, ContractExpenseViewModel>>
     {
-        public AccountDataController(ICRMRepository<ContractExpense, ContractExpenseViewModel> repo, IAppSecurityService security)
+        public ContractExpenseDataController(ICRMRepository<ContractExpense, ContractExpenseViewModel> repo, IAppSecurityService security)
             :base(repo, security)
             {
 

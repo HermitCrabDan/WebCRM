@@ -15,7 +15,7 @@ namespace WebCRM.WebApi.Controllers
     public class CRMAccountDataController
         :CRMApiControllerBase<CRMAccount, CRMAccountViewModel, ICRMRepository<CRMAccount, CRMAccountViewModel>>
     {
-        public AccountDataController(ICRMRepository<CRMAccount, CRMAccountViewModel> repo, IAppSecurityService security)
+        public CRMAccountDataController(ICRMRepository<CRMAccount, CRMAccountViewModel> repo, IAppSecurityService security)
             :base(repo, security)
             {
 

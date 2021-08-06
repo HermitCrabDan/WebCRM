@@ -1,0 +1,15 @@
+/Users/danielgraf/Documents/GitHub/WebCRM/WebCRM/src/WebCRM.Shared/obj/Debug/net5.0/WebCRM.Shared.csproj.AssemblyReference.cache
+/Users/danielgraf/Documents/GitHub/WebCRM/WebCRM/src/WebCRM.Shared/obj/Debug/net5.0/WebCRM.Shared.GeneratedMSBuildEditorConfig.editorconfig
+/Users/danielgraf/Documents/GitHub/WebCRM/WebCRM/src/WebCRM.Shared/obj/Debug/net5.0/WebCRM.Shared.AssemblyInfoInputs.cache
+/Users/danielgraf/Documents/GitHub/WebCRM/WebCRM/src/WebCRM.Shared/obj/Debug/net5.0/WebCRM.Shared.AssemblyInfo.cs
+/Users/danielgraf/Documents/GitHub/WebCRM/WebCRM/src/WebCRM.Shared/obj/Debug/net5.0/WebCRM.Shared.csproj.CoreCompileInputs.cache
+/Users/danielgraf/Documents/GitHub/WebCRM/WebCRM/src/WebCRM.Shared/bin/Debug/net5.0/WebCRM.Shared.deps.json
+/Users/danielgraf/Documents/GitHub/WebCRM/WebCRM/src/WebCRM.Shared/bin/Debug/net5.0/WebCRM.Shared.dll
+/Users/danielgraf/Documents/GitHub/WebCRM/WebCRM/src/WebCRM.Shared/bin/Debug/net5.0/ref/WebCRM.Shared.dll
+/Users/danielgraf/Documents/GitHub/WebCRM/WebCRM/src/WebCRM.Shared/bin/Debug/net5.0/WebCRM.Shared.pdb
+/Users/danielgraf/Documents/GitHub/WebCRM/WebCRM/src/WebCRM.Shared/bin/Debug/net5.0/WebCRM.Data.dll
+/Users/danielgraf/Documents/GitHub/WebCRM/WebCRM/src/WebCRM.Shared/bin/Debug/net5.0/WebCRM.Data.pdb
+/Users/danielgraf/Documents/GitHub/WebCRM/WebCRM/src/WebCRM.Shared/obj/Debug/net5.0/WebCRM.Shared.csproj.CopyComplete
+/Users/danielgraf/Documents/GitHub/WebCRM/WebCRM/src/WebCRM.Shared/obj/Debug/net5.0/WebCRM.Shared.dll
+/Users/danielgraf/Documents/GitHub/WebCRM/WebCRM/src/WebCRM.Shared/obj/Debug/net5.0/ref/WebCRM.Shared.dll
+/Users/danielgraf/Documents/GitHub/WebCRM/WebCRM/src/WebCRM.Shared/obj/Debug/net5.0/WebCRM.Shared.pdb

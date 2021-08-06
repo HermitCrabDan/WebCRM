@@ -15,7 +15,7 @@ namespace WebCRM.Shared
             {
             }
             
-        public MemberTestimonialRepository(ILoggerlogger)
+        public MemberTestimonialRepository(ILogger logger)
             :base(logger)
             {
             }

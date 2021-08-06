@@ -8,6 +8,15 @@ namespace WebCRM.Data
     /// <author>Daniel Lee Graf</author>
     public class CRMDBContext: DbContext
     { 
+        public CRMDBContext()
+            :base()
+        {
+        }
+
+        public CRMDBContext(DbContextOptions<CRMDBContext> options)
+            :base(options)
+        {
+        }
 
         public DbSet<CRMAccount> CRMAccounts { get; set; }
 

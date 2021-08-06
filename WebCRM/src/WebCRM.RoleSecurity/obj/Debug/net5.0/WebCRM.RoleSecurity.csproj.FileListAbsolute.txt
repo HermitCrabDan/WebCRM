@@ -1,0 +1,12 @@
+/Users/danielgraf/Documents/GitHub/WebCRM/WebCRM/src/WebCRM.RoleSecurity/obj/Debug/net5.0/WebCRM.RoleSecurity.csproj.AssemblyReference.cache
+/Users/danielgraf/Documents/GitHub/WebCRM/WebCRM/src/WebCRM.RoleSecurity/obj/Debug/net5.0/WebCRM.RoleSecurity.GeneratedMSBuildEditorConfig.editorconfig
+/Users/danielgraf/Documents/GitHub/WebCRM/WebCRM/src/WebCRM.RoleSecurity/obj/Debug/net5.0/WebCRM.RoleSecurity.AssemblyInfoInputs.cache
+/Users/danielgraf/Documents/GitHub/WebCRM/WebCRM/src/WebCRM.RoleSecurity/obj/Debug/net5.0/WebCRM.RoleSecurity.AssemblyInfo.cs
+/Users/danielgraf/Documents/GitHub/WebCRM/WebCRM/src/WebCRM.RoleSecurity/obj/Debug/net5.0/WebCRM.RoleSecurity.csproj.CoreCompileInputs.cache
+/Users/danielgraf/Documents/GitHub/WebCRM/WebCRM/src/WebCRM.RoleSecurity/bin/Debug/net5.0/WebCRM.RoleSecurity.deps.json
+/Users/danielgraf/Documents/GitHub/WebCRM/WebCRM/src/WebCRM.RoleSecurity/bin/Debug/net5.0/WebCRM.RoleSecurity.dll
+/Users/danielgraf/Documents/GitHub/WebCRM/WebCRM/src/WebCRM.RoleSecurity/bin/Debug/net5.0/ref/WebCRM.RoleSecurity.dll
+/Users/danielgraf/Documents/GitHub/WebCRM/WebCRM/src/WebCRM.RoleSecurity/bin/Debug/net5.0/WebCRM.RoleSecurity.pdb
+/Users/danielgraf/Documents/GitHub/WebCRM/WebCRM/src/WebCRM.RoleSecurity/obj/Debug/net5.0/WebCRM.RoleSecurity.dll
+/Users/danielgraf/Documents/GitHub/WebCRM/WebCRM/src/WebCRM.RoleSecurity/obj/Debug/net5.0/ref/WebCRM.RoleSecurity.dll
+/Users/danielgraf/Documents/GitHub/WebCRM/WebCRM/src/WebCRM.RoleSecurity/obj/Debug/net5.0/WebCRM.RoleSecurity.pdb

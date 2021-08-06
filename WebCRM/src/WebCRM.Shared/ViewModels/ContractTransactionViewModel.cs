@@ -4,6 +4,7 @@ namespace WebCRM.Shared
     using WebCRM.Data;
     using WebCRM.Helpers;
     using System.Collections.Generic;
+    
     /// <summary>
     /// ViewModel for the ContractTransaction data
     /// </summary>

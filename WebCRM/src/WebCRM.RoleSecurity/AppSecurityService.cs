@@ -2,7 +2,6 @@ namespace WebCRM.RoleSecurity
 {
     using System;
     using System.Linq;
-    using WebCRM.Data;
     using System.Collections.Generic;
     
     ///<summary>

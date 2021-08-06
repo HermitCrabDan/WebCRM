@@ -27,7 +27,7 @@ namespace WebCRM.Data
 
         public DateTime? AccountRetirementDate { get; set; }
 
-        public void RestrictedModelUpdate(Account model)
+        public void RestrictedModelUpdate(CRMAccount model)
         {
             this.AccountName = model.AccountName;
             this.AccountRetirementDate =  model.AccountRetirementDate;

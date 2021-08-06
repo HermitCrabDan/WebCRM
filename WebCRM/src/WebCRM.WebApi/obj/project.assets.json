@@ -544,6 +544,16 @@
           "bin/placeholder/WebCRM.Data.dll": {}
         }
       },
+      "WebCRM.RoleSecurity/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v5.0",
+        "compile": {
+          "bin/placeholder/WebCRM.RoleSecurity.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/WebCRM.RoleSecurity.dll": {}
+        }
+      },
       "WebCRM.Shared/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v5.0",
@@ -1431,6 +1441,11 @@
       "path": "../WebCRM.Data/WebCRM.Data.csproj",
       "msbuildProject": "../WebCRM.Data/WebCRM.Data.csproj"
     },
+    "WebCRM.RoleSecurity/1.0.0": {
+      "type": "project",
+      "path": "../WebCRM.RoleSecurity/WebCRM.RoleSecurity.csproj",
+      "msbuildProject": "../WebCRM.RoleSecurity/WebCRM.RoleSecurity.csproj"
+    },
     "WebCRM.Shared/1.0.0": {
       "type": "project",
       "path": "../WebCRM.Shared/WebCRM.Shared.csproj",
@@ -1443,6 +1458,7 @@
       "Swashbuckle.AspNetCore >= 5.6.3",
       "VueCliMiddleware >= 5.0.0",
       "WebCRM.Data >= 1.0.0",
+      "WebCRM.RoleSecurity >= 1.0.0",
       "WebCRM.Shared >= 1.0.0"
     ]
   },
@@ -1452,11 +1468,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/danielgraf/Documents/GitHub/DotNet5MVCVue/WebCRM/src/WebCRM.WebApi/WebCRM.WebApi.csproj",
+      "projectUniqueName": "/Users/danielgraf/Documents/GitHub/WebCRM/WebCRM/src/WebCRM.WebApi/WebCRM.WebApi.csproj",
       "projectName": "WebCRM.WebApi",
-      "projectPath": "/Users/danielgraf/Documents/GitHub/DotNet5MVCVue/WebCRM/src/WebCRM.WebApi/WebCRM.WebApi.csproj",
+      "projectPath": "/Users/danielgraf/Documents/GitHub/WebCRM/WebCRM/src/WebCRM.WebApi/WebCRM.WebApi.csproj",
       "packagesPath": "/Users/danielgraf/.nuget/packages/",
-      "outputPath": "/Users/danielgraf/Documents/GitHub/DotNet5MVCVue/WebCRM/src/WebCRM.WebApi/obj/",
+      "outputPath": "/Users/danielgraf/Documents/GitHub/WebCRM/WebCRM/src/WebCRM.WebApi/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "/Users/danielgraf/.nuget/NuGet/NuGet.Config"
@@ -1471,11 +1487,14 @@
         "net5.0": {
           "targetAlias": "net5.0",
           "projectReferences": {
-            "/Users/danielgraf/Documents/GitHub/DotNet5MVCVue/WebCRM/src/WebCRM.Data/WebCRM.Data.csproj": {
-              "projectPath": "/Users/danielgraf/Documents/GitHub/DotNet5MVCVue/WebCRM/src/WebCRM.Data/WebCRM.Data.csproj"
+            "/Users/danielgraf/Documents/GitHub/WebCRM/WebCRM/src/WebCRM.Data/WebCRM.Data.csproj": {
+              "projectPath": "/Users/danielgraf/Documents/GitHub/WebCRM/WebCRM/src/WebCRM.Data/WebCRM.Data.csproj"
             },
-            "/Users/danielgraf/Documents/GitHub/DotNet5MVCVue/WebCRM/src/WebCRM.Shared/WebCRM.Shared.csproj": {
-              "projectPath": "/Users/danielgraf/Documents/GitHub/DotNet5MVCVue/WebCRM/src/WebCRM.Shared/WebCRM.Shared.csproj"
+            "/Users/danielgraf/Documents/GitHub/WebCRM/WebCRM/src/WebCRM.RoleSecurity/WebCRM.RoleSecurity.csproj": {
+              "projectPath": "/Users/danielgraf/Documents/GitHub/WebCRM/WebCRM/src/WebCRM.RoleSecurity/WebCRM.RoleSecurity.csproj"
+            },
+            "/Users/danielgraf/Documents/GitHub/WebCRM/WebCRM/src/WebCRM.Shared/WebCRM.Shared.csproj": {
+              "projectPath": "/Users/danielgraf/Documents/GitHub/WebCRM/WebCRM/src/WebCRM.Shared/WebCRM.Shared.csproj"
             }
           }
         }

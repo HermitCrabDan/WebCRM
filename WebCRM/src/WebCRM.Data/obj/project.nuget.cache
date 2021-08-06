@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "C/s3b4oF5Zqtz/Wn7SHckopPlIKADUvC21vivJVTBGzDmPlDm7QEuVrXTD9Iwwc4+d/VOCWJ5Je5nBACOxzjtw==",
+  "dgSpecHash": "a1CjmFFKK8Npq5WGZWyKSQHqtim7QkGfavkAJBrI4TeVSJ1QnYE/axkyPw/QvAwABYHQthW0EWfqPQfVoNm90g==",
   "success": true,
-  "projectFilePath": "/Users/danielgraf/Documents/GitHub/DotNet5MVCVue/WebCRM/src/WebCRM.Data/WebCRM.Data.csproj",
+  "projectFilePath": "/Users/danielgraf/Documents/GitHub/WebCRM/WebCRM/src/WebCRM.Data/WebCRM.Data.csproj",
   "expectedPackageFiles": [
     "/Users/danielgraf/.nuget/packages/microsoft.data.sqlite.core/5.0.8/microsoft.data.sqlite.core.5.0.8.nupkg.sha512",
     "/Users/danielgraf/.nuget/packages/microsoft.dotnet.platformabstractions/3.1.6/microsoft.dotnet.platformabstractions.3.1.6.nupkg.sha512",
