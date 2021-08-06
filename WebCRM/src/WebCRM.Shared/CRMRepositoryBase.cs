@@ -16,17 +16,21 @@ namespace WebCRM.Shared
     public abstract class CRMRepositoryBase<Model, ViewModel, Context>: ICRMRepository<Model,ViewModel>
         where ViewModel: ICRMViewModel<Model>,new()
         where Model: class,ICRMDataModel<Model>
-        where Context: DbContext,new()
+        where Context: DbContext
     {
         private ILogger _logger;
 
-        private Context ctx;
+        private Context _ctx;
 
-        public CRMRepositoryBase() {}
-
-        public CRMRepositoryBase(ILogger logger)
+        public CRMRepositoryBase(Context ctx) 
         {
-            _logger = logger;
+            this._ctx = ctx;
+        }
+
+        public CRMRepositoryBase(ILogger logger, Context ctx)
+        {
+            this._logger = logger;
+            this._ctx = ctx;
         }
 
         public virtual (bool, ViewModel) Create(ViewModel model)
@@ -35,17 +39,14 @@ namespace WebCRM.Shared
             {
                 try
                 {
-                    using (ctx = new Context())
-                    {
-                        var modelToAdd = model.GetBaseModel();
-                        ctx
-                            .Set<Model>()
-                            .Add(modelToAdd);
-                        var success = (ctx.SaveChanges() > 0);
-                        var viewModel = new ViewModel();
-                        viewModel.SetModelValues(modelToAdd);
-                        return (success, viewModel);
-                    }
+                    var modelToAdd = model.GetBaseModel();
+                    _ctx
+                        .Set<Model>()
+                        .Add(modelToAdd);
+                    var success = (_ctx.SaveChanges() > 0);
+                    var viewModel = new ViewModel();
+                    viewModel.SetModelValues(modelToAdd);
+                    return (success, viewModel);
                 }
                 catch (Exception ex)
                 {
@@ -64,18 +65,15 @@ namespace WebCRM.Shared
             {
                 try
                 {
-                    using (ctx = new Context())
-                    {
-                        var modelToAdd = model.GetBaseModel();
-                        await ctx
-                            .Set<Model>()
-                            .AddAsync(modelToAdd);
-                        var savedRecords = await ctx.SaveChangesAsync();
-                        var success = (savedRecords > 0);
-                        var viewModel = new ViewModel();
-                        viewModel.SetModelValues(modelToAdd);
-                        return (success, viewModel);
-                    }
+                    var modelToAdd = model.GetBaseModel();
+                    await _ctx
+                        .Set<Model>()
+                        .AddAsync(modelToAdd);
+                    var savedRecords = await _ctx.SaveChangesAsync();
+                    var success = (savedRecords > 0);
+                    var viewModel = new ViewModel();
+                    viewModel.SetModelValues(modelToAdd);
+                    return (success, viewModel);
                 }
                 catch (Exception ex)
                 {
@@ -90,41 +88,35 @@ namespace WebCRM.Shared
 
         public virtual (bool, ViewModel) RetrieveById(int id)
         {
-            using (var ctx = new CRMDBContext())
-            {
-                var model = ctx
-                    .Set<Model>()
-                    .Where(w => w.Id == id)
-                    .FirstOrDefault();
+            var model = _ctx
+                .Set<Model>()
+                .Where(w => w.Id == id)
+                .FirstOrDefault();
                 
-                var viewModel = new ViewModel();
-                bool success = false;
-                if (model != null)
-                {
-                    viewModel.SetModelValues(model);
-                    success = true;
-                }
-                return (success, viewModel);
+            var viewModel = new ViewModel();
+            bool success = false;
+            if (model != null)
+            {
+                viewModel.SetModelValues(model);
+                success = true;
             }
+            return (success, viewModel);
         }
 
         public virtual IEnumerable<ViewModel> Retrieve(Func<Model, bool> selector)
         {
-            using (var ctx = new CRMDBContext())
+            var data = _ctx
+                .Set<Model>()
+                .Where(selector)
+                .ToList();
+            var viewModelList = new List<ViewModel>();
+            foreach (var model in data)
             {
-                var data = ctx
-                    .Set<Model>()
-                    .Where(selector)
-                    .ToList();
-                var viewModelList = new List<ViewModel>();
-                foreach (var model in data)
-                {
-                    var viewModel = new ViewModel();
-                    viewModel.SetModelValues(model);
-                    viewModelList.Add(viewModel);
-                }
-                return viewModelList;
+                var viewModel = new ViewModel();
+                viewModel.SetModelValues(model);
+                viewModelList.Add(viewModel);
             }
+            return viewModelList;
         }
 
         public virtual (bool, ViewModel) Update(ViewModel model)
@@ -133,22 +125,21 @@ namespace WebCRM.Shared
             {
                 try
                 {
-                    using (var ctx = new CRMDBContext())
+                    var modelToUpdate = 
+                        _ctx
+                            .Set<Model>()
+                            .Where(w => w.Id == model.Id)
+                            .FirstOrDefault();
+                    if (modelToUpdate != null)
                     {
-                        var modelToUpdate = 
-                            ctx
-                                .Set<Model>()
-                                .Where(w => w.Id == model.Id)
-                                .FirstOrDefault();
-                        if (modelToUpdate != null)
-                        {
-                            modelToUpdate.RestrictedModelUpdate(model.GetBaseModel());
-                            ctx.Update(modelToUpdate);
-                            var success = ctx.SaveChanges() > 0;
-                            var viewModel = new ViewModel();
-                            viewModel.SetModelValues(modelToUpdate);
-                            return (success, viewModel);
-                        }
+                        modelToUpdate.RestrictedModelUpdate(model.GetBaseModel());
+                        _ctx
+                            .Set<Model>()
+                            .Update(modelToUpdate);
+                        var success = _ctx.SaveChanges() > 0;
+                        var viewModel = new ViewModel();
+                        viewModel.SetModelValues(modelToUpdate);
+                        return (success, viewModel);
                     }
                 }
                 catch (Exception ex) 
@@ -168,24 +159,23 @@ namespace WebCRM.Shared
             {
                 try
                 {
-                    using (var ctx = new CRMDBContext())
+                    var modelToUpdate = 
+                        _ctx
+                            .Set<Model>()
+                            .Where(w => w.Id == model.Id)
+                            .FirstOrDefault();
+                    if (modelToUpdate != null)
                     {
-                        var modelToUpdate = 
-                            ctx
-                                .Set<Model>()
-                                .Where(w => w.Id == model.Id)
-                                .FirstOrDefault();
-                        if (modelToUpdate != null)
-                        {
-                            modelToUpdate.RestrictedModelUpdate(model.GetBaseModel());
-                            ctx.Update(modelToUpdate);
-                            var savedRecords = await ctx.SaveChangesAsync();
+                        modelToUpdate.RestrictedModelUpdate(model.GetBaseModel());
+                        _ctx
+                            .Set<Model>()
+                            .Update(modelToUpdate);
+                        var savedRecords = await _ctx.SaveChangesAsync();
 
-                            var success = savedRecords > 0;
-                            var viewModel = new ViewModel();
-                            viewModel.SetModelValues(modelToUpdate);
-                            return (success, viewModel);
-                        }
+                        var success = savedRecords > 0;
+                        var viewModel = new ViewModel();
+                        viewModel.SetModelValues(modelToUpdate);
+                        return (success, viewModel);
                     }
                 }
                 catch (Exception ex) 
@@ -199,67 +189,61 @@ namespace WebCRM.Shared
             return (false, model);
         }
 
-        public virtual bool Delete(ViewModel model)
+        public virtual bool Delete(int id)
         {
-            if (model != null)
+            if (id > 0)
             {
                 try
                 {
-                    using (var ctx = new CRMDBContext())
+                    var modelToDelete = 
+                        _ctx
+                            .Set<Model>()
+                            .Where(w => w.Id == id)
+                            .FirstOrDefault();
+                    if (modelToDelete != null)
                     {
-                        var modelToDelete = 
-                            ctx
-                                .Set<Model>()
-                                .Where(w => w.Id == model.Id)
-                                .FirstOrDefault();
-                        if (modelToDelete != null)
-                        {
-                            ctx
-                                .Set<Model>()
-                                .Remove(modelToDelete);
-                            return (ctx.SaveChanges() > 0);
-                        }
+                        _ctx
+                            .Set<Model>()
+                            .Remove(modelToDelete);
+                        return (_ctx.SaveChanges() > 0);
                     }
                 }
                 catch (Exception ex)
                 {
                     if (_logger != null)
                     {
-                        _logger.LogError(ex, $"Failed to delete {typeof(Model).Name}, Id:{model?.Id}");
+                        _logger.LogError(ex, $"Failed to delete {typeof(Model).Name}, Id:{id}");
                     }
                 }
             }
             return false;
         }
 
-        public virtual async Task<bool> DeleteAsync(ViewModel model)
+        public virtual async Task<bool> DeleteAsync(int id)
         {
-            if (model != null)
+            if (id > 0)
             {
                 try
                 {
-                    using (var ctx = new CRMDBContext())
+                    var modelToDelete = 
+                        _ctx
+                            .Set<Model>()
+                            .Where(w => w.Id == id)
+                            .FirstOrDefault();
+                    if (modelToDelete != null)
                     {
-                        var modelToDelete = 
-                            ctx
-                                .Set<Model>()
-                                .Where(w => w.Id == model.Id)
-                                .FirstOrDefault();
-                        if (modelToDelete != null)
-                        {
-                            ctx
-                                .Set<Model>()
-                                .Remove(modelToDelete);
-                            var deletedRecords = await ctx.SaveChangesAsync();
-                            return (deletedRecords > 0);
-                        }
+                        _ctx
+                            .Set<Model>()
+                            .Remove(modelToDelete);
+                        var deletedRecords = await _ctx.SaveChangesAsync();
+                        return (deletedRecords > 0);
                     }
                 }
                 catch (Exception ex)
                 {
                     if (_logger != null)
                     {
-                        _logger.LogError(ex, $"Failed to delete {typeof(Model).Name}, Id:{model?.Id}");
+                        _logger.LogError(ex, $"Failed to delete {typeof(Model).Name}, Id:{id}");
                     }
                 }
             }

@@ -8,13 +8,13 @@ namespace WebCRM.Shared
     /// <author>Daniel Lee Graf</author>
     public class AccountNoteRepository: CRMRepositoryBase<AccountNote, AccountNoteViewModel, CRMDBContext>
     {
-        public AccountNoteRepository()
-            :base()
+        public AccountNoteRepository(CRMDBContext context)
+            :base(context)
             {
             }
 
-        public AccountNoteRepository(ILogger logger)
-            :base(logger)
+        public AccountNoteRepository(ILogger logger, CRMDBContext context)
+            :base(logger, context)
             {
             }
     }

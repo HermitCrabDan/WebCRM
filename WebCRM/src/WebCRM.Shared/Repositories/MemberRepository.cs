@@ -8,13 +8,13 @@ namespace WebCRM.Shared
     /// <author>Daniel Lee Graf</author>
     public class MemberRepository: CRMRepositoryBase<Member, MemberViewModel, CRMDBContext>
     {
-        public MemberRepository()
-            :base()
+        public MemberRepository(CRMDBContext ctx)
+            :base(ctx)
             {
             }
             
-        public MemberRepository(ILogger logger)
-            :base(logger)
+        public MemberRepository(ILogger logger, CRMDBContext ctx)
+            :base(logger, ctx)
             {
             }
     }

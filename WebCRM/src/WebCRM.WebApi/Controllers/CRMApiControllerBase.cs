@@ -6,6 +6,7 @@ namespace WebCRM.WebApi.Controllers
     using WebCRM.Shared;
     using WebCRM.RoleSecurity;
     using Microsoft.AspNetCore.Mvc;
+    using System.Threading.Tasks;
 
     /// <summary>
     /// Base Api data controller for CRM functions
@@ -64,8 +65,8 @@ namespace WebCRM.WebApi.Controllers
             return Ok(this._repo.Retrieve(RestrictedSelection()));
         }
 
-        [HttpGet]
-        public virtual IActionResult Get(int id)
+        [HttpGet("{id}")]
+        public virtual IActionResult Get([FromRoute] int id)
         {
             if (id <= 0)
             {
@@ -90,11 +91,11 @@ namespace WebCRM.WebApi.Controllers
         }
 
         [HttpPost]
-        public virtual IActionResult Post(ViewModel model)
+        public virtual async Task<IActionResult> Create([FromBody] ViewModel model)
         {
             if (model != null && CanCreate() && model.IsValid())
             {
-                var (success, viewModel) = this._repo.Create(model);
+                var (success, viewModel) = await this._repo.CreateAsync(model);
                 if (success)
                 {
                     return Ok(viewModel);
@@ -114,11 +115,11 @@ namespace WebCRM.WebApi.Controllers
         }
 
         [HttpPut]
-        public virtual IActionResult Put(ViewModel model)
+        public virtual async Task<IActionResult> Update([FromBody] ViewModel model)
         {
             if (model != null && model.Id > 0 && CanUpdate() && model.IsValid())
             {
-                var (success, viewModel) = this._repo.Update(model);
+                var (success, viewModel) = await this._repo.UpdateAsync(model);
                 if (success)
                 {
                     return Ok(viewModel);
@@ -141,30 +142,26 @@ namespace WebCRM.WebApi.Controllers
             return BadRequest(model);
         }
 
-        [HttpDelete]
-        protected virtual IActionResult Delete(ViewModel model)
+        [HttpDelete("{id}")]
+        protected virtual async Task<IActionResult> Delete([FromRoute] int id)
         {
-            if (model != null && CanDelete() && model.Id > 0)
+            if (CanDelete() && id > 0)
             {
-                var success = this._repo.Delete(model);
+                var success = await this._repo.DeleteAsync(id);
                 if (success)
                 {
                     return Ok();
                 }
-                return NotFound(model);
+                return NotFound();
             }
-            if (model == null)
+            var model = new ViewModel();
+            if (id <= 0)
             {
-                model = new ViewModel();
-                model.ValidationErrorMessages.Add("Blank data posted, please check inputs");
+                model.ValidationErrorMessages.Add("Invalid Id, please check inputs");
             }
             if (!CanDelete())
             {
                 model.ValidationErrorMessages.Add($"Not Authorized to delete { typeof(Model).Name }");
-            }
-            if ((model?.Id ?? 0) <=0)
-            {
-                model.ValidationErrorMessages.Add("Invalid Id");
             }
             return BadRequest(model);
         }

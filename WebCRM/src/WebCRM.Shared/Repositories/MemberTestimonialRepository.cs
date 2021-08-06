@@ -10,13 +10,13 @@ namespace WebCRM.Shared
     public class MemberTestimonialRepository: 
         CRMRepositoryBase<MemberTestimonial, MemberTestimonialViewModel, CRMDBContext>
     {
-        public MemberTestimonialRepository()
-            :base()
+        public MemberTestimonialRepository(CRMDBContext ctx)
+            :base(ctx)
             {
             }
             
-        public MemberTestimonialRepository(ILogger logger)
-            :base(logger)
+        public MemberTestimonialRepository(ILogger logger, CRMDBContext ctx)
+            :base(logger, ctx)
             {
             }
     }

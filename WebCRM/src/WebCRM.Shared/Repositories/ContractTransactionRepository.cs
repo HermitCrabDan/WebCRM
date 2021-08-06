@@ -7,16 +7,16 @@ namespace WebCRM.Shared
     /// </summary>
     /// <author>Daniel Lee Graf</author>
 
-    public class ContractTransactionRepository: 
-        CRMRepositoryBase<ContractTransaction, ContractTransactionViewModel, CRMDBContext>
+    public class ContractTransactionRepository
+        :CRMRepositoryBase<ContractTransaction, ContractTransactionViewModel, CRMDBContext>
     {
-        public ContractTransactionRepository()
-            :base() 
+        public ContractTransactionRepository(CRMDBContext ctx)
+            :base(ctx) 
             {
             }
 
-        public ContractTransactionRepository(ILogger logger)
-            :base(logger)
+        public ContractTransactionRepository(ILogger logger, CRMDBContext ctx)
+            :base(logger, ctx)
             {
             }   
     }

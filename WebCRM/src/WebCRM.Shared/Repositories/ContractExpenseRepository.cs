@@ -10,13 +10,13 @@ namespace WebCRM.Shared
     public class ContractExpenseRepository: 
         CRMRepositoryBase<ContractExpense, ContractExpenseViewModel, CRMDBContext>
     {
-        public ContractExpenseRepository()
-            :base() 
+        public ContractExpenseRepository(CRMDBContext ctx)
+            :base(ctx) 
             {
             }
 
-        public ContractExpenseRepository(ILogger logger)
-            :base(logger)
+        public ContractExpenseRepository(ILogger logger, CRMDBContext ctx)
+            :base(logger, ctx)
             {
             }   
     }
