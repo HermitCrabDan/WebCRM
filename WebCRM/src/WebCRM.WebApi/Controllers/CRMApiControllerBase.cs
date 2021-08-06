@@ -36,22 +36,22 @@ namespace WebCRM.WebApi.Controllers
 
         protected virtual bool CanViewAll()
         {
-            return this._security.CanViewAll(typeof(Model));
+            return this._security.IsAdmin || this._security.CanViewReports || this._security.CanAccountEnterData;
         }
 
         protected virtual bool CanCreate()
         {
-            return this._security.CanCreate(typeof(Model));
+            return this._security.IsAdmin || this._security.CanAccountEnterData;
         }
 
         protected virtual bool CanUpdate()
         {
-            return this._security.CanUpdate(typeof(Model));
+            return this._security.IsAdmin || this._security.CanAccountEnterData;
         }
 
         protected virtual bool CanDelete()
         {
-            return this._security.CanDelete(typeof(Model));
+            return this._security.IsAdmin;
         }
 
         [HttpGet]
