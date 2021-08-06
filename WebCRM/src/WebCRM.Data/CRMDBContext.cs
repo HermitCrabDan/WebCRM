@@ -3,7 +3,7 @@ namespace WebCRM.Data
     using System;
     using Microsoft.EntityFrameworkCore;
     /// <summary>
-    /// 
+    /// Base context for CRM data
     /// </summary>
     /// <author>Daniel Lee Graf</author>
     public class CRMDBContext: DbContext
