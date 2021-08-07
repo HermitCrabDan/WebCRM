@@ -1,10 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "lCUTh1iNIGq7ROuhTs3jNhr8MH/Q6Mg1HAxpexXeH9S3x2vcHMcKikzNZpiS75GEFiDvpWowYqU619/b0JVHhg==",
+  "dgSpecHash": "mzMQB8MNPUEHSTOsPd1+F6ksHYAmhCSOSwn+ohX6daWiOODazjEQxZeUjv9SthUq+UkqlQlgEXRMGWrIPnASAA==",
   "success": true,
   "projectFilePath": "/Users/danielgraf/Documents/GitHub/WebCRM/WebCRM/src/WebCRM.WebApi/WebCRM.WebApi.csproj",
   "expectedPackageFiles": [
     "/Users/danielgraf/.nuget/packages/humanizer.core/2.8.26/humanizer.core.2.8.26.nupkg.sha512",
+    "/Users/danielgraf/.nuget/packages/microsoft.aspnetcore.authentication.jwtbearer/5.0.8/microsoft.aspnetcore.authentication.jwtbearer.5.0.8.nupkg.sha512",
+    "/Users/danielgraf/.nuget/packages/microsoft.aspnetcore.authentication.openidconnect/5.0.8/microsoft.aspnetcore.authentication.openidconnect.5.0.8.nupkg.sha512",
     "/Users/danielgraf/.nuget/packages/microsoft.aspnetcore.spaservices.extensions/5.0.1/microsoft.aspnetcore.spaservices.extensions.5.0.1.nupkg.sha512",
     "/Users/danielgraf/.nuget/packages/microsoft.csharp/4.7.0/microsoft.csharp.4.7.0.nupkg.sha512",
     "/Users/danielgraf/.nuget/packages/microsoft.data.sqlite.core/5.0.8/microsoft.data.sqlite.core.5.0.8.nupkg.sha512",
@@ -30,6 +32,11 @@
     "/Users/danielgraf/.nuget/packages/microsoft.extensions.logging.abstractions/5.0.0/microsoft.extensions.logging.abstractions.5.0.0.nupkg.sha512",
     "/Users/danielgraf/.nuget/packages/microsoft.extensions.options/5.0.0/microsoft.extensions.options.5.0.0.nupkg.sha512",
     "/Users/danielgraf/.nuget/packages/microsoft.extensions.primitives/5.0.0/microsoft.extensions.primitives.5.0.0.nupkg.sha512",
+    "/Users/danielgraf/.nuget/packages/microsoft.identitymodel.jsonwebtokens/6.12.0/microsoft.identitymodel.jsonwebtokens.6.12.0.nupkg.sha512",
+    "/Users/danielgraf/.nuget/packages/microsoft.identitymodel.logging/6.12.0/microsoft.identitymodel.logging.6.12.0.nupkg.sha512",
+    "/Users/danielgraf/.nuget/packages/microsoft.identitymodel.protocols/6.7.1/microsoft.identitymodel.protocols.6.7.1.nupkg.sha512",
+    "/Users/danielgraf/.nuget/packages/microsoft.identitymodel.protocols.openidconnect/6.7.1/microsoft.identitymodel.protocols.openidconnect.6.7.1.nupkg.sha512",
+    "/Users/danielgraf/.nuget/packages/microsoft.identitymodel.tokens/6.12.0/microsoft.identitymodel.tokens.6.12.0.nupkg.sha512",
     "/Users/danielgraf/.nuget/packages/microsoft.openapi/1.2.3/microsoft.openapi.1.2.3.nupkg.sha512",
     "/Users/danielgraf/.nuget/packages/sqlitepclraw.bundle_e_sqlite3/2.0.4/sqlitepclraw.bundle_e_sqlite3.2.0.4.nupkg.sha512",
     "/Users/danielgraf/.nuget/packages/sqlitepclraw.core/2.0.4/sqlitepclraw.core.2.0.4.nupkg.sha512",
@@ -42,7 +49,9 @@
     "/Users/danielgraf/.nuget/packages/system.collections.immutable/5.0.0/system.collections.immutable.5.0.0.nupkg.sha512",
     "/Users/danielgraf/.nuget/packages/system.componentmodel.annotations/5.0.0/system.componentmodel.annotations.5.0.0.nupkg.sha512",
     "/Users/danielgraf/.nuget/packages/system.diagnostics.diagnosticsource/5.0.1/system.diagnostics.diagnosticsource.5.0.1.nupkg.sha512",
+    "/Users/danielgraf/.nuget/packages/system.identitymodel.tokens.jwt/6.12.0/system.identitymodel.tokens.jwt.6.12.0.nupkg.sha512",
     "/Users/danielgraf/.nuget/packages/system.memory/4.5.3/system.memory.4.5.3.nupkg.sha512",
+    "/Users/danielgraf/.nuget/packages/system.security.cryptography.cng/4.5.0/system.security.cryptography.cng.4.5.0.nupkg.sha512",
     "/Users/danielgraf/.nuget/packages/vueclimiddleware/5.0.0/vueclimiddleware.5.0.0.nupkg.sha512"
   ],
   "logs": []

@@ -19,6 +19,7 @@ namespace WebCRM.WebApi
     using WebCRM.Data;
     using WebCRM.Shared;
     using WebCRM.RoleSecurity;
+    using WebCRM.RoleSecurity.Helpers;
 
     /// <summary>
     /// Start up point for Web Api and Vue application
@@ -46,6 +47,17 @@ namespace WebCRM.WebApi
             {
                 configuration.RootPath = "../vue-app/dist";
             });
+            services.Configure<AppSettings>(Configuration.GetSection("AppSettings"));
+            services.AddScoped<IUserService, UserService>();
+            services.AddScoped<ICRMRepository<AccountMembership, AccountMembershipViewModel>, AccountMembershipRepository>();
+            services.AddScoped<ICRMRepository<AccountNote, AccountNoteViewModel>, AccountNoteRepository>();
+            services.AddScoped<ICRMRepository<ContractExpense, ContractExpenseViewModel>, ContractExpenseRepository>();
+            services.AddScoped<ICRMRepository<Contract, ContractViewModel>, ContractRepository>();
+            services.AddScoped<ICRMRepository<ContractTransaction, ContractTransactionViewModel>, ContractTransactionRepository>();
+            services.AddScoped<ICRMRepository<CRMAccount, CRMAccountViewModel>, CRMAccountRepository>();
+            services.AddScoped<ICRMRepository<Member, MemberViewModel>, MemberRepository>();
+            services.AddScoped<ICRMRepository<MemberTestimonial, MemberTestimonialViewModel>, MemberTestimonialRepository>();
+            services.AddScoped<IReportRepository, ReportRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -69,6 +81,8 @@ namespace WebCRM.WebApi
             app.UseRouting();
 
             app.UseAuthorization();
+
+            app.UseMiddleware<JwtMiddleware>();
 
             app.UseEndpoints(endpoints =>
             {
