@@ -11,7 +11,7 @@ namespace WebCRM.WebApi.Controllers
     /// <author>Daniel Lee Graf</author>
 
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class ContractTransactionDataController
         :CRMApiControllerBase<ContractTransaction, ContractTransactionViewModel, ICRMRepository<ContractTransaction, ContractTransactionViewModel>>
     {

@@ -47,7 +47,7 @@ namespace WebCRM.WebApi
             {
                 configuration.RootPath = "../vue-app/dist";
             });
-            services.Configure<AppSettings>(Configuration.GetSection("AppSettings"));
+            services.Configure<AuthSettings>(Configuration.GetSection("AuthSettings"));
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<ICRMRepository<AccountMembership, AccountMembershipViewModel>, AccountMembershipRepository>();
             services.AddScoped<ICRMRepository<AccountNote, AccountNoteViewModel>, AccountNoteRepository>();
@@ -91,7 +91,7 @@ namespace WebCRM.WebApi
 
             app.UseSpa(spa =>
             {
-                spa.Options.SourcePath = "../vue-app";
+                spa.Options.SourcePath = "vue-app";
 
                 if (env.IsDevelopment())
                 {

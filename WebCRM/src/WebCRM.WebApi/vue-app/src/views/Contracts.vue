@@ -1,31 +1,32 @@
 <template>
     <div>
-        <h1>Accounts</h1>
+        <h1>Contracts</h1>
     </div>
 </template>
 
 <script>
 import axios from 'axios';
+
 export default {
-    name:"CRMAccounts",
+    name:"Contracts",
     data(){
-        return {
-            CRMAccountList: null,
+        return{
+            contractList: null,
             isError: false,
             isLoading: false
         }
     },
     methods:{
-        getCRMAccountList(){
+        getContractList() {
             this.isLoading = true;
             axios
-                .get("api/CRMAccountData")
-                .then(response => { 
-                    this.CRMAccountList = response.data;
+                .get("api/ContractData")
+                .then(response => {
+                    this.contractList = response.data;
                     this.isError = false;
                     this.isLoading = false;
                 })
-                .catch(function(error){ 
+                .catch(function (error) {
                     console.log(error);
                     this.isError = true;
                     this.isLoading = false;

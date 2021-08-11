@@ -62,3 +62,11 @@
 /Users/danielgraf/Documents/GitHub/WebCRM/WebCRM/src/WebCRM.WebApi/obj/Debug/net5.0/ref/WebCRM.WebApi.dll
 /Users/danielgraf/Documents/GitHub/WebCRM/WebCRM/src/WebCRM.WebApi/obj/Debug/net5.0/WebCRM.WebApi.pdb
 /Users/danielgraf/Documents/GitHub/WebCRM/WebCRM/src/WebCRM.WebApi/obj/Debug/net5.0/WebCRM.WebApi.genruntimeconfig.cache
+/Users/danielgraf/Documents/GitHub/WebCRM/WebCRM/src/WebCRM.WebApi/bin/Debug/net5.0/Microsoft.AspNetCore.Authentication.JwtBearer.dll
+/Users/danielgraf/Documents/GitHub/WebCRM/WebCRM/src/WebCRM.WebApi/bin/Debug/net5.0/Microsoft.AspNetCore.Authentication.OpenIdConnect.dll
+/Users/danielgraf/Documents/GitHub/WebCRM/WebCRM/src/WebCRM.WebApi/bin/Debug/net5.0/Microsoft.IdentityModel.JsonWebTokens.dll
+/Users/danielgraf/Documents/GitHub/WebCRM/WebCRM/src/WebCRM.WebApi/bin/Debug/net5.0/Microsoft.IdentityModel.Logging.dll
+/Users/danielgraf/Documents/GitHub/WebCRM/WebCRM/src/WebCRM.WebApi/bin/Debug/net5.0/Microsoft.IdentityModel.Protocols.dll
+/Users/danielgraf/Documents/GitHub/WebCRM/WebCRM/src/WebCRM.WebApi/bin/Debug/net5.0/Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+/Users/danielgraf/Documents/GitHub/WebCRM/WebCRM/src/WebCRM.WebApi/bin/Debug/net5.0/Microsoft.IdentityModel.Tokens.dll
+/Users/danielgraf/Documents/GitHub/WebCRM/WebCRM/src/WebCRM.WebApi/bin/Debug/net5.0/System.IdentityModel.Tokens.Jwt.dll

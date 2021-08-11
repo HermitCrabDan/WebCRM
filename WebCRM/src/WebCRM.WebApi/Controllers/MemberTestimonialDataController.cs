@@ -10,7 +10,7 @@ namespace WebCRM.WebApi.Controllers
     /// </summary>
     /// <author>Daniel Lee Graf</author>
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class MemberTestimonialDataController
         :CRMApiControllerBase<MemberTestimonial,MemberTestimonialViewModel, ICRMRepository<MemberTestimonial, MemberTestimonialViewModel>>
     {
