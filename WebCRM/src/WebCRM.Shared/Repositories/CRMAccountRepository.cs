@@ -2,6 +2,10 @@ namespace WebCRM.Shared
 {
     using WebCRM.Data;
     using Microsoft.Extensions.Logging;
+    using System.Collections.Generic;
+    using System;
+    using System.Linq;
+
     /// <summary>
     /// CRM Repository for account data
     /// </summary>
@@ -16,6 +20,7 @@ namespace WebCRM.Shared
         public CRMAccountRepository(ILogger logger, CRMDBContext ctx)
             :base(logger, ctx)
             {
-            }   
+            }
+
     }
 }

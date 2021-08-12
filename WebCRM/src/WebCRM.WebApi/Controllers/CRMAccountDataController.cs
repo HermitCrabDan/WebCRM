@@ -5,6 +5,8 @@ namespace WebCRM.WebApi.Controllers
     using WebCRM.RoleSecurity;
     using Microsoft.Extensions.Logging;
     using Microsoft.AspNetCore.Mvc;
+    using System.Threading.Tasks;
+    using System;
 
     /// <summary>
     /// Api data controller for account data
@@ -20,5 +22,24 @@ namespace WebCRM.WebApi.Controllers
             {
 
             }
+
+        protected override bool CanDelete()
+        {
+            return false;
+        }
+
+        public override IActionResult Create([FromBody] CRMAccountViewModel model)
+        {
+            model.CreatedBy = this._security.UserID;
+            model.CreationDate = System.DateTime.Now;
+            return base.Create(model);
+        }
+
+        public override IActionResult Update([FromBody] CRMAccountViewModel model)
+        {
+            model.LastUpdatedBy = this._security.UserID;
+            model.LastUpdatedDate = System.DateTime.Now;
+            return base.Update(model);
+        }
     }
 }

@@ -5,8 +5,7 @@
     <router-link to="/Members">Members</router-link> |
     <router-link to="/Contracts">Contracts</router-link> |
     <router-link to="/Transactions">Transactions</router-link> |
-    <router-link to="/Totals">Totals</router-link> |
-    <router-link to="/about">About</router-link>
+    <router-link to="/Totals">Totals</router-link> 
   </div>
   <router-view />
 </template>

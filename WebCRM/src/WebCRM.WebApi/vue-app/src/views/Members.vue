@@ -25,7 +25,7 @@ export default {
                     this.isError = false;
                     this.isLoading = false;
                 })
-                .catch(function(error) {
+                .catch(error => {
                     console.log(error);
                     this.isError = true;
                     this.isLoading = false;

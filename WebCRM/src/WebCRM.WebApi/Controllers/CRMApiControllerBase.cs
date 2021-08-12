@@ -60,7 +60,8 @@ namespace WebCRM.WebApi.Controllers
         {
             if (this.CanViewAll())
             {
-                return Ok(this._repo.Retrieve(n => 1 == 1));
+                var data = this._repo.Retrieve(n => 1 == 1);
+                return Ok(data);
             }
             return Ok(this._repo.Retrieve(RestrictedSelection()));
         }
@@ -91,11 +92,11 @@ namespace WebCRM.WebApi.Controllers
         }
 
         [HttpPost]
-        public virtual async Task<IActionResult> Create([FromBody] ViewModel model)
+        public virtual IActionResult Create([FromBody] ViewModel model)
         {
             if (model != null && CanCreate() && model.IsValid())
             {
-                var (success, viewModel) = await this._repo.CreateAsync(model);
+                var (success, viewModel) = this._repo.Create(model);
                 if (success)
                 {
                     return Ok(viewModel);
@@ -115,11 +116,11 @@ namespace WebCRM.WebApi.Controllers
         }
 
         [HttpPut]
-        public virtual async Task<IActionResult> Update([FromBody] ViewModel model)
+        public virtual IActionResult Update([FromBody] ViewModel model)
         {
             if (model != null && model.Id > 0 && CanUpdate() && model.IsValid())
             {
-                var (success, viewModel) = await this._repo.UpdateAsync(model);
+                var (success, viewModel) = this._repo.Update(model);
                 if (success)
                 {
                     return Ok(viewModel);
@@ -143,11 +144,11 @@ namespace WebCRM.WebApi.Controllers
         }
 
         [HttpDelete("{id}")]
-        protected virtual async Task<IActionResult> Delete([FromRoute] int id)
+        protected virtual IActionResult Delete([FromRoute] int id)
         {
             if (CanDelete() && id > 0)
             {
-                var success = await this._repo.DeleteAsync(id);
+                var success = this._repo.Delete(id);
                 if (success)
                 {
                     return Ok();

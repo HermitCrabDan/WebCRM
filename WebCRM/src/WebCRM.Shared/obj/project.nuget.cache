@@ -1,14 +1,14 @@
 {
   "version": 2,
-  "dgSpecHash": "AByA2ToXUqabAlhzAbr+otOimGWD0nvGMilIO2dBHFHEPJ3hZ9gN7R+H1OrP860X0fk190E5ATM0h2EX/LAwNA==",
+  "dgSpecHash": "+V08J8cdKvRdCd4JE+7MkmX9u3EbY0LXCX+hgxoN6Ve9eLGHhuJtjB4RESMDhsMPyHxSQicPQ+iEnE9lB9xFPg==",
   "success": true,
   "projectFilePath": "/Users/danielgraf/Documents/GitHub/WebCRM/WebCRM/src/WebCRM.Shared/WebCRM.Shared.csproj",
   "expectedPackageFiles": [
     "/Users/danielgraf/.nuget/packages/microsoft.data.sqlite.core/5.0.8/microsoft.data.sqlite.core.5.0.8.nupkg.sha512",
     "/Users/danielgraf/.nuget/packages/microsoft.dotnet.platformabstractions/3.1.6/microsoft.dotnet.platformabstractions.3.1.6.nupkg.sha512",
-    "/Users/danielgraf/.nuget/packages/microsoft.entityframeworkcore/5.0.8/microsoft.entityframeworkcore.5.0.8.nupkg.sha512",
-    "/Users/danielgraf/.nuget/packages/microsoft.entityframeworkcore.abstractions/5.0.8/microsoft.entityframeworkcore.abstractions.5.0.8.nupkg.sha512",
-    "/Users/danielgraf/.nuget/packages/microsoft.entityframeworkcore.analyzers/5.0.8/microsoft.entityframeworkcore.analyzers.5.0.8.nupkg.sha512",
+    "/Users/danielgraf/.nuget/packages/microsoft.entityframeworkcore/5.0.9/microsoft.entityframeworkcore.5.0.9.nupkg.sha512",
+    "/Users/danielgraf/.nuget/packages/microsoft.entityframeworkcore.abstractions/5.0.9/microsoft.entityframeworkcore.abstractions.5.0.9.nupkg.sha512",
+    "/Users/danielgraf/.nuget/packages/microsoft.entityframeworkcore.analyzers/5.0.9/microsoft.entityframeworkcore.analyzers.5.0.9.nupkg.sha512",
     "/Users/danielgraf/.nuget/packages/microsoft.entityframeworkcore.relational/5.0.8/microsoft.entityframeworkcore.relational.5.0.8.nupkg.sha512",
     "/Users/danielgraf/.nuget/packages/microsoft.entityframeworkcore.sqlite/5.0.8/microsoft.entityframeworkcore.sqlite.5.0.8.nupkg.sha512",
     "/Users/danielgraf/.nuget/packages/microsoft.entityframeworkcore.sqlite.core/5.0.8/microsoft.entityframeworkcore.sqlite.core.5.0.8.nupkg.sha512",

@@ -5,7 +5,6 @@ import Contracts from "../views/Contracts.vue";
 import Members from "../views/Members.vue";
 import Transactions from "../views/Transactions.vue";
 import Totals from "../views/Totals.vue";
-import About from "../views/About.vue";
 
 const routes = [
   {
@@ -37,11 +36,6 @@ const routes = [
     path: "/Totals",
     name: "Totals",
     component: Totals,
-  },
-  {
-    path: "/about",
-    name: "About",
-    component: About,
   },
 ];
 

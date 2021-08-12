@@ -58,6 +58,7 @@ namespace WebCRM.WebApi
             services.AddScoped<ICRMRepository<Member, MemberViewModel>, MemberRepository>();
             services.AddScoped<ICRMRepository<MemberTestimonial, MemberTestimonialViewModel>, MemberTestimonialRepository>();
             services.AddScoped<IReportRepository, ReportRepository>();
+            services.AddScoped<IAppSecurityService, AppSecurityService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -9,11 +9,13 @@ namespace WebCRM.RoleSecurity
     ///<author>Daniel Lee Graf</author>
     public interface IAppSecurityService
     {
-        int UserID { get; }
+        string UserID { get; }
 
         bool IsAdmin { get; }
 
         bool IsMember { get; }
+
+        int MemberId { get; }
 
         bool CanAccountEnterData { get; }
 

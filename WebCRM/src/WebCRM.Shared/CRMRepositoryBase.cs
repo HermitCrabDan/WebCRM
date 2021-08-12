@@ -2,6 +2,7 @@ namespace WebCRM.Shared
 {
     using System;
     using System.Linq;
+    
     using WebCRM.Data;
     using System.Collections.Generic;
     using System.Threading.Tasks;
@@ -18,9 +19,9 @@ namespace WebCRM.Shared
         where Model: class,ICRMDataModel<Model>
         where Context: DbContext
     {
-        private ILogger _logger;
+        protected ILogger _logger;
 
-        private Context _ctx;
+        protected Context _ctx;
 
         public CRMRepositoryBase(Context ctx) 
         {
@@ -103,12 +104,47 @@ namespace WebCRM.Shared
             return (success, viewModel);
         }
 
+        public virtual async Task<(bool, ViewModel)> RetrieveByIdAsync(int id)
+        {
+            var model = await _ctx
+                .Set<Model>()
+                .Where(w => w.Id == id)
+                .AsQueryable()
+                .FirstOrDefaultAsync();
+
+            var viewModel = new ViewModel();
+            bool success = false;
+            if (model != null)
+            {
+                viewModel.SetModelValues(model);
+                success = true;
+            }
+            return (success, viewModel);
+        }
+
         public virtual IEnumerable<ViewModel> Retrieve(Func<Model, bool> selector)
         {
             var data = _ctx
                 .Set<Model>()
                 .Where(selector)
                 .ToList();
+            var viewModelList = new List<ViewModel>();
+            foreach (var model in data)
+            {
+                var viewModel = new ViewModel();
+                viewModel.SetModelValues(model);
+                viewModelList.Add(viewModel);
+            }
+            return viewModelList;
+        }
+
+        public virtual async Task<IEnumerable<ViewModel>> RetrieveAsync(Func<Model, bool> selector)
+        {
+            var data = await _ctx
+                .Set<Model>()
+                .Where(selector)
+                .AsQueryable()
+                .ToListAsync();
             var viewModelList = new List<ViewModel>();
             foreach (var model in data)
             {

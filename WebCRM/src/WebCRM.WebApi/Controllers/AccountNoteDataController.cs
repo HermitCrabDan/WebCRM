@@ -5,6 +5,7 @@ namespace WebCRM.WebApi.Controllers
     using WebCRM.RoleSecurity;
     using Microsoft.Extensions.Logging;
     using Microsoft.AspNetCore.Mvc;
+    using System.Threading.Tasks;
 
     /// <summary>
     /// Api controller for account note data
@@ -20,5 +21,28 @@ namespace WebCRM.WebApi.Controllers
             {
 
             }
+
+        protected override bool CanDelete()
+        {
+            return false;
+        }
+
+        [HttpPost]
+        public override IActionResult Create([FromBody] AccountNoteViewModel model)
+        {
+            model.CreatedBy = this._security.UserID;
+            model.NoteCreationDate = System.DateTime.Now;
+            return base.Create(model);
+        }
+
+        [HttpPut]
+        public override IActionResult Update([FromBody] AccountNoteViewModel model)
+        {
+            if (model.NoteRemovalDate.HasValue && string.IsNullOrWhiteSpace(model.NoteRemovedBy))
+            {
+                model.NoteRemovedBy = this._security.UserID;
+            }
+            return base.Update(model);
+        }
     }
 }

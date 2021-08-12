@@ -21,7 +21,11 @@ namespace WebCRM.Shared
 
         IEnumerable<ViewModel> Retrieve(Func<Model, bool> selector);
 
+        Task<IEnumerable<ViewModel>> RetrieveAsync(Func<Model, bool> selector);
+
         (bool, ViewModel) RetrieveById(int id);
+
+        Task<(bool, ViewModel)> RetrieveByIdAsync(int id);
 
         (bool, ViewModel) Update(ViewModel modelToUpdate);
 

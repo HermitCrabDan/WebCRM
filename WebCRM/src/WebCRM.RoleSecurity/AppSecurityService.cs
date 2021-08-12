@@ -13,11 +13,14 @@ namespace WebCRM.RoleSecurity
         public AppSecurityService() 
         {
             this.IsAdmin = true;
+            this.UserID = "admin";
         }
 
-        public int UserID { get; private set; }
+        public string UserID { get; private set; }
 
-        public bool IsMember { get; set; }
+        public bool IsMember { get; private set; }
+
+        public int MemberId { get; private set; }
 
         public bool IsAdmin { get; private set; }
 
