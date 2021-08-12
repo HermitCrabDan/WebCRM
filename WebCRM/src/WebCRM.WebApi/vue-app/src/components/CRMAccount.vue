@@ -6,7 +6,11 @@
 
 <script>
     export default {
-        name:"CRMAccount"
+        name:"CRMAccount",
+        props:{
+            AccountData: Object
+        },
+        emits:["CRMAccountSelected"]
     }
 </script>
 

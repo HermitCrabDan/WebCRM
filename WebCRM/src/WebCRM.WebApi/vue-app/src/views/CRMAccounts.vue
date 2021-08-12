@@ -12,10 +12,15 @@ export default {
         return {
             CRMAccountList: null,
             isError: false,
-            isLoading: false
+            isLoading: false,
+            newAccountMode: false,
+            newAccountData: null,
         }
     },
     methods:{
+        newAccount(){
+            this.newAccountMode = true;
+        },
         getCRMAccountList(){
             this.isLoading = true;
             axios
