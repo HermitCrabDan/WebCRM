@@ -8,22 +8,20 @@ namespace WebCRM.Shared
     /// ViewModel for the MemberTestimonial data and implements testimonial clipping
     /// </summary>
     /// <author>Daniel Lee Graf</author>
-    public class MemberTestimonialViewModel: ICRMViewModel<MemberTestimonial>
+    public class MemberTestimonialViewModel: CRMViewModelBase<MemberTestimonial>
     {
         public MemberTestimonialViewModel() 
+            :base()
         {
-            this.ValidationErrorMessages = new List<string>();
         }
 
         public MemberTestimonialViewModel(MemberTestimonial model)
+            :base()
         {
-            this.ValidationErrorMessages = new List<string>();
             SetModelValues(model);
         }
 
         #region MemberTestimonial
-        public int Id { get; set; }
-
         public int MemberID { get; set; }
 
         public string TestimonialText { get; set; }
@@ -35,27 +33,9 @@ namespace WebCRM.Shared
         public DateTime? ApprovalDate { get; set; }
 
         public string ApprovedBy { get; set; }
-
-        public DateTime CreationDate { get; set; }
-
-        public string CreatedBy { get; set; }
-
-        public DateTime? DeletionDate { get; set; }
-
-        public string DeletionBy { get; set; }
-
-        public DateTime? LastUpdatedDate { get; set; }
-
-        public string LastUpdatedBy { get; set; }
-
-        public string CreationDateString { get; set; }
-
-        public string LastUpdatedDateString { get; set; }
-
-        public string DeletionDateString { get; set; }
         #endregion
-        
-        public List<string> ValidationErrorMessages { get; set; }
+
+        public string ApprovalDateString { get; set; }
 
         /// <summary>
         /// Clipped Text
@@ -63,7 +43,7 @@ namespace WebCRM.Shared
         /// <value>Calculated from the testimonial text with the clip start and end values</value>
         public string ClippedString { get; set; }
 
-        public bool IsValid()
+        public override bool IsValid()
         {
             bool valid = true;
             this.ValidationErrorMessages = new List<string>();
@@ -91,26 +71,18 @@ namespace WebCRM.Shared
             return valid;
         }
 
-        public void SetModelValues(MemberTestimonial model)
+        public override void SetModelValues(MemberTestimonial model)
         {
             this.ApprovalDate = model.ApprovalDate;
             this.ApprovedBy = XSSFilterHelper.FilterForXSS(model.ApprovedBy);
             this.MemberID = model.MemberID;
-            this.Id = model.Id;
             this.TestimonialClipEnd = model.TestimonialClipEnd;
             this.TestimonialClipStart = model.TestimonialClipStart;
             this.TestimonialText = XSSFilterHelper.FilterForXSS(model.TestimonialText);
 
-            this.CreationDate = model.CreationDate;
-            this.CreatedBy = XSSFilterHelper.FilterForXSS(model.CreatedBy);
-            this.LastUpdatedBy = XSSFilterHelper.FilterForXSS(model.LastUpdatedBy);
-            this.LastUpdatedDate = model.LastUpdatedDate;
-            this.DeletionDate = model.DeletionDate;
-            this.DeletionBy = XSSFilterHelper.FilterForXSS(model.DeletionBy);
-
-            this.CreationDateString = String.Format("{0:MM-dd-YYYY", model.CreationDate);
-            this.LastUpdatedDateString = String.Format("{0:MM-dd-YYYY", model.LastUpdatedDate);
-            this.DeletionDateString = String.Format("{0:MM-dd-YYYY", model.DeletionDate);
+            this.ApprovalDateString = String.Format("{0:MM-dd-yyyy}", model.ApprovalDate);
+            
+            base.SetModelValues(model);
             
             if (!String.IsNullOrWhiteSpace(model.TestimonialText)
                 && (model.TestimonialClipEnd.HasValue || model.TestimonialClipStart.HasValue))
@@ -141,25 +113,18 @@ namespace WebCRM.Shared
             return $"MemberTestimonialID:{this.Id}, Member:{this.MemberID}, Date:{this.CreationDate.ToShortDateString()}";
         }
 
-        public MemberTestimonial GetBaseModel()
+        public override MemberTestimonial GetBaseModel()
         {
-            return new MemberTestimonial
-            {
-                ApprovalDate = this.ApprovalDate,
-                ApprovedBy = this.ApprovedBy,
-                MemberID = this.MemberID,
-                Id = this.Id,
-                TestimonialClipEnd = this.TestimonialClipEnd,
-                TestimonialClipStart = this.TestimonialClipStart,
-                TestimonialText = this.TestimonialText,
+            var model = base.GetBaseModel();
 
-                LastUpdatedBy = this.LastUpdatedBy,
-                LastUpdatedDate = this.LastUpdatedDate,
-                CreatedBy = this.CreatedBy,
-                CreationDate = this.CreationDate,
-                DeletionDate = this.DeletionDate,
-                DeletionBy = this.DeletionBy
-            };
+            model.ApprovalDate = this.ApprovalDate;
+            model.ApprovedBy = this.ApprovedBy;
+            model.MemberID = this.MemberID;
+            model.TestimonialClipEnd = this.TestimonialClipEnd;
+            model.TestimonialClipStart = this.TestimonialClipStart;
+            model.TestimonialText = this.TestimonialText;
+
+            return model;
         }
     }
 }

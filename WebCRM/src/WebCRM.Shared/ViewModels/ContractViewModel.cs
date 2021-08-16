@@ -8,22 +8,20 @@ namespace WebCRM.Shared
     /// ViewModel for the Contract data
     /// </summary>
     /// <author>Daniel Lee Graf</author>
-    public class ContractViewModel: ICRMViewModel<Contract>
+    public class ContractViewModel: CRMViewModelBase<Contract>
     {
         public ContractViewModel() 
+            :base()
         {
-            this.ValidationErrorMessages = new List<string>();
         }
 
         public ContractViewModel(Contract model)
+            :base()
         {
-            this.ValidationErrorMessages = new List<string>();
             SetModelValues(model);
         }
 
         #region  Contract
-        public int Id { get; set; }
-
         public int AccountID { get; set; }
 
         public int MemberID { get; set; }
@@ -41,27 +39,19 @@ namespace WebCRM.Shared
         public decimal TotalPaidAmount { get; set; }
 
         public DateTime? LastPaymentRecievedDate { get; set; }
-
-        public DateTime CreationDate { get; set; }
-
-        public string CreatedBy { get; set; }
-
-        public DateTime? DeletionDate { get; set; }
-
-        public string DeletionBy { get; set; }
-
-        public DateTime? LastUpdatedDate { get; set; }
-
-        public string LastUpdatedBy { get; set; }
-
-        public string CreationDateString { get; set; }
-
-        public string LastUpdatedDateString { get; set; }
-
-        public string DeletionDateString { get; set; }
         #endregion
 
-        public bool IsValid()
+        public string ContractStartDateString { get; set; }
+
+        public string ContractEndDateString { get; set; }
+
+        public string ContractAmountString { get; set; }
+
+        public string TotalPaidAmountString { get; set; }
+
+        public string LastPaymentRecievedDateString { get; set; }
+
+        public override bool IsValid()
         {
             this.ValidationErrorMessages = new List<string>();
             if (this.AccountID <= 0)
@@ -79,12 +69,11 @@ namespace WebCRM.Shared
             return this.AccountID > 0 && this.MemberID > 0 && !String.IsNullOrWhiteSpace(this.ContractName);
         }
 
-        public void SetModelValues(Contract model)
+        public override void SetModelValues(Contract model)
         {
             this.AccountID = model.AccountID;
             this.ContractAmount = model.ContractAmount;
             this.ContractEndDate = model.ContractEndDate;
-            this.Id = model.Id;
             this.ContractName = XSSFilterHelper.FilterForXSS(model.ContractName);
             this.ContractStartDate = model.ContractStartDate;
             this.LastPaymentRecievedDate = model.LastPaymentRecievedDate;
@@ -92,46 +81,35 @@ namespace WebCRM.Shared
             this.OriginalContractID = model.OriginalContractID;
             this.TotalPaidAmount = model.TotalPaidAmount;
 
-            this.CreationDate = model.CreationDate;
-            this.CreatedBy = XSSFilterHelper.FilterForXSS(model.CreatedBy);
-            this.LastUpdatedBy = XSSFilterHelper.FilterForXSS(model.LastUpdatedBy);
-            this.LastUpdatedDate = model.LastUpdatedDate;
-            this.DeletionDate = model.DeletionDate;
-            this.DeletionBy = XSSFilterHelper.FilterForXSS(model.DeletionBy);
-
-            this.CreationDateString = String.Format("{0:MM-dd-YYYY", model.CreationDate);
-            this.LastUpdatedDateString = String.Format("{0:MM-dd-YYYY", model.LastUpdatedDate);
-            this.DeletionDateString = String.Format("{0:MM-dd-YYYY", model.DeletionDate);
+            this.ContractAmountString = String.Format("{0:c2}", model.ContractAmount);
+            this.TotalPaidAmountString = String.Format("{0:c2}", model.TotalPaidAmount);
+            this.LastPaymentRecievedDateString = String.Format("{0:MM-dd-yyyy}", model.LastPaymentRecievedDate);
+            this.ContractEndDateString = String.Format("{0:MM-dd-yyyy}", model.ContractStartDate);
+            this.ContractEndDateString = String.Format("{0:MM-dd-yyyy}", model.ContractEndDate);
+            
+            base.SetModelValues(model);
         }
-        public List<string> ValidationErrorMessages { get; set; }
         
         public override string ToString()
         {
             return $"ContractID:{this.Id},Account:{this.AccountID},Member:{this.MemberID},ContractName:{this.ContractName}";
         }
 
-        public Contract GetBaseModel()
+        public override Contract GetBaseModel()
         {
-            return new Contract
-            {
-                AccountID = this.AccountID,
-                ContractAmount = this.ContractAmount,
-                ContractEndDate = this.ContractEndDate,
-                Id = this.Id,
-                ContractName = this.ContractName,
-                ContractStartDate = this.ContractStartDate,
-                LastPaymentRecievedDate = this.LastPaymentRecievedDate,
-                MemberID = this.MemberID,
-                OriginalContractID = this.OriginalContractID,
-                TotalPaidAmount = this.TotalPaidAmount,
+            var model = base.GetBaseModel();
 
-                LastUpdatedBy = this.LastUpdatedBy,
-                LastUpdatedDate = this.LastUpdatedDate,
-                CreatedBy = this.CreatedBy,
-                CreationDate = this.CreationDate,
-                DeletionDate = this.DeletionDate,
-                DeletionBy = this.DeletionBy
-            };
+            model.AccountID = this.AccountID;
+            model.ContractAmount = this.ContractAmount;
+            model.ContractEndDate = this.ContractEndDate;
+            model.ContractName = this.ContractName;
+            model.ContractStartDate = this.ContractStartDate;
+            model.LastPaymentRecievedDate = this.LastPaymentRecievedDate;
+            model.MemberID = this.MemberID;
+            model.OriginalContractID = this.OriginalContractID;
+            model.TotalPaidAmount = this.TotalPaidAmount;
+
+            return model;
         }
     }
 }

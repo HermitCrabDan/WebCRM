@@ -9,50 +9,32 @@ namespace WebCRM.Shared
     /// ViewModel for the ContractTransaction data
     /// </summary>
     /// <author>Daniel Lee Graf</author>
-    public class ContractTransactionViewModel: ICRMViewModel<ContractTransaction>
+    public class ContractTransactionViewModel: CRMViewModelBase<ContractTransaction>
     {
         public ContractTransactionViewModel() 
+            :base()
         {
-            this.ValidationErrorMessages = new List<string>();
         }
 
         public ContractTransactionViewModel(ContractTransaction model)
+            :base()
         {
-            this.ValidationErrorMessages = new List<string>();
             SetModelValues(model);
         }
 
         #region ContractTransaction
-        public int Id { get; set; }
-
         public int ContractID { get; set; }
 
         public DateTime TransactionDate { get; set; }
 
         public decimal TransactionAmount { get; set; }
-
-        public DateTime CreationDate { get; set; }
-
-        public string CreatedBy { get; set; }
-
-        public DateTime? DeletionDate { get; set; }
-
-        public string DeletionBy { get; set; }
-
-        public DateTime? LastUpdatedDate { get; set; }
-
-        public string LastUpdatedBy { get; set; }
-
-        public string CreationDateString { get; set; }
-
-        public string LastUpdatedDateString { get; set; }
-
-        public string DeletionDateString { get; set; }
         #endregion
 
-        public List<string> ValidationErrorMessages { get; set; }
+        public string TransactionDateString { get; set; }
 
-        public bool IsValid()
+        public string TransactionAmountString { get; set; }
+
+        public override bool IsValid()
         {
             this.ValidationErrorMessages = new List<string>();
             if (this.ContractID <= 0)
@@ -65,28 +47,21 @@ namespace WebCRM.Shared
             }
             if (this.TransactionDate <= DateTime.Now.AddYears(-5))
             {
-                this.ValidationErrorMessages.Add("Transaction must be within the last 10 years to be entered or updated");
+                this.ValidationErrorMessages.Add("Transaction must be within the last 5 years to be entered or updated");
             }
             return this.ContractID > 0 && this.TransactionAmount != 0 && this.TransactionDate > DateTime.Now.AddYears(-5);
         }
 
-        public void SetModelValues(ContractTransaction model)
+        public override void SetModelValues(ContractTransaction model)
         {
             this.ContractID = model.ContractID;
-            this.Id = model.Id;
             this.TransactionAmount = model.TransactionAmount;
             this.TransactionDate = model.TransactionDate;
 
-            this.CreationDate = model.CreationDate;
-            this.CreatedBy = XSSFilterHelper.FilterForXSS(model.CreatedBy);
-            this.LastUpdatedBy = XSSFilterHelper.FilterForXSS(model.LastUpdatedBy);
-            this.LastUpdatedDate = model.LastUpdatedDate;
-            this.DeletionDate = model.DeletionDate;
-            this.DeletionBy = XSSFilterHelper.FilterForXSS(model.DeletionBy);
+            this.TransactionAmountString = String.Format("{0:c2}", model.TransactionAmount);
+            this.TransactionDateString = String.Format("{0:MM-dd-yyyy}", model.TransactionDate);
 
-            this.CreationDateString = String.Format("{0:MM-dd-YYYY", model.CreationDate);
-            this.LastUpdatedDateString = String.Format("{0:MM-dd-YYYY", model.LastUpdatedDate);
-            this.DeletionDateString = String.Format("{0:MM-dd-YYYY", model.DeletionDate);
+            base.SetModelValues(model);
         }
 
         public override string ToString()
@@ -95,22 +70,15 @@ namespace WebCRM.Shared
                 
         }
 
-        public ContractTransaction GetBaseModel()
+        public override ContractTransaction GetBaseModel()
         {
-            return new ContractTransaction
-            {
-                ContractID = this.ContractID,
-                Id = this.Id,
-                TransactionAmount = this.TransactionAmount,
-                TransactionDate = this.TransactionDate,
+            var model = base.GetBaseModel();
 
-                LastUpdatedBy = this.LastUpdatedBy,
-                LastUpdatedDate = this.LastUpdatedDate,
-                CreatedBy = this.CreatedBy,
-                CreationDate = this.CreationDate,
-                DeletionDate = this.DeletionDate,
-                DeletionBy = this.DeletionBy
-            };
+            model.ContractID = this.ContractID;
+            model.TransactionAmount = this.TransactionAmount;
+            model.TransactionDate = this.TransactionDate;
+
+            return model;
         }
     }
 }

@@ -8,7 +8,7 @@ namespace WebCRM.Shared
     /// ViewModel for the AccountNote data
     /// </summary>
     /// <author>Daniel Lee Graf</author>
-    public class AccountNoteViewModel: ICRMViewModel<AccountNote>
+    public class AccountNoteViewModel: CRMViewModelBase<AccountNote>
     {
         public AccountNoteViewModel() {}
 
@@ -19,34 +19,12 @@ namespace WebCRM.Shared
         }
 
         #region AccountNote
-        public int Id { get; set; }
-
         public int AccountID { get; set; }
 
         public string NoteText { get; set; }
-        
-        public DateTime CreationDate { get; set; }
-
-        public string CreatedBy { get; set; }
-
-        public DateTime? DeletionDate { get; set; }
-
-        public string DeletionBy { get; set; }
-
-        public DateTime? LastUpdatedDate { get; set; }
-
-        public string LastUpdatedBy { get; set; }
-
-        public string CreationDateString { get; set; }
-
-        public string LastUpdatedDateString { get; set; }
-
-        public string DeletionDateString { get; set; }
         #endregion
-        
-        public List<string> ValidationErrorMessages { get; set; }
 
-        public bool IsValid()
+        public override bool IsValid()
         {
             this.ValidationErrorMessages = new List<string>();
             if (this.AccountID <= 0)
@@ -60,22 +38,12 @@ namespace WebCRM.Shared
             return this.AccountID > 0 && !String.IsNullOrWhiteSpace(this.NoteText);
         }
         
-        public void SetModelValues(AccountNote model)
+        public override void SetModelValues(AccountNote model)
         {
             this.AccountID = model.AccountID;
-            this.Id = model.Id;
             this.NoteText = XSSFilterHelper.FilterForXSS(model.NoteText);
-
-            this.CreationDate = model.CreationDate;
-            this.CreatedBy = XSSFilterHelper.FilterForXSS(model.CreatedBy);
-            this.LastUpdatedBy = XSSFilterHelper.FilterForXSS(model.LastUpdatedBy);
-            this.LastUpdatedDate = model.LastUpdatedDate;
-            this.DeletionDate = model.DeletionDate;
-            this.DeletionBy = XSSFilterHelper.FilterForXSS(model.DeletionBy);
-
-            this.CreationDateString = String.Format("{0:MM-dd-YYYY", model.CreationDate);
-            this.LastUpdatedDateString = String.Format("{0:MM-dd-YYYY", model.LastUpdatedDate);
-            this.DeletionDateString = String.Format("{0:MM-dd-YYYY", model.DeletionDate);
+            
+            base.SetModelValues(model);
         }
 
         public override string ToString()
@@ -83,21 +51,14 @@ namespace WebCRM.Shared
             return $"AccountNoteID:{this.Id},Account:{this.AccountID},By:{this.CreatedBy}-{this.CreationDate.ToShortDateString()}";
         }
 
-        public AccountNote GetBaseModel()
+        public override AccountNote GetBaseModel()
         {
-            return new AccountNote
-            {
-                AccountID = this.AccountID,
-                Id = this.Id,
-                NoteText = this.NoteText,
+            var model = base.GetBaseModel();
 
-                LastUpdatedBy = this.LastUpdatedBy,
-                LastUpdatedDate = this.LastUpdatedDate,
-                CreatedBy = this.CreatedBy,
-                CreationDate = this.CreationDate,
-                DeletionDate = this.DeletionDate,
-                DeletionBy = this.DeletionBy
-            };
+            model.AccountID = this.AccountID;
+            model.NoteText = this.NoteText;
+
+            return model;
         }
     }
 }

@@ -8,50 +8,28 @@ namespace WebCRM.Shared
     /// ViewModel for the AccountMembership data
     /// </summary>
     /// <author>Daniel Lee Graf</author>
-    public class AccountMembershipViewModel: ICRMViewModel<AccountMembership>
+    public class AccountMembershipViewModel: CRMViewModelBase<AccountMembership>
     {
         public AccountMembershipViewModel() 
+            :base()
         {
-            this.ValidationErrorMessages = new List<string>();
         }
 
         public AccountMembershipViewModel(AccountMembership model)
+            :base()
         {
-            this.ValidationErrorMessages = new List<string>();
             SetModelValues(model);
         }
 
         #region AccountMembership
-        public int Id { get; set; }
-
         public int AccountID { get; set; }
 
         public int MemberID { get; set; }
 
         public bool IsPrimaryAccountMember { get; set; }
-        
-        public DateTime CreationDate { get; set; }
-
-        public string CreatedBy { get; set; }
-
-        public DateTime? DeletionDate { get; set; }
-
-        public string DeletionBy { get; set; }
-
-        public DateTime? LastUpdatedDate { get; set; }
-
-        public string LastUpdatedBy { get; set; }
-
-        public string CreationDateString { get; set; }
-
-        public string LastUpdatedDateString { get; set; }
-
-        public string DeletionDateString { get; set; }
         #endregion
 
-        public List<string> ValidationErrorMessages { get; set; }
-
-        public bool IsValid()
+        public override bool IsValid()
         {
             this.ValidationErrorMessages = new List<string>();
             if (this.AccountID <= 0)
@@ -65,23 +43,13 @@ namespace WebCRM.Shared
             return (this.AccountID > 0) && (this.MemberID > 0); 
         }
 
-        public void SetModelValues(AccountMembership model)
+        public override void SetModelValues(AccountMembership model)
         {
             this.AccountID = model.AccountID;
-            this.Id = model.Id;
             this.IsPrimaryAccountMember = model.IsPrimaryAccountMember;
             this.MemberID = model.MemberID;
-
-            this.CreationDate = model.CreationDate;
-            this.CreatedBy = XSSFilterHelper.FilterForXSS(model.CreatedBy);
-            this.LastUpdatedBy = XSSFilterHelper.FilterForXSS(model.LastUpdatedBy);
-            this.LastUpdatedDate = model.LastUpdatedDate;
-            this.DeletionDate = model.DeletionDate;
-            this.DeletionBy = XSSFilterHelper.FilterForXSS(model.DeletionBy);
-
-            this.CreationDateString = String.Format("{0:MM-dd-YYYY", model.CreationDate);
-            this.LastUpdatedDateString = String.Format("{0:MM-dd-YYYY", model.LastUpdatedDate);
-            this.DeletionDateString = String.Format("{0:MM-dd-YYYY", model.DeletionDate);
+            
+            base.SetModelValues(model);
         }
 
         public override string ToString()
@@ -89,22 +57,15 @@ namespace WebCRM.Shared
             return $"AccountMembershipID:{this.Id},Account:{this.AccountID},Member:{this.MemberID}";
         }
 
-        public AccountMembership GetBaseModel()
+        public override AccountMembership GetBaseModel()
         {
-            return new AccountMembership
-            {
-                AccountID = this.AccountID,
-                Id = this.Id,
-                IsPrimaryAccountMember = this.IsPrimaryAccountMember,
-                MemberID = this.MemberID,
+            var model = base.GetBaseModel();
 
-                LastUpdatedBy = this.LastUpdatedBy,
-                LastUpdatedDate = this.LastUpdatedDate,
-                CreatedBy = this.CreatedBy,
-                CreationDate = this.CreationDate,
-                DeletionDate = this.DeletionDate,
-                DeletionBy = this.DeletionBy
-            };
+            model.AccountID = this.AccountID;
+            model.IsPrimaryAccountMember = this.IsPrimaryAccountMember;
+            model.MemberID = this.MemberID;
+
+            return model;
         }
     }
 }

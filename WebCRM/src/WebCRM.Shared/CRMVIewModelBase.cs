@@ -50,19 +50,28 @@ namespace WebCRM.Shared
             this.DeletionDate = model.DeletionDate;
             this.DeletionBy = XSSFilterHelper.FilterForXSS(model.DeletionBy);
 
-            this.CreationDateString = String.Format("{0:MM-dd-YYYY", model.CreationDate);
-            this.LastUpdatedDateString = String.Format("{0:MM-dd-YYYY", model.LastUpdatedDate);
-            this.DeletionDateString = String.Format("{0:MM-dd-YYYY", model.DeletionDate);
+            this.CreationDateString = String.Format("{0:MM-dd-yyyy}", model.CreationDate);
+            this.LastUpdatedDateString = String.Format("{0:MM-dd-yyyy}", model.LastUpdatedDate);
+            this.DeletionDateString = String.Format("{0:MM-dd-yyyy}", model.DeletionDate);
         }
 
-        public bool IsValid()
+        public virtual bool IsValid()
         {
             return false;
         }
 
-        public Model GetBaseModel()
+        public virtual Model GetBaseModel()
         {
-            return new Model();
+            return new Model
+            {
+                Id = this.Id,
+                CreatedBy = this.CreatedBy,
+                CreationDate = this.CreationDate,
+                DeletionBy = this.DeletionBy,
+                DeletionDate = this.DeletionDate,
+                LastUpdatedBy = this.LastUpdatedBy,
+                LastUpdatedDate = this.LastUpdatedDate
+            };
         }
     }
 }
