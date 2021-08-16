@@ -1,33 +1,25 @@
 ﻿<Properties StartupConfiguration="{4925F06C-80EB-4244-97D9-037BD339E6D5}|Default">
-  <MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.Workbench ActiveDocument="src/WebCRM.Shared/ViewModels/CRMAccountViewModel.cs">
+    <Files>
+      <File FileName="src/WebCRM.Shared/ViewModels/CRMAccountViewModel.cs" Line="72" Column="1" />
+    </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="WebCRM" expanded="True">
             <Node name="src" expanded="True">
-              <Node name="WebCRM.Data" expanded="True">
-                <Node name="Models" expanded="True" />
-              </Node>
-              <Node name="WebCRM.RoleSecurity" expanded="True">
-                <Node name="Helpers" expanded="True" />
-              </Node>
               <Node name="WebCRM.Shared" expanded="True">
-                <Node name="Repositories" expanded="True">
-                  <Node name="MemberRepository.cs" selected="True" />
-                </Node>
-                <Node name="ViewModels" expanded="True" />
-              </Node>
-              <Node name="WebCRM.WebApi" expanded="True">
-                <Node name="Controllers" expanded="True" />
-                <Node name="vue-app" expanded="True">
-                  <Node name="src" expanded="True">
-                    <Node name="views" expanded="True" />
-                  </Node>
+                <Node name="ViewModels" expanded="True">
+                  <Node name="CRMAccountViewModel.cs" selected="True" />
                 </Node>
               </Node>
+              <Node name="WebCRM.WebApi" expanded="True" />
             </Node>
           </Node>
         </State>
+      </Pad>
+      <Pad Id="MonoDevelop.Debugger.WatchPad">
+        <State />
       </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>

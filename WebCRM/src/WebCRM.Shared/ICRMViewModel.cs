@@ -12,13 +12,19 @@ namespace WebCRM.Shared
 
         DateTime CreationDate { get; set; }
 
+        string CreationDateString { get; set; }
+
         string CreatedBy { get; set; }
 
         DateTime? LastUpdatedDate { get; set; }
 
+        string LastUpdatedDateString { get; set; }
+
         string LastUpdatedBy { get; set; }
 
         DateTime? DeletionDate { get; set; }
+
+        string DeletionDateString { get; set; }
 
         string DeletionBy { get; set; }
 

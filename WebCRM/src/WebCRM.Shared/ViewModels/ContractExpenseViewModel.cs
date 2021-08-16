@@ -42,6 +42,12 @@ namespace WebCRM.Shared
         public DateTime? LastUpdatedDate { get; set; }
 
         public string LastUpdatedBy { get; set; }
+
+        public string CreationDateString { get; set; }
+
+        public string LastUpdatedDateString { get; set; }
+
+        public string DeletionDateString { get; set; }
         #endregion
         
         public List<string> ValidationErrorMessages { get; set; }
@@ -78,6 +84,10 @@ namespace WebCRM.Shared
             this.LastUpdatedDate = model.LastUpdatedDate;
             this.DeletionDate = model.DeletionDate;
             this.DeletionBy = XSSFilterHelper.FilterForXSS(model.DeletionBy);
+
+            this.CreationDateString = String.Format("{0:MM-dd-YYYY", model.CreationDate);
+            this.LastUpdatedDateString = String.Format("{0:MM-dd-YYYY", model.LastUpdatedDate);
+            this.DeletionDateString = String.Format("{0:MM-dd-YYYY", model.DeletionDate);
         }
 
         public ContractExpense GetBaseModel()

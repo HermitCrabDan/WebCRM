@@ -34,13 +34,15 @@ namespace WebCRM.Shared
             this._ctx = ctx;
         }
 
-        public virtual (bool, ViewModel) Create(ViewModel model)
+        public virtual (bool, ViewModel) Create(ViewModel model, string userID)
         {
             if (model != null)
             {
                 try
                 {
                     var modelToAdd = model.GetBaseModel();
+                    modelToAdd.CreationDate = DateTime.Now;
+                    modelToAdd.CreatedBy = userID;
                     _ctx
                         .Set<Model>()
                         .Add(modelToAdd);
@@ -60,13 +62,16 @@ namespace WebCRM.Shared
             return (false, model);
         }
 
-        public virtual async Task<(bool, ViewModel)> CreateAsync(ViewModel model)
+        public virtual async Task<(bool, ViewModel)> CreateAsync(ViewModel model, string userID)
         {
             if (model != null)
             {
                 try
                 {
                     var modelToAdd = model.GetBaseModel();
+                    modelToAdd.CreationDate = DateTime.Now;
+                    modelToAdd.CreatedBy = userID;
+
                     await _ctx
                         .Set<Model>()
                         .AddAsync(modelToAdd);
@@ -155,7 +160,7 @@ namespace WebCRM.Shared
             return viewModelList;
         }
 
-        public virtual (bool, ViewModel) Update(ViewModel model)
+        public virtual (bool, ViewModel) Update(ViewModel model, string userID)
         {
             if (model != null)
             {
@@ -169,6 +174,9 @@ namespace WebCRM.Shared
                     if (modelToUpdate != null)
                     {
                         modelToUpdate.RestrictedModelUpdate(model.GetBaseModel());
+                        modelToUpdate.LastUpdatedDate = DateTime.Now;
+                        modelToUpdate.LastUpdatedBy = userID;
+
                         _ctx
                             .Set<Model>()
                             .Update(modelToUpdate);
@@ -189,7 +197,7 @@ namespace WebCRM.Shared
             return (false, model);
         }
 
-        public virtual async Task<(bool, ViewModel)> UpdateAsync(ViewModel model)
+        public virtual async Task<(bool, ViewModel)> UpdateAsync(ViewModel model, string userID)
         {
             if (model != null)
             {
@@ -203,6 +211,8 @@ namespace WebCRM.Shared
                     if (modelToUpdate != null)
                     {
                         modelToUpdate.RestrictedModelUpdate(model.GetBaseModel());
+                        modelToUpdate.LastUpdatedDate = DateTime.Now;
+                        modelToUpdate.LastUpdatedBy = userID;
                         _ctx
                             .Set<Model>()
                             .Update(modelToUpdate);

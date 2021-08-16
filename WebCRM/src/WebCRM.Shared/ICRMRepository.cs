@@ -15,9 +15,9 @@ namespace WebCRM.Shared
         where Model:ICRMDataModel<Model>
         where ViewModel:ICRMViewModel<Model>
     {
-        (bool, ViewModel) Create(ViewModel model);
+        (bool, ViewModel) Create(ViewModel model, string userID);
 
-        Task<(bool, ViewModel)> CreateAsync(ViewModel model);
+        Task<(bool, ViewModel)> CreateAsync(ViewModel model, string userID);
 
         IEnumerable<ViewModel> Retrieve(Func<Model, bool> selector);
 
@@ -27,12 +27,12 @@ namespace WebCRM.Shared
 
         Task<(bool, ViewModel)> RetrieveByIdAsync(int id);
 
-        (bool, ViewModel) Update(ViewModel modelToUpdate);
+        (bool, ViewModel) Update(ViewModel modelToUpdate, string userID);
 
-        Task<(bool, ViewModel)> UpdateAsync(ViewModel modelToUpdate);
+        Task<(bool, ViewModel)> UpdateAsync(ViewModel modelToUpdate, string userID);
 
-        bool Delete(int id, string UserID);
+        bool Delete(int id, string userID);
 
-        Task<bool> DeleteAsync(int id, string UserID);
+        Task<bool> DeleteAsync(int id, string userID);
     }
 }

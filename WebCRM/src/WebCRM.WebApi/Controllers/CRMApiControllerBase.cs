@@ -96,10 +96,7 @@ namespace WebCRM.WebApi.Controllers
         {
             if (model != null && CanCreate() && model.IsValid())
             {
-                model.CreationDate = DateTime.Now;
-                model.CreatedBy = this._security.UserID;
-
-                var (success, viewModel) = this._repo.Create(model);
+                var (success, viewModel) = this._repo.Create(model, this._security.UserID);
                 if (success)
                 {
                     return Ok(viewModel);
@@ -123,10 +120,7 @@ namespace WebCRM.WebApi.Controllers
         {
             if (model != null && model.Id > 0 && CanUpdate() && model.IsValid())
             {
-                model.LastUpdatedDate = DateTime.Now;
-                model.LastUpdatedBy = this._security.UserID;
-
-                var (success, viewModel) = this._repo.Update(model);
+                var (success, viewModel) = this._repo.Update(model, this._security.UserID);
                 if (success)
                 {
                     return Ok(viewModel);
