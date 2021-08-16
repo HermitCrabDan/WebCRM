@@ -22,13 +22,13 @@ namespace WebCRM.Data
 
         public bool IsPrimaryAccountMember { get; set; }
 
-        public DateTime MembershipCreationDate { get; set; }
+        public DateTime CreationDate { get; set; }
 
-        public string MembershipCreatedBy { get; set; }
+        public string CreatedBy { get; set; }
 
-        public DateTime? MembershipRemovalDate { get; set; }
+        public DateTime? DeletionDate { get; set; }
 
-        public string MembershipRemovedBy { get; set; }
+        public string DeletionBy { get; set; }
 
         public DateTime? LastUpdatedDate { get; set; }
 
@@ -37,8 +37,9 @@ namespace WebCRM.Data
         public void RestrictedModelUpdate(AccountMembership model)
         {
             this.IsPrimaryAccountMember = model.IsPrimaryAccountMember;
-            this.MembershipRemovalDate =  model.MembershipRemovalDate;
-            this.MembershipRemovedBy = model.MembershipRemovedBy;
+            
+            this.DeletionDate =  model.DeletionDate;
+            this.DeletionBy = model.DeletionBy;
             this.LastUpdatedBy = model.LastUpdatedBy;
             this.LastUpdatedDate = model.LastUpdatedDate;
         }

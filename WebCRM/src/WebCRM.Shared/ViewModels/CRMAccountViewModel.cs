@@ -30,11 +30,13 @@ namespace WebCRM.Shared
 
         public string CreatedBy { get; set; }
 
-        public DateTime LastUpdatedDate { get; set; }
+        public DateTime? DeletionDate { get; set; }
+
+        public string DeletionBy { get; set; }
+
+        public DateTime? LastUpdatedDate { get; set; }
 
         public string LastUpdatedBy { get; set; }
-
-        public DateTime? AccountRetirementDate { get; set; }
         #endregion
 
         public List<string> ValidationErrorMessages { get; set; }
@@ -53,11 +55,13 @@ namespace WebCRM.Shared
         {
             this.Id = model.Id;
             this.AccountName = XSSFilterHelper.FilterForXSS(model.AccountName);
-            this.AccountRetirementDate = model.AccountRetirementDate;
-            this.CreatedBy = XSSFilterHelper.FilterForXSS(model.CreatedBy);
+
             this.CreationDate = model.CreationDate;
+            this.CreatedBy = XSSFilterHelper.FilterForXSS(model.CreatedBy);
             this.LastUpdatedBy = XSSFilterHelper.FilterForXSS(model.LastUpdatedBy);
             this.LastUpdatedDate = model.LastUpdatedDate;
+            this.DeletionDate = model.DeletionDate;
+            this.DeletionBy = XSSFilterHelper.FilterForXSS(model.DeletionBy);
         }
 
         public override string ToString()
@@ -71,11 +75,13 @@ namespace WebCRM.Shared
             {
                 Id = this.Id,
                 AccountName = this.AccountName,
-                AccountRetirementDate = this.AccountRetirementDate,
+
+                LastUpdatedBy = this.LastUpdatedBy,
+                LastUpdatedDate = this.LastUpdatedDate,
                 CreatedBy = this.CreatedBy,
                 CreationDate = this.CreationDate,
-                LastUpdatedBy = this.LastUpdatedBy,
-                LastUpdatedDate = this.LastUpdatedDate
+                DeletionDate = this.DeletionDate,
+                DeletionBy = this.DeletionBy
             };
         }
     }

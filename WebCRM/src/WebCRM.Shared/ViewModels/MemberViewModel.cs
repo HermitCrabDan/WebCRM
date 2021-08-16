@@ -23,34 +23,22 @@ namespace WebCRM.Shared
 
         #region Member
         public int Id { get; set; }
-
-        /// <summary>
-        /// Name of member entered by site manager
-        /// </summary>
-        /// <value>user input</value>
+        
         public string MemberName { get; set; }
 
-        public DateTime MemberAddedDate { get; set; }
-
-        /// <summary>
-        /// Account log in of site manager when added to the system
-        /// </summary>
-        /// <value>user input</value>
-        public string MemberAddedBy { get; set; }
-
-        public DateTime? MemberRemovalDate { get; set; }
-
-        /// <summary>
-        /// Account log in of site manager when removing user from system
-        /// </summary>
-        /// <value>user input</value>
-        public string MemberRemovedBy { get; set; }
-
-        /// <summary>
-        /// User email address from registration
-        /// </summary>
-        /// <value>user input</value>
         public string UserID { get; set; }
+
+        public DateTime CreationDate { get; set; }
+
+        public string CreatedBy { get; set; }
+
+        public DateTime? DeletionDate { get; set; }
+
+        public string DeletionBy { get; set; }
+
+        public DateTime? LastUpdatedDate { get; set; }
+
+        public string LastUpdatedBy { get; set; }
         #endregion
 
         public List<string> ValidationErrorMessages { get; set; }
@@ -62,13 +50,16 @@ namespace WebCRM.Shared
 
         public void SetModelValues(Member model)
         {
-            this.MemberAddedBy = XSSFilterHelper.FilterForXSS(model.MemberAddedBy);
-            this.MemberAddedDate = model.MemberAddedDate;
             this.Id = model.Id;
             this.MemberName = XSSFilterHelper.FilterForXSS(model.MemberName);
-            this.MemberRemovalDate = model.MemberRemovalDate;
-            this.MemberRemovedBy = XSSFilterHelper.FilterForXSS(model.MemberRemovedBy);
             this.UserID = XSSFilterHelper.FilterForXSS(model.UserID);
+
+            this.CreationDate = model.CreationDate;
+            this.CreatedBy = XSSFilterHelper.FilterForXSS(model.CreatedBy);
+            this.LastUpdatedBy = XSSFilterHelper.FilterForXSS(model.LastUpdatedBy);
+            this.LastUpdatedDate = model.LastUpdatedDate;
+            this.DeletionDate = model.DeletionDate;
+            this.DeletionBy = XSSFilterHelper.FilterForXSS(model.DeletionBy);
         }
 
         public bool IsValid()
@@ -87,13 +78,16 @@ namespace WebCRM.Shared
         {
             return new Member
             {
-                MemberAddedBy = this.MemberAddedBy,
-                MemberAddedDate = this.MemberAddedDate,
                 Id = this.Id,
                 MemberName = this.MemberName,
-                MemberRemovalDate = this.MemberRemovalDate,
-                MemberRemovedBy = this.MemberRemovedBy,
-                UserID = this.UserID
+                UserID = this.UserID,
+
+                LastUpdatedBy = this.LastUpdatedBy,
+                LastUpdatedDate = this.LastUpdatedDate,
+                CreatedBy = this.CreatedBy,
+                CreationDate = this.CreationDate,
+                DeletionDate = this.DeletionDate,
+                DeletionBy = this.DeletionBy
             };
         }
     }

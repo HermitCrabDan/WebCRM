@@ -24,11 +24,6 @@ namespace WebCRM.WebApi.Controllers
                 
             }
 
-        protected override bool CanDelete()
-        {
-            return false;
-        }
-
         protected override Func<Contract, bool> RestrictedSelection()
         {
             if (this._security.IsMember)
@@ -37,22 +32,5 @@ namespace WebCRM.WebApi.Controllers
             }
             return base.RestrictedSelection();
         }
-
-        [HttpPost]
-        public override IActionResult Create([FromBody] ContractViewModel model)
-        {
-            model.CreatedBy = this._security.UserID;
-            model.CreationDate = DateTime.Now;
-            return base.Create(model);
-        }
-
-        [HttpPut]
-        public override IActionResult Update([FromBody] ContractViewModel model)
-        {
-            model.LastUpdatedBy = this._security.UserID;
-            model.LastUpdatedDate = DateTime.Now;
-            return base.Update(model);
-        }
-
     }
 }

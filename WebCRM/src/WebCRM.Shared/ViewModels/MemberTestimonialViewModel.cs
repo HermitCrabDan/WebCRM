@@ -28,10 +28,6 @@ namespace WebCRM.Shared
 
         public string TestimonialText { get; set; }
 
-        public DateTime CreationDate { get; set; }
-
-        public string CreatedBy { get; set; }
-
         public int? TestimonialClipStart { get; set; }
 
         public int? TestimonialClipEnd { get; set; }
@@ -40,13 +36,17 @@ namespace WebCRM.Shared
 
         public string ApprovedBy { get; set; }
 
-        public DateTime? TestimonialRemovedDate { get; set; }
+        public DateTime CreationDate { get; set; }
 
-        public string TestimonialRemovedBy { get; set; }
+        public string CreatedBy { get; set; }
+
+        public DateTime? DeletionDate { get; set; }
+
+        public string DeletionBy { get; set; }
 
         public DateTime? LastUpdatedDate { get; set; }
 
-        public string LastedUpdatedBy { get; set; }
+        public string LastUpdatedBy { get; set; }
         #endregion
         
         public List<string> ValidationErrorMessages { get; set; }
@@ -89,17 +89,19 @@ namespace WebCRM.Shared
         {
             this.ApprovalDate = model.ApprovalDate;
             this.ApprovedBy = XSSFilterHelper.FilterForXSS(model.ApprovedBy);
-            this.CreatedBy = XSSFilterHelper.FilterForXSS(model.CreatedBy);
-            this.CreationDate = model.CreationDate;
-            this.LastedUpdatedBy = XSSFilterHelper.FilterForXSS(model.LastedUpdatedBy);
-            this.LastUpdatedDate = model.LastUpdatedDate;
             this.MemberID = model.MemberID;
             this.Id = model.Id;
             this.TestimonialClipEnd = model.TestimonialClipEnd;
             this.TestimonialClipStart = model.TestimonialClipStart;
-            this.TestimonialRemovedBy = XSSFilterHelper.FilterForXSS(model.TestimonialRemovedBy);
-            this.TestimonialRemovedDate = model.TestimonialRemovedDate;
             this.TestimonialText = XSSFilterHelper.FilterForXSS(model.TestimonialText);
+
+            this.CreationDate = model.CreationDate;
+            this.CreatedBy = XSSFilterHelper.FilterForXSS(model.CreatedBy);
+            this.LastUpdatedBy = XSSFilterHelper.FilterForXSS(model.LastUpdatedBy);
+            this.LastUpdatedDate = model.LastUpdatedDate;
+            this.DeletionDate = model.DeletionDate;
+            this.DeletionBy = XSSFilterHelper.FilterForXSS(model.DeletionBy);
+            
             if (!String.IsNullOrWhiteSpace(model.TestimonialText)
                 && (model.TestimonialClipEnd.HasValue || model.TestimonialClipStart.HasValue))
             {
@@ -135,17 +137,18 @@ namespace WebCRM.Shared
             {
                 ApprovalDate = this.ApprovalDate,
                 ApprovedBy = this.ApprovedBy,
-                CreatedBy = this.CreatedBy,
-                CreationDate = this.CreationDate,
-                LastedUpdatedBy = this.LastedUpdatedBy,
-                LastUpdatedDate = this.LastUpdatedDate,
                 MemberID = this.MemberID,
                 Id = this.Id,
                 TestimonialClipEnd = this.TestimonialClipEnd,
                 TestimonialClipStart = this.TestimonialClipStart,
-                TestimonialRemovedBy = this.TestimonialRemovedBy,
-                TestimonialRemovedDate = this.TestimonialRemovedDate,
-                TestimonialText = this.TestimonialText
+                TestimonialText = this.TestimonialText,
+
+                LastUpdatedBy = this.LastUpdatedBy,
+                LastUpdatedDate = this.LastUpdatedDate,
+                CreatedBy = this.CreatedBy,
+                CreationDate = this.CreationDate,
+                DeletionDate = this.DeletionDate,
+                DeletionBy = this.DeletionBy
             };
         }
     }

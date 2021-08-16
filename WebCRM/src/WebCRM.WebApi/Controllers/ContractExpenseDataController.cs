@@ -21,28 +21,5 @@ namespace WebCRM.WebApi.Controllers
             {
 
             }
-
-        protected override bool CanDelete()
-        {
-            return false;
-        }
-
-        [HttpPost]
-        public override IActionResult Create([FromBody] ContractExpenseViewModel model)
-        {
-            model.ExpenseEnteredBy = this._security.UserID;
-            model.ExpenseEnteredDate = System.DateTime.Now;
-            return base.Create(model);
-        }
-
-        [HttpPut]
-        public override IActionResult Update([FromBody] ContractExpenseViewModel model)
-        {
-            if (model.ExpenseCancelDate.HasValue && string.IsNullOrWhiteSpace(model.ExpenseCanceledBy))
-            {
-                model.ExpenseCanceledBy = this._security.UserID;
-            }    
-            return base.Update(model);
-        }
     }
 }

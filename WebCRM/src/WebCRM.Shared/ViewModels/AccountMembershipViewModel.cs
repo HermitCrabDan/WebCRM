@@ -29,14 +29,14 @@ namespace WebCRM.Shared
         public int MemberID { get; set; }
 
         public bool IsPrimaryAccountMember { get; set; }
+        
+        public DateTime CreationDate { get; set; }
 
-        public DateTime MembershipCreationDate { get; set; }
+        public string CreatedBy { get; set; }
 
-        public string MembershipCreatedBy { get; set; }
+        public DateTime? DeletionDate { get; set; }
 
-        public DateTime? MembershipRemovalDate { get; set; }
-
-        public string MembershipRemovedBy { get; set; }
+        public string DeletionBy { get; set; }
 
         public DateTime? LastUpdatedDate { get; set; }
 
@@ -64,13 +64,14 @@ namespace WebCRM.Shared
             this.AccountID = model.AccountID;
             this.Id = model.Id;
             this.IsPrimaryAccountMember = model.IsPrimaryAccountMember;
+            this.MemberID = model.MemberID;
+
+            this.CreationDate = model.CreationDate;
+            this.CreatedBy = XSSFilterHelper.FilterForXSS(model.CreatedBy);
             this.LastUpdatedBy = XSSFilterHelper.FilterForXSS(model.LastUpdatedBy);
             this.LastUpdatedDate = model.LastUpdatedDate;
-            this.MemberID = model.MemberID;
-            this.MembershipCreatedBy = XSSFilterHelper.FilterForXSS(model.MembershipCreatedBy);
-            this.MembershipCreationDate = model.MembershipCreationDate;
-            this.MembershipRemovalDate = model.MembershipRemovalDate;
-            this.MembershipRemovedBy = XSSFilterHelper.FilterForXSS(model.MembershipRemovedBy);
+            this.DeletionDate = model.DeletionDate;
+            this.DeletionBy = XSSFilterHelper.FilterForXSS(model.DeletionBy);
         }
 
         public override string ToString()
@@ -85,13 +86,14 @@ namespace WebCRM.Shared
                 AccountID = this.AccountID,
                 Id = this.Id,
                 IsPrimaryAccountMember = this.IsPrimaryAccountMember,
+                MemberID = this.MemberID,
+
                 LastUpdatedBy = this.LastUpdatedBy,
                 LastUpdatedDate = this.LastUpdatedDate,
-                MemberID = this.MemberID,
-                MembershipCreatedBy = this.MembershipCreatedBy,
-                MembershipCreationDate = this.MembershipCreationDate,
-                MembershipRemovalDate = this.MembershipRemovalDate,
-                MembershipRemovedBy = this.MembershipRemovedBy
+                CreatedBy = this.CreatedBy,
+                CreationDate = this.CreationDate,
+                DeletionDate = this.DeletionDate,
+                DeletionBy = this.DeletionBy
             };
         }
     }

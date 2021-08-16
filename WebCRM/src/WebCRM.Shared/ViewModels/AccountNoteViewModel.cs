@@ -18,20 +18,26 @@ namespace WebCRM.Shared
             SetModelValues(model);
         }
 
+        #region AccountNote
         public int Id { get; set; }
 
         public int AccountID { get; set; }
 
         public string NoteText { get; set; }
+        
+        public DateTime CreationDate { get; set; }
 
         public string CreatedBy { get; set; }
 
-        public DateTime NoteCreationDate { get; set; }
+        public DateTime? DeletionDate { get; set; }
 
-        public DateTime? NoteRemovalDate { get; set; }
+        public string DeletionBy { get; set; }
 
-        public string NoteRemovedBy { get; set; }
+        public DateTime? LastUpdatedDate { get; set; }
 
+        public string LastUpdatedBy { get; set; }
+        #endregion
+        
         public List<string> ValidationErrorMessages { get; set; }
 
         public bool IsValid()
@@ -52,16 +58,19 @@ namespace WebCRM.Shared
         {
             this.AccountID = model.AccountID;
             this.Id = model.Id;
-            this.CreatedBy = XSSFilterHelper.FilterForXSS(model.CreatedBy);
-            this.NoteCreationDate = model.NoteCreationDate;
-            this.NoteRemovalDate = model.NoteRemovalDate;
-            this.NoteRemovedBy = XSSFilterHelper.FilterForXSS(model.NoteRemovedBy);
             this.NoteText = XSSFilterHelper.FilterForXSS(model.NoteText);
+
+            this.CreationDate = model.CreationDate;
+            this.CreatedBy = XSSFilterHelper.FilterForXSS(model.CreatedBy);
+            this.LastUpdatedBy = XSSFilterHelper.FilterForXSS(model.LastUpdatedBy);
+            this.LastUpdatedDate = model.LastUpdatedDate;
+            this.DeletionDate = model.DeletionDate;
+            this.DeletionBy = XSSFilterHelper.FilterForXSS(model.DeletionBy);
         }
 
         public override string ToString()
         {
-            return $"AccountNoteID:{this.Id},Account:{this.AccountID},By:{this.CreatedBy}-{this.NoteCreationDate.ToShortDateString()}";
+            return $"AccountNoteID:{this.Id},Account:{this.AccountID},By:{this.CreatedBy}-{this.CreationDate.ToShortDateString()}";
         }
 
         public AccountNote GetBaseModel()
@@ -70,11 +79,14 @@ namespace WebCRM.Shared
             {
                 AccountID = this.AccountID,
                 Id = this.Id,
+                NoteText = this.NoteText,
+
+                LastUpdatedBy = this.LastUpdatedBy,
+                LastUpdatedDate = this.LastUpdatedDate,
                 CreatedBy = this.CreatedBy,
-                NoteCreationDate = this.NoteCreationDate,
-                NoteRemovalDate = this.NoteRemovalDate,
-                NoteRemovedBy = this.NoteRemovedBy,
-                NoteText = this.NoteText
+                CreationDate = this.CreationDate,
+                DeletionDate = this.DeletionDate,
+                DeletionBy = this.DeletionBy
             };
         }
     }

@@ -225,7 +225,7 @@ namespace WebCRM.Shared
             return (false, model);
         }
 
-        public virtual bool Delete(int id)
+        public virtual bool Delete(int id, string UserID)
         {
             if (id > 0)
             {
@@ -238,9 +238,11 @@ namespace WebCRM.Shared
                             .FirstOrDefault();
                     if (modelToDelete != null)
                     {
+                        modelToDelete.DeletionDate = DateTime.Now;
+                        modelToDelete.DeletionBy = UserID;
                         _ctx
                             .Set<Model>()
-                            .Remove(modelToDelete);
+                            .Update(modelToDelete);
                         return (_ctx.SaveChanges() > 0);
                     }
                 }
@@ -255,7 +257,7 @@ namespace WebCRM.Shared
             return false;
         }
 
-        public virtual async Task<bool> DeleteAsync(int id)
+        public virtual async Task<bool> DeleteAsync(int id, string UserID)
         {
             if (id > 0)
             {
@@ -268,9 +270,11 @@ namespace WebCRM.Shared
                             .FirstOrDefault();
                     if (modelToDelete != null)
                     {
+                        modelToDelete.DeletionDate = DateTime.Now;
+                        modelToDelete.DeletionBy = UserID;
                         _ctx
                             .Set<Model>()
-                            .Remove(modelToDelete);
+                            .Update(modelToDelete);
                         var deletedRecords = await _ctx.SaveChangesAsync();
                         return (deletedRecords > 0);
                     }

@@ -24,10 +24,6 @@ namespace WebCRM.Data
 
         public string ContractName { get; set; }
 
-        public DateTime CreationDate { get; set; }
-
-        public string CreatedBy { get; set; }
-
         public DateTime ContractStartDate { get; set; }
 
         public DateTime ContractEndDate { get; set; }
@@ -38,9 +34,13 @@ namespace WebCRM.Data
 
         public DateTime? LastPaymentRecievedDate { get; set; }
 
-        public DateTime? ContractCloseDate { get; set; }
+        public DateTime CreationDate { get; set; }
 
-        public string ClosedBy { get; set; }
+        public string CreatedBy { get; set; }
+
+        public DateTime? DeletionDate { get; set; }
+
+        public string DeletionBy { get; set; }
 
         public DateTime? LastUpdatedDate { get; set; }
 
@@ -48,11 +48,12 @@ namespace WebCRM.Data
 
         public void RestrictedModelUpdate(Contract model)
         {
-            this.ClosedBy = model.ClosedBy;
-            this.ContractCloseDate = model.ContractCloseDate;
             this.ContractName = model.ContractName;
             this.LastPaymentRecievedDate = model.LastPaymentRecievedDate;
             this.TotalPaidAmount = model.TotalPaidAmount;
+            
+            this.DeletionDate =  model.DeletionDate;
+            this.DeletionBy = model.DeletionBy;
             this.LastUpdatedBy = model.LastUpdatedBy;
             this.LastUpdatedDate = model.LastUpdatedDate;
         }

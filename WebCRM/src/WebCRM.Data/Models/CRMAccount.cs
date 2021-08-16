@@ -21,16 +21,20 @@ namespace WebCRM.Data
 
         public string CreatedBy { get; set; }
 
-        public DateTime LastUpdatedDate { get; set; }
+        public DateTime? DeletionDate { get; set; }
+
+        public string DeletionBy { get; set; }
+
+        public DateTime? LastUpdatedDate { get; set; }
 
         public string LastUpdatedBy { get; set; }
-
-        public DateTime? AccountRetirementDate { get; set; }
 
         public void RestrictedModelUpdate(CRMAccount model)
         {
             this.AccountName = model.AccountName;
-            this.AccountRetirementDate =  model.AccountRetirementDate;
+            
+            this.DeletionDate =  model.DeletionDate;
+            this.DeletionBy = model.DeletionBy;
             this.LastUpdatedBy = model.LastUpdatedBy;
             this.LastUpdatedDate = model.LastUpdatedDate;
         }

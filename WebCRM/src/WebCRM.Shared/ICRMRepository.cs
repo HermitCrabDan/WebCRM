@@ -31,8 +31,8 @@ namespace WebCRM.Shared
 
         Task<(bool, ViewModel)> UpdateAsync(ViewModel modelToUpdate);
 
-        bool Delete(int id);
+        bool Delete(int id, string UserID);
 
-        Task<bool> DeleteAsync(int id);
+        Task<bool> DeleteAsync(int id, string UserID);
     }
 }

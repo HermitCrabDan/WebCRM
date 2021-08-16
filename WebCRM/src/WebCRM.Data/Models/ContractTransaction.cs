@@ -22,21 +22,27 @@ namespace WebCRM.Data
 
         public decimal TransactionAmount { get; set; }
 
-        public string TransactionEnteredBy { get; set; }
+        public DateTime CreationDate { get; set; }
 
-        public DateTime TransactionEnteredDate { get; set; }
+        public string CreatedBy { get; set; }
 
-        public DateTime? TransactionCancelDate { get; set; }
+        public DateTime? DeletionDate { get; set; }
 
-        public string TransactionCanceledBy { get; set; }
+        public string DeletionBy { get; set; }
+
+        public DateTime? LastUpdatedDate { get; set; }
+
+        public string LastUpdatedBy { get; set; }
 
         public void RestrictedModelUpdate(ContractTransaction model)
         {
-            this.TransactionEnteredBy = model.TransactionEnteredBy;
             this.TransactionDate = model.TransactionDate;
             this.TransactionAmount = model.TransactionAmount;
-            this.TransactionCancelDate = model.TransactionCancelDate;
-            this.TransactionCanceledBy = model.TransactionCanceledBy;
+            
+            this.DeletionDate =  model.DeletionDate;
+            this.DeletionBy = model.DeletionBy;
+            this.LastUpdatedBy = model.LastUpdatedBy;
+            this.LastUpdatedDate = model.LastUpdatedDate;
         }
     }
 }

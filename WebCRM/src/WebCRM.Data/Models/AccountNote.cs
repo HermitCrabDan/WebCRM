@@ -20,19 +20,26 @@ namespace WebCRM.Data
 
         public string NoteText { get; set; }
 
+        public DateTime CreationDate { get; set; }
+
         public string CreatedBy { get; set; }
 
-        public DateTime NoteCreationDate { get; set; }
+        public DateTime? DeletionDate { get; set; }
 
-        public DateTime? NoteRemovalDate { get; set; }
+        public string DeletionBy { get; set; }
 
-        public string NoteRemovedBy { get; set; }
+        public DateTime? LastUpdatedDate { get; set; }
+
+        public string LastUpdatedBy { get; set; }
 
         public void RestrictedModelUpdate(AccountNote model)
         {
-            this.NoteRemovalDate = model.NoteRemovalDate;
-            this.NoteRemovedBy = model.NoteRemovedBy;
             this.NoteText = model.NoteText;
+            
+            this.DeletionDate =  model.DeletionDate;
+            this.DeletionBy = model.DeletionBy;
+            this.LastUpdatedBy = model.LastUpdatedBy;
+            this.LastUpdatedDate = model.LastUpdatedDate;
         }
     }
 }

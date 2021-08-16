@@ -31,13 +31,17 @@ namespace WebCRM.Shared
 
         public decimal ExpenseAmount { get; set; }
 
-        public string ExpenseEnteredBy { get; set; }
+        public DateTime CreationDate { get; set; }
 
-        public DateTime ExpenseEnteredDate { get; set; }
+        public string CreatedBy { get; set; }
 
-        public DateTime? ExpenseCancelDate { get; set; }
+        public DateTime? DeletionDate { get; set; }
 
-        public string ExpenseCanceledBy { get; set; }
+        public string DeletionBy { get; set; }
+
+        public DateTime? LastUpdatedDate { get; set; }
+
+        public string LastUpdatedBy { get; set; }
         #endregion
         
         public List<string> ValidationErrorMessages { get; set; }
@@ -67,10 +71,13 @@ namespace WebCRM.Shared
             this.Id = model.Id;
             this.ExpenseAmount = model.ExpenseAmount;
             this.ExpenseDate = model.ExpenseDate;
-            this.ExpenseCancelDate = model.ExpenseCancelDate;
-            this.ExpenseCanceledBy = XSSFilterHelper.FilterForXSS(model.ExpenseCanceledBy);
-            this.ExpenseEnteredDate = model.ExpenseEnteredDate;
-            this.ExpenseEnteredBy = XSSFilterHelper.FilterForXSS(model.ExpenseEnteredBy);
+
+            this.CreationDate = model.CreationDate;
+            this.CreatedBy = XSSFilterHelper.FilterForXSS(model.CreatedBy);
+            this.LastUpdatedBy = XSSFilterHelper.FilterForXSS(model.LastUpdatedBy);
+            this.LastUpdatedDate = model.LastUpdatedDate;
+            this.DeletionDate = model.DeletionDate;
+            this.DeletionBy = XSSFilterHelper.FilterForXSS(model.DeletionBy);
         }
 
         public ContractExpense GetBaseModel()
@@ -81,10 +88,13 @@ namespace WebCRM.Shared
                 Id = this.Id,
                 ExpenseAmount = this.ExpenseAmount,
                 ExpenseDate = this.ExpenseDate,
-                ExpenseCancelDate = this.ExpenseCancelDate,
-                ExpenseCanceledBy = this.ExpenseCanceledBy,
-                ExpenseEnteredDate = this.ExpenseEnteredDate,
-                ExpenseEnteredBy = this.ExpenseEnteredBy
+
+                LastUpdatedBy = this.LastUpdatedBy,
+                LastUpdatedDate = this.LastUpdatedDate,
+                CreatedBy = this.CreatedBy,
+                CreationDate = this.CreationDate,
+                DeletionDate = this.DeletionDate,
+                DeletionBy = this.DeletionBy
             };
         }
     }

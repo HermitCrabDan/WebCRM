@@ -14,7 +14,7 @@
         "outputPath": "/Users/danielgraf/Documents/GitHub/WebCRM/WebCRM/src/WebCRM.Data/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/Users/danielgraf/.config/NuGet/NuGet.Config"
+          "/Users/danielgraf/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net5.0"
@@ -41,6 +41,12 @@
             "Microsoft.EntityFrameWorkCore.Sqlite": {
               "target": "Package",
               "version": "[5.0.8, )"
+            },
+            "Microsoft.EntityFrameworkCore.Design": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[5.0.9, )"
             }
           },
           "imports": [
@@ -72,7 +78,7 @@
         "outputPath": "/Users/danielgraf/Documents/GitHub/WebCRM/WebCRM/src/WebCRM.Shared/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/Users/danielgraf/.config/NuGet/NuGet.Config"
+          "/Users/danielgraf/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net5.0"

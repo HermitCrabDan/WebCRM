@@ -81,11 +81,6 @@
                             :validators="[validators.required]"
                             >
                         </w-input>
-                        <w-input 
-                            label="Account Retirement Date"
-                            v-model="selectedCRMAccount.accountRetirementDate"
-                            >
-                        </w-input>
                         <w-button
                             class="my1"
                             type="submit"
@@ -139,7 +134,7 @@ export default {
                 { label:'Date Entered', key:'creationDate', align:'left' },
                 { label:'Last Updated', key:'lastUpdatedDate', align:'left' },
                 { label:'Updated by', key:'lastUpdatedBy', align:'left' },
-                { label:'Retired', key:'accountRetirementDate', align:'left' },
+                { label:'Retired', key:'deletionDate', align:'left' },
             ],
             CRMAccountSort:'-creationDate',
             isError: false,

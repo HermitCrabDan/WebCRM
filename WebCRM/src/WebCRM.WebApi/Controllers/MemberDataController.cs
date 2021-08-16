@@ -23,11 +23,6 @@ namespace WebCRM.WebApi.Controllers
 
         }
 
-        protected override bool CanDelete()
-        {
-            return false;
-        }
-
         protected override Func<Member, bool> RestrictedSelection()
         {
             if (this._security.IsMember)
@@ -35,24 +30,6 @@ namespace WebCRM.WebApi.Controllers
                 return n => n.Id == this._security.MemberId;
             }
             return base.RestrictedSelection();
-        }
-
-        [HttpPost]
-        public override IActionResult Create([FromBody] MemberViewModel model)
-        {
-            model.MemberAddedBy = this._security.UserID;
-            model.MemberAddedDate = DateTime.Now;
-            return base.Create(model);
-        }
-
-        [HttpPut]
-        public override IActionResult Update([FromBody] MemberViewModel model)
-        {
-            if (model.MemberRemovalDate.HasValue && String.IsNullOrWhiteSpace(model.MemberRemovedBy))
-            {
-                model.MemberRemovedBy = this._security.UserID;
-            }
-            return base.Update(model);
         }
     }
 }

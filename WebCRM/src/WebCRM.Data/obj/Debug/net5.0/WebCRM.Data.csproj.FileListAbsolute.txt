@@ -10,3 +10,6 @@
 /Users/danielgraf/Documents/GitHub/WebCRM/WebCRM/src/WebCRM.Data/obj/Debug/net5.0/WebCRM.Data.dll
 /Users/danielgraf/Documents/GitHub/WebCRM/WebCRM/src/WebCRM.Data/obj/Debug/net5.0/ref/WebCRM.Data.dll
 /Users/danielgraf/Documents/GitHub/WebCRM/WebCRM/src/WebCRM.Data/obj/Debug/net5.0/WebCRM.Data.pdb
+/Users/danielgraf/Documents/GitHub/WebCRM/WebCRM/src/WebCRM.Data/bin/Debug/net5.0/WebCRM.Data.runtimeconfig.json
+/Users/danielgraf/Documents/GitHub/WebCRM/WebCRM/src/WebCRM.Data/bin/Debug/net5.0/WebCRM.Data.runtimeconfig.dev.json
+/Users/danielgraf/Documents/GitHub/WebCRM/WebCRM/src/WebCRM.Data/obj/Debug/net5.0/WebCRM.Data.genruntimeconfig.cache

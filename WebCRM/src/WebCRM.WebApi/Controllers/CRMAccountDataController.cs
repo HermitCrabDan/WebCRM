@@ -22,24 +22,5 @@ namespace WebCRM.WebApi.Controllers
             {
 
             }
-
-        protected override bool CanDelete()
-        {
-            return false;
-        }
-
-        public override IActionResult Create([FromBody] CRMAccountViewModel model)
-        {
-            model.CreatedBy = this._security.UserID;
-            model.CreationDate = System.DateTime.Now;
-            return base.Create(model);
-        }
-
-        public override IActionResult Update([FromBody] CRMAccountViewModel model)
-        {
-            model.LastUpdatedBy = this._security.UserID;
-            model.LastUpdatedDate = System.DateTime.Now;
-            return base.Update(model);
-        }
     }
 }

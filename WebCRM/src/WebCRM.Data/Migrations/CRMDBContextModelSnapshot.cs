@@ -14,7 +14,7 @@ namespace WebCRM.Data.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "5.0.8");
+                .HasAnnotation("ProductVersion", "5.0.9");
 
             modelBuilder.Entity("WebCRM.Data.AccountMembership", b =>
                 {
@@ -24,6 +24,18 @@ namespace WebCRM.Data.Migrations
 
                     b.Property<int>("AccountID")
                         .HasColumnType("INTEGER");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("CreationDate")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("DeletionBy")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime?>("DeletionDate")
+                        .HasColumnType("TEXT");
 
                     b.Property<bool>("IsPrimaryAccountMember")
                         .HasColumnType("INTEGER");
@@ -36,18 +48,6 @@ namespace WebCRM.Data.Migrations
 
                     b.Property<int>("MemberID")
                         .HasColumnType("INTEGER");
-
-                    b.Property<string>("MembershipCreatedBy")
-                        .HasColumnType("TEXT");
-
-                    b.Property<DateTime>("MembershipCreationDate")
-                        .HasColumnType("TEXT");
-
-                    b.Property<DateTime?>("MembershipRemovalDate")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("MembershipRemovedBy")
-                        .HasColumnType("TEXT");
 
                     b.HasKey("Id");
 
@@ -68,13 +68,19 @@ namespace WebCRM.Data.Migrations
                     b.Property<string>("CreatedBy")
                         .HasColumnType("TEXT");
 
-                    b.Property<DateTime>("NoteCreationDate")
+                    b.Property<DateTime>("CreationDate")
                         .HasColumnType("TEXT");
 
-                    b.Property<DateTime?>("NoteRemovalDate")
+                    b.Property<string>("DeletionBy")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("NoteRemovedBy")
+                    b.Property<DateTime?>("DeletionDate")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("LastUpdatedBy")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime?>("LastUpdatedDate")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("NoteText")
@@ -97,19 +103,22 @@ namespace WebCRM.Data.Migrations
                     b.Property<string>("AccountName")
                         .HasColumnType("TEXT");
 
-                    b.Property<DateTime?>("AccountRetirementDate")
-                        .HasColumnType("TEXT");
-
                     b.Property<string>("CreatedBy")
                         .HasColumnType("TEXT");
 
                     b.Property<DateTime>("CreationDate")
                         .HasColumnType("TEXT");
 
+                    b.Property<string>("DeletionBy")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime?>("DeletionDate")
+                        .HasColumnType("TEXT");
+
                     b.Property<string>("LastUpdatedBy")
                         .HasColumnType("TEXT");
 
-                    b.Property<DateTime>("LastUpdatedDate")
+                    b.Property<DateTime?>("LastUpdatedDate")
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
@@ -125,13 +134,7 @@ namespace WebCRM.Data.Migrations
                     b.Property<int>("MemberID")
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("ClosedBy")
-                        .HasColumnType("TEXT");
-
                     b.Property<decimal>("ContractAmount")
-                        .HasColumnType("TEXT");
-
-                    b.Property<DateTime?>("ContractCloseDate")
                         .HasColumnType("TEXT");
 
                     b.Property<DateTime>("ContractEndDate")
@@ -147,6 +150,12 @@ namespace WebCRM.Data.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<DateTime>("CreationDate")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("DeletionBy")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime?>("DeletionDate")
                         .HasColumnType("TEXT");
 
                     b.Property<int>("Id")
@@ -185,22 +194,28 @@ namespace WebCRM.Data.Migrations
                     b.Property<int>("ContractID")
                         .HasColumnType("INTEGER");
 
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("CreationDate")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("DeletionBy")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime?>("DeletionDate")
+                        .HasColumnType("TEXT");
+
                     b.Property<decimal>("ExpenseAmount")
-                        .HasColumnType("TEXT");
-
-                    b.Property<DateTime?>("ExpenseCancelDate")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("ExpenseCanceledBy")
                         .HasColumnType("TEXT");
 
                     b.Property<DateTime>("ExpenseDate")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("ExpenseEnteredBy")
+                    b.Property<string>("LastUpdatedBy")
                         .HasColumnType("TEXT");
 
-                    b.Property<DateTime>("ExpenseEnteredDate")
+                    b.Property<DateTime?>("LastUpdatedDate")
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
@@ -219,22 +234,28 @@ namespace WebCRM.Data.Migrations
                     b.Property<int>("ContractID")
                         .HasColumnType("INTEGER");
 
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("CreationDate")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("DeletionBy")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime?>("DeletionDate")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("LastUpdatedBy")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime?>("LastUpdatedDate")
+                        .HasColumnType("TEXT");
+
                     b.Property<decimal>("TransactionAmount")
                         .HasColumnType("TEXT");
 
-                    b.Property<DateTime?>("TransactionCancelDate")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("TransactionCanceledBy")
-                        .HasColumnType("TEXT");
-
                     b.Property<DateTime>("TransactionDate")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("TransactionEnteredBy")
-                        .HasColumnType("TEXT");
-
-                    b.Property<DateTime>("TransactionEnteredDate")
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
@@ -250,19 +271,25 @@ namespace WebCRM.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("MemberAddedBy")
+                    b.Property<string>("CreatedBy")
                         .HasColumnType("TEXT");
 
-                    b.Property<DateTime>("MemberAddedDate")
+                    b.Property<DateTime>("CreationDate")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("DeletionBy")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime?>("DeletionDate")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("LastUpdatedBy")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime?>("LastUpdatedDate")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("MemberName")
-                        .HasColumnType("TEXT");
-
-                    b.Property<DateTime?>("MemberRemovalDate")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("MemberRemovedBy")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("UserID")
@@ -291,10 +318,16 @@ namespace WebCRM.Data.Migrations
                     b.Property<DateTime>("CreationDate")
                         .HasColumnType("TEXT");
 
-                    b.Property<DateTime?>("LastUpdatedDate")
+                    b.Property<string>("DeletionBy")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("LastedUpdatedBy")
+                    b.Property<DateTime?>("DeletionDate")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("LastUpdatedBy")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime?>("LastUpdatedDate")
                         .HasColumnType("TEXT");
 
                     b.Property<int>("MemberID")
@@ -305,12 +338,6 @@ namespace WebCRM.Data.Migrations
 
                     b.Property<int?>("TestimonialClipStart")
                         .HasColumnType("INTEGER");
-
-                    b.Property<string>("TestimonialRemovedBy")
-                        .HasColumnType("TEXT");
-
-                    b.Property<DateTime?>("TestimonialRemovedDate")
-                        .HasColumnType("TEXT");
 
                     b.Property<string>("TestimonialText")
                         .HasColumnType("TEXT");

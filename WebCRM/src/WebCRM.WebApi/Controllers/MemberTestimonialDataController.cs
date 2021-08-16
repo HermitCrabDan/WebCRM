@@ -23,11 +23,6 @@ namespace WebCRM.WebApi.Controllers
                 
             }
 
-        protected override bool CanDelete()
-        {
-            return false;
-        }
-
         protected override bool CanUpdate()
         {
             if (this._security.IsMember)
@@ -46,20 +41,9 @@ namespace WebCRM.WebApi.Controllers
             return base.RestrictedSelection();
         }
 
-        [HttpPost]
-        public override IActionResult Create([FromBody] MemberTestimonialViewModel model)
-        {
-            model.CreatedBy = this._security.UserID;
-            model.CreationDate = DateTime.Now;
-            return base.Create(model);
-        }
-
         [HttpPut]
         public override IActionResult Update([FromBody] MemberTestimonialViewModel model)
         {
-            
-            model.LastedUpdatedBy = this._security.UserID;
-            model.LastUpdatedDate = DateTime.Now;
             if (this._security.IsMember)
             {
                 if (model.MemberID != this._security.MemberId)
@@ -72,10 +56,6 @@ namespace WebCRM.WebApi.Controllers
             else if(model.ApprovalDate.HasValue && String.IsNullOrWhiteSpace(model.ApprovedBy))
             {
                 model.ApprovedBy = this._security.UserID;
-            }
-            if (model.TestimonialRemovedDate.HasValue && String.IsNullOrWhiteSpace(model.TestimonialRemovedBy))
-            {
-                model.TestimonialRemovedBy = this._security.UserID;
             }
             return base.Update(model);
         }

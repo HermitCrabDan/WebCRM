@@ -22,26 +22,5 @@ namespace WebCRM.WebApi.Controllers
             {
                 
             }
-
-        protected override bool CanDelete()
-        {
-            return false;
-        }
-
-        public override IActionResult Create([FromBody] ContractTransactionViewModel model)
-        {
-            model.TransactionEnteredBy = this._security.UserID;
-            model.TransactionEnteredDate = System.DateTime.Now;
-            return base.Create(model);
-        }
-
-        public override IActionResult Update([FromBody] ContractTransactionViewModel model)
-        {
-            if (model.TransactionCancelDate.HasValue && string.IsNullOrWhiteSpace(model.TransactionCanceledBy))
-            {
-                model.TransactionCanceledBy = this._security.UserID;
-            }
-            return base.Update(model);
-        }
     }
 }

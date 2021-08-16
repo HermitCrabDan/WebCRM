@@ -32,10 +32,6 @@ namespace WebCRM.Shared
 
         public string ContractName { get; set; }
 
-        public DateTime CreationDate { get; set; }
-
-        public string CreatedBy { get; set; }
-
         public DateTime ContractStartDate { get; set; }
 
         public DateTime ContractEndDate { get; set; }
@@ -46,9 +42,13 @@ namespace WebCRM.Shared
 
         public DateTime? LastPaymentRecievedDate { get; set; }
 
-        public DateTime? ContractCloseDate { get; set; }
+        public DateTime CreationDate { get; set; }
 
-        public string ClosedBy { get; set; }
+        public string CreatedBy { get; set; }
+
+        public DateTime? DeletionDate { get; set; }
+
+        public string DeletionBy { get; set; }
 
         public DateTime? LastUpdatedDate { get; set; }
 
@@ -76,21 +76,22 @@ namespace WebCRM.Shared
         public void SetModelValues(Contract model)
         {
             this.AccountID = model.AccountID;
-            this.ClosedBy = XSSFilterHelper.FilterForXSS(model.ClosedBy);
             this.ContractAmount = model.ContractAmount;
-            this.ContractCloseDate = model.ContractCloseDate;
             this.ContractEndDate = model.ContractEndDate;
             this.Id = model.Id;
             this.ContractName = XSSFilterHelper.FilterForXSS(model.ContractName);
             this.ContractStartDate = model.ContractStartDate;
-            this.CreatedBy = XSSFilterHelper.FilterForXSS(model.CreatedBy);
-            this.CreationDate = model.CreationDate;
             this.LastPaymentRecievedDate = model.LastPaymentRecievedDate;
-            this.LastUpdatedBy = XSSFilterHelper.FilterForXSS(model.LastUpdatedBy);
-            this.LastUpdatedDate = model.LastUpdatedDate;
             this.MemberID = model.MemberID;
             this.OriginalContractID = model.OriginalContractID;
             this.TotalPaidAmount = model.TotalPaidAmount;
+
+            this.CreationDate = model.CreationDate;
+            this.CreatedBy = XSSFilterHelper.FilterForXSS(model.CreatedBy);
+            this.LastUpdatedBy = XSSFilterHelper.FilterForXSS(model.LastUpdatedBy);
+            this.LastUpdatedDate = model.LastUpdatedDate;
+            this.DeletionDate = model.DeletionDate;
+            this.DeletionBy = XSSFilterHelper.FilterForXSS(model.DeletionBy);
         }
         public List<string> ValidationErrorMessages { get; set; }
         
@@ -104,21 +105,22 @@ namespace WebCRM.Shared
             return new Contract
             {
                 AccountID = this.AccountID,
-                ClosedBy = this.ClosedBy,
                 ContractAmount = this.ContractAmount,
-                ContractCloseDate = this.ContractCloseDate,
                 ContractEndDate = this.ContractEndDate,
                 Id = this.Id,
                 ContractName = this.ContractName,
                 ContractStartDate = this.ContractStartDate,
-                CreatedBy = this.CreatedBy,
-                CreationDate = this.CreationDate,
                 LastPaymentRecievedDate = this.LastPaymentRecievedDate,
-                LastUpdatedBy = this.LastUpdatedBy,
-                LastUpdatedDate = this.LastUpdatedDate,
                 MemberID = this.MemberID,
                 OriginalContractID = this.OriginalContractID,
-                TotalPaidAmount = this.TotalPaidAmount
+                TotalPaidAmount = this.TotalPaidAmount,
+
+                LastUpdatedBy = this.LastUpdatedBy,
+                LastUpdatedDate = this.LastUpdatedDate,
+                CreatedBy = this.CreatedBy,
+                CreationDate = this.CreationDate,
+                DeletionDate = this.DeletionDate,
+                DeletionBy = this.DeletionBy
             };
         }
     }

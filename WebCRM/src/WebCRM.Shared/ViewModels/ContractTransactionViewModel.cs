@@ -31,13 +31,17 @@ namespace WebCRM.Shared
 
         public decimal TransactionAmount { get; set; }
 
-        public string TransactionEnteredBy { get; set; }
+        public DateTime CreationDate { get; set; }
 
-        public DateTime TransactionEnteredDate { get; set; }
+        public string CreatedBy { get; set; }
 
-        public DateTime? TransactionCancelDate { get; set; }
+        public DateTime? DeletionDate { get; set; }
 
-        public string TransactionCanceledBy { get; set; }
+        public string DeletionBy { get; set; }
+
+        public DateTime? LastUpdatedDate { get; set; }
+
+        public string LastUpdatedBy { get; set; }
         #endregion
 
         public List<string> ValidationErrorMessages { get; set; }
@@ -66,17 +70,18 @@ namespace WebCRM.Shared
             this.Id = model.Id;
             this.TransactionAmount = model.TransactionAmount;
             this.TransactionDate = model.TransactionDate;
-            this.TransactionEnteredBy = XSSFilterHelper.FilterForXSS(model.TransactionEnteredBy);
-            this.TransactionEnteredDate = model.TransactionEnteredDate;
-            this.TransactionCancelDate = model.TransactionCancelDate;
-            this.TransactionCanceledBy = XSSFilterHelper.FilterForXSS(model.TransactionCanceledBy);
+
+            this.CreationDate = model.CreationDate;
+            this.CreatedBy = XSSFilterHelper.FilterForXSS(model.CreatedBy);
+            this.LastUpdatedBy = XSSFilterHelper.FilterForXSS(model.LastUpdatedBy);
+            this.LastUpdatedDate = model.LastUpdatedDate;
+            this.DeletionDate = model.DeletionDate;
+            this.DeletionBy = XSSFilterHelper.FilterForXSS(model.DeletionBy);
         }
 
         public override string ToString()
         {
-            return (this.TransactionCancelDate.HasValue)?
-                $"Canceled:{this.TransactionCancelDate.Value.ToShortDateString()},TransactionID:{this.Id},Contract:{this.ContractID},Ammount:{this.TransactionAmount}"
-                :$"Active:{this.TransactionDate.ToShortDateString()},TransactionID:{this.Id},Contract:{this.ContractID},Ammount:{this.TransactionAmount}";
+            return $"Contract Transaction:{this.TransactionDate.ToShortDateString()},TransactionID:{this.Id},Contract:{this.ContractID},Ammount:{this.TransactionAmount}";
                 
         }
 
@@ -88,10 +93,13 @@ namespace WebCRM.Shared
                 Id = this.Id,
                 TransactionAmount = this.TransactionAmount,
                 TransactionDate = this.TransactionDate,
-                TransactionEnteredBy = this.TransactionEnteredBy,
-                TransactionEnteredDate = this.TransactionEnteredDate,
-                TransactionCancelDate = this.TransactionCancelDate,
-                TransactionCanceledBy = this.TransactionCanceledBy
+
+                LastUpdatedBy = this.LastUpdatedBy,
+                LastUpdatedDate = this.LastUpdatedDate,
+                CreatedBy = this.CreatedBy,
+                CreationDate = this.CreationDate,
+                DeletionDate = this.DeletionDate,
+                DeletionBy = this.DeletionBy
             };
         }
     }

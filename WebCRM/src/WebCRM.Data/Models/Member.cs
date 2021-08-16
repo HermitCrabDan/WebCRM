@@ -16,22 +16,29 @@ namespace WebCRM.Data
 
         public string MemberName { get; set; }
 
-        public DateTime MemberAddedDate { get; set; }
-
-        public string MemberAddedBy { get; set; }
-
-        public DateTime? MemberRemovalDate { get; set; }
-
-        public string MemberRemovedBy { get; set; }
-
         public string UserID { get; set; }
+
+        public DateTime CreationDate { get; set; }
+
+        public string CreatedBy { get; set; }
+
+        public DateTime? DeletionDate { get; set; }
+
+        public string DeletionBy { get; set; }
+
+        public DateTime? LastUpdatedDate { get; set; }
+
+        public string LastUpdatedBy { get; set; }
 
         public void RestrictedModelUpdate(Member model)
         {
-            this.MemberRemovalDate = model.MemberRemovalDate;
-            this.MemberRemovedBy = model.MemberRemovedBy;
             this.MemberName = model.MemberName;
             this.UserID = model.UserID;
+            
+            this.DeletionDate =  model.DeletionDate;
+            this.DeletionBy = model.DeletionBy;
+            this.LastUpdatedBy = model.LastUpdatedBy;
+            this.LastUpdatedDate = model.LastUpdatedDate;
         }
     }
 }

@@ -20,10 +20,6 @@ namespace WebCRM.Data
 
         public string TestimonialText { get; set; }
 
-        public DateTime CreationDate { get; set; }
-
-        public string CreatedBy { get; set; }
-
         public int? TestimonialClipStart { get; set; }
 
         public int? TestimonialClipEnd { get; set; }
@@ -32,13 +28,17 @@ namespace WebCRM.Data
 
         public string ApprovedBy { get; set; }
 
-        public DateTime? TestimonialRemovedDate { get; set; }
+        public DateTime CreationDate { get; set; }
 
-        public string TestimonialRemovedBy { get; set; }
+        public string CreatedBy { get; set; }
+
+        public DateTime? DeletionDate { get; set; }
+
+        public string DeletionBy { get; set; }
 
         public DateTime? LastUpdatedDate { get; set; }
 
-        public string LastedUpdatedBy { get; set; }
+        public string LastUpdatedBy { get; set; }
 
         public void RestrictedModelUpdate(MemberTestimonial model)
         {
@@ -46,11 +46,12 @@ namespace WebCRM.Data
             this.ApprovedBy = model.ApprovedBy;
             this.TestimonialClipStart = model.TestimonialClipStart;
             this.TestimonialClipEnd = model.TestimonialClipEnd;
-            this.LastedUpdatedBy = model.LastedUpdatedBy;
-            this.LastUpdatedDate = model.LastUpdatedDate;
-            this.TestimonialRemovedDate = model.TestimonialRemovedDate;
-            this.TestimonialRemovedBy = model.TestimonialRemovedBy;
             this.TestimonialText = model.TestimonialText;
+            
+            this.DeletionDate =  model.DeletionDate;
+            this.DeletionBy = model.DeletionBy;
+            this.LastUpdatedBy = model.LastUpdatedBy;
+            this.LastUpdatedDate = model.LastUpdatedDate;
         }
     }
 }
