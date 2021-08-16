@@ -13,10 +13,10 @@
                 </div>
                 <w-form
                     v-model="newAccountValid"
-                    @success="newAccountValidated"
+                    @success="validationSuccess"
                     >
                     <w-button 
-                        @click="newAccountClose" 
+                        @click="closeClick" 
                         sm 
                         outline 
                         round 
@@ -26,7 +26,7 @@
                     <div>
                          <w-input 
                             label="New Account Name" 
-                            v-model="newAccount.newAccountName"
+                            v-model="newAccountData.accountName"
                             :validators="[validators.required]"
                             >
                         </w-input>
@@ -44,18 +44,24 @@
 <script>
     export default {
         name:"NewCRMAccount",
-        props:{
-            newAccount: Object,
-        },
-        emits:["newAccountValidated","newAccountClose"],
+        emits:["newAccountValidated", "newAccountClose"],
         data(){
             return {
                 newAccountValid: null,
+                newAccountData: { accountName: '' },
                 validators: {
                     required: value => !!value || 'This field is required',
                 },
             }
         },
+        methods:{
+            closeClick(){
+                this.$emit("newAccountClose");
+            },
+            validationSuccess(){
+                this.$emit("newAccountValidated", this.newAccountData);
+            }
+        }
     }
 </script>
 

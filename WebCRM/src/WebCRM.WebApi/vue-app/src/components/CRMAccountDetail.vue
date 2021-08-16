@@ -16,7 +16,7 @@
                     @success="onEditSuccess"
                     >
                     <w-button
-                        @click="accountDetailClose" 
+                        @click="detailCloseClick" 
                         sm 
                         outline 
                         round 
@@ -25,9 +25,9 @@
                     </w-button>
                     <w-input
                         label="Account Name"
-                        :value="selectedAccountData.accountName"
+                        :value="selectedAccountName"
                         :validators="[validators.required]"
-                        @input="$emit('update:selectedAccountData.accountName', $event.target.value)"
+                        @update:model-value="inputSelectedAccountName"
                         >
                     </w-input>
                     <w-button
@@ -46,9 +46,9 @@
     export default {
         name:"CRMAccountDetail",
         props:{
-            selectedAccountData: Object
+            selectedAccountName: String
         },
-        emits: ["editValidationSuccess", "accountDetailClose"],
+        emits: ["editValidationSuccess", "accountDetailClose", "update:selectedAccountName"],
         data(){
             return {
                 editFormValid: null,
@@ -61,6 +61,12 @@
         methods:{
             onEditSuccess(){
                 this.$emit("editValidationSuccess");
+            },
+            detailCloseClick(){
+                this.$emit("accountDetailClose");
+            },
+            inputSelectedAccountName(val){
+                this.$emit("update:selectedAccountName", val);
             }
         }
     }

@@ -10,86 +10,20 @@
                 An Error Occured
             </w-notification>
             <div v-if="newAccountMode">
-                <w-flex justify-center fill-width>
-                <w-card title="New Account" title-class="blue-light5--bg pa3" style="min-width:400px">
-                    <div class="message-box">
-                        <w-alert
-                            class="my0 text-light"
-                            v-if="newAccountValid === false"
-                            error
-                            no-border>
-                            The form has {{ newAccountErrors }} errors.
-                        </w-alert>
-                    </div>
-                    <w-form
-                        v-model="newAccountValid"
-                        :error-count="newAccountErrors"
-                        @success="submitNewAccount"
-                        >
-                        <w-button 
-                            @click="newAccountMode = false" 
-                            sm 
-                            outline 
-                            round 
-                            absolute 
-                            icon="wi-cross" >
-                        </w-button>
-                        <div>
-                            <label for="New Account Name">New Account Name</label>
-                            <w-input 
-                                label="New Account Name" 
-                                v-model="newAccountName"
-                                :validators="[validators.required]"
-                                >
-                            </w-input>
-                        </div>
-                        <br />
-                        <div>
-                            <w-button type="submit">Submit Account</w-button>
-                        </div>
-                    </w-form>
-                </w-card>
-                </w-flex>
+                <new-crm-account
+                    @newAccountClose="closeNewAccountMode"
+                    @newAccountValidated="submitNewAccount"
+                    >
+                </new-crm-account>
             </div>
             <div v-else-if="accountEditMode">
-                <w-flex justify-center fill-width>
-                <w-card title="Edit Account" title-class="blue-light5--bg pa3" style="min-width:400px">
-                    <div class="message-box">
-                        <w-alert
-                            class="my0 text-light"
-                            v-if="editFormValid === false"
-                            error
-                            no-border>
-                            The form has errors.
-                        </w-alert>
-                    </div>
-                    <w-form
-                        v-model="editFormValid"
-                        @success="onEditSuccess"
-                        >
-                        <w-button
-                            @click="accountEditMode = false" 
-                            sm 
-                            outline 
-                            round 
-                            absolute 
-                            icon="wi-cross" >
-                        </w-button>
-                        <w-input
-                            label="Account Name"
-                            v-model="selectedCRMAccount.accountName"
-                            :validators="[validators.required]"
-                            >
-                        </w-input>
-                        <w-button
-                            class="my1"
-                            type="submit"
-                            >
-                            Edit Account
-                        </w-button>
-                    </w-form>
-                </w-card>
-                </w-flex>
+                <crm-account-detail
+                    :selectedAccountName="selectedCRMAccountName"
+                    @editValidationSuccess="onEditSuccess"
+                    @accountDetailClose="closeAccountDetail"
+                    @update:selectedAccountName="updateSelectedAccountName"
+                    >
+                </crm-account-detail>
             </div>
             <div v-else>
                 <w-button @click="createNewAccount">Create New Account</w-button>
@@ -110,7 +44,7 @@
                         :sort="CRMAccountSort"
                         :filter="keywordFilter(keyword)"
                         :selectable-rows="1"
-                         @row-select="selectedCRMAccount = $event.item; accountEditMode = true">
+                         @row-select="selectCRMAccount($event.item)">
                         </w-table>
                     </w-card>
                 </div>
@@ -121,8 +55,14 @@
 
 <script>
 import axios from 'axios';
+import NewCRMAccount from '../components/NewCRMAccount.vue';
+import CRMAccountDetail from '../components/CRMAccountDetail.vue';
 
 export default {
+    components: { 
+        'new-crm-account': NewCRMAccount,
+        'crm-account-detail': CRMAccountDetail,
+    },
     name:"CRMAccounts",
     data(){
         return {
@@ -136,16 +76,15 @@ export default {
                 { label:'Last Updated', key:'lastUpdatedDateString', align:'left' },
             ],
             CRMAccountSort:'-creationDate',
+
             isError: false,
             isLoading: false,
             newAccountMode: false,
-            newAccountName: '',
-            newAccountErrors: null,
-            newAccountValid: null,
-            selectedCRMAccount:{},
             accountEditMode: false,
-            editAccountErrors: null,
-            editFormValid: null,
+
+            selectedCRMAccount: {},
+            selectedCRMAccountName: '',
+
             keyword:'',
             keywordFilter: keyword => item => {
             // Concatenate all the columns into a single string for a more performant lookup.
@@ -154,22 +93,25 @@ export default {
             // Lookup the keyword variable in the string with case-insensitive flag.
             return new RegExp(keyword, 'i').test(allTheColumns)
             },
-            validators: {
-                required: value => !!value || 'This field is required',
-            },
         }
     },
     methods:{
         createNewAccount(){
             this.accountEditMode = false;
             this.newAccountMode = true;
-            this.newAccountName = '';
+            this.newAccountData.newAccountName = '';
         },
-        submitNewAccount(){
+        selectCRMAccount(accountData){
+            this.selectedCRMAccount = accountData;
+            this.selectedCRMAccountName = accountData.accountName;
+            this.accountEditMode = true;
+            this.newAccountMode = false;
+        },
+        submitNewAccount(newAccountData){
             this.isLoading = true;
             this.isError = false;
             axios
-                .post("api/CRMAccountData", { accountName: this.newAccountName })
+                .post("api/CRMAccountData", newAccountData)
                 .then(response => { 
                     console.log(response.data);
                     this.newAccountMode = false;
@@ -181,9 +123,20 @@ export default {
                 })
                 .then(() => { this.isLoading = false; });
         },
+        closeNewAccountMode(){
+            this.newAccountMode = false;
+        },
+        closeAccountDetail(){
+            this.accountEditMode = false;
+        },
+        updateSelectedAccountName(val){
+            this.selectedCRMAccountName = val;
+        },
         onEditSuccess(){
             this.isLoading = true;
             this.isError = false;
+            this.selectedCRMAccount.accountName = this.selectedCRMAccountName;
+
             axios
                 .put("api/CRMAccountData", this.selectedCRMAccount)
                 .then(response => { 

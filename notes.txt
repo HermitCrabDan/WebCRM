@@ -1,0 +1,48 @@
+
+               <!-- <w-flex justify-center fill-width>
+                <w-card title="New Account" title-class="blue-light5--bg pa3" style="min-width:400px">
+                    <div class="message-box">
+                        <w-alert
+                            class="my0 text-light"
+                            v-if="newAccountValid === false"
+                            error
+                            no-border>
+                            The form has {{ newAccountErrors }} errors.
+                        </w-alert>
+                    </div>
+                    <w-form
+                        v-model="newAccountValid"
+                        :error-count="newAccountErrors"
+                        @success="submitNewAccount"
+                        >
+                        <w-button 
+                            @click="newAccountMode = false" 
+                            sm 
+                            outline 
+                            round 
+                            absolute 
+                            icon="wi-cross" >
+                        </w-button>
+                        <div>
+                            <label for="New Account Name">New Account Name</label>
+                            <w-input 
+                                label="New Account Name" 
+                                v-model="newAccountName"
+                                :validators="[validators.required]"
+                                >
+                            </w-input>
+                        </div>
+                        <br />
+                        <div>
+                            <w-button type="submit">Submit Account</w-button>
+                        </div>
+                    </w-form>
+                </w-card>
+                </w-flex>-->
+
+                <new-crm-account  
+                    newAccount="newAccountData"
+                    @newAccountValidated="submitNewAccount"
+                    @newAccountClose="newAccountMode = false"
+                    >
+                </new-crm-account>
