@@ -144,7 +144,7 @@ namespace WebCRM.WebApi.Controllers
         }
 
         [HttpDelete("{id}")]
-        protected virtual IActionResult Delete([FromRoute] int id)
+        public virtual IActionResult Delete([FromRoute] int id)
         {
             if (CanDelete() && id > 0)
             {

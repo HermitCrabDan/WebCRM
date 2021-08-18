@@ -1,6 +1,7 @@
 namespace WebCRM.WebApi.Controllers
 {
     using WebCRM.Data;
+    using System.Linq;
     using WebCRM.RoleSecurity;
     using WebCRM.Shared;
     using Microsoft.Extensions.Logging;
@@ -30,6 +31,24 @@ namespace WebCRM.WebApi.Controllers
                 return n => n.MemberID == this._security.MemberId;
             }
             return base.RestrictedSelection();
+        }
+
+        [HttpGet("{id}")]
+        public override IActionResult Get([FromRoute] int id)
+        {
+            if (CanViewAll())
+            {
+                var data = this._repo.Retrieve(n => n.AccountID == id);
+                return Ok(data);
+            }
+            else
+            {
+                var data = this
+                    ._repo.Retrieve(RestrictedSelection())
+                    .Where(w => w.AccountID == id)
+                    .ToList();
+                return Ok(data);
+            }
         }
     }
 }

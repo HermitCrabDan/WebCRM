@@ -18,10 +18,9 @@
             </div>
             <div v-else-if="accountEditMode">
                 <crm-account-detail
-                    :selectedAccountName="selectedCRMAccountName"
+                    :selectedAccountData="selectedCRMAccount"
                     @editValidationSuccess="onEditSuccess"
                     @accountDetailClose="closeAccountDetail"
-                    @update:selectedAccountName="updateSelectedAccountName"
                     >
                 </crm-account-detail>
             </div>
@@ -82,8 +81,7 @@ export default {
             newAccountMode: false,
             accountEditMode: false,
 
-            selectedCRMAccount: {},
-            selectedCRMAccountName: '',
+            selectedCRMAccount: { accountName: '' },
 
             keyword:'',
             keywordFilter: keyword => item => {
@@ -99,11 +97,9 @@ export default {
         createNewAccount(){
             this.accountEditMode = false;
             this.newAccountMode = true;
-            this.newAccountData.newAccountName = '';
         },
         selectCRMAccount(accountData){
             this.selectedCRMAccount = accountData;
-            this.selectedCRMAccountName = accountData.accountName;
             this.accountEditMode = true;
             this.newAccountMode = false;
         },
@@ -129,16 +125,11 @@ export default {
         closeAccountDetail(){
             this.accountEditMode = false;
         },
-        updateSelectedAccountName(val){
-            this.selectedCRMAccountName = val;
-        },
-        onEditSuccess(){
+        onEditSuccess(accountData){
             this.isLoading = true;
             this.isError = false;
-            this.selectedCRMAccount.accountName = this.selectedCRMAccountName;
-
             axios
-                .put("api/CRMAccountData", this.selectedCRMAccount)
+                .put("api/CRMAccountData", accountData)
                 .then(response => { 
                     console.log(response.data);
                     this.accountEditMode = false;
@@ -152,11 +143,11 @@ export default {
         },
         getCRMAccountList(){
             this.isLoading = true;
+            this.isError = false;
             axios
                 .get("api/CRMAccountData")
                 .then(response => { 
                     this.CRMAccountList = response.data;
-                    this.isError = false;
                     console.log(response.data);
                 })
                 .catch(error => { 

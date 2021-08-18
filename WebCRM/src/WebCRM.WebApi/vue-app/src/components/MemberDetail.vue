@@ -1,7 +1,7 @@
 <template>
     <div>
         <w-flex justify-center fill-width>
-            <w-card title="Edit Account" title-class="blue-light5--bg pa3" style="min-width:400px">
+            <w-card title="Edit Member" title-class="blue-light5--bg pa3" style="min-width:400px">
                 <div class="message-box">
                     <w-alert
                         class="my0 text-light"
@@ -25,16 +25,18 @@
                     </w-button>
                     <w-input
                         label="Member Name"
-                        v-model="crmAccountData.memberName"
+                        v-model="memberData.memberName"
                         :validators="[validators.required]"
                         >
                     </w-input>
+                    <br />
                     <w-input
                         label="User Name"
                         placeholder="optional"
-                        v-model="crmAccountData.memberName"
+                        v-model="memberData.userId"
                         >
                     </w-input>
+                    <br />
                     <w-button
                         class="my1"
                         type="submit"
@@ -68,9 +70,9 @@
                 immediate:true,
                 deep:true,
                 handler(newVal, oldVal){
+                    this.memberData = newVal;
                     console.log(newVal);
                     console.log(oldVal);
-                    this.memberData = newVal;
                 }
             }
         },
@@ -79,7 +81,7 @@
                 this.$emit("memberDetailClose");
             },
             onEditSuccess(){
-                this.$emit("memberEditSucess", this.memberData);
+                this.$emit("memberEditSuccess", this.memberData);
             }
         }
     }
