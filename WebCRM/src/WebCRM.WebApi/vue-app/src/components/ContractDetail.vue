@@ -1,5 +1,11 @@
 <template>
     <div>
+            <w-notification v-model="isLoading" success bg-color="white">
+                ....loading
+            </w-notification>
+            <w-notification v-model="isError" error bg-color="white">
+                An Error Occured
+            </w-notification>
         <h2>{{ contractData.id }} - {{ contractData.contractName }}</h2>
         <br />
         <w-flex justify-center>
@@ -161,7 +167,16 @@
                     </new-crm-transaction>
                 </div>
                 <div v-else>
-                    <w-button @click="newTransactionMode = true">New Transaction</w-button>
+                    <br />
+                    <div>
+                        <w-button @click="newTransactionMode = true">New Transaction</w-button>
+                    </div>
+                    <br />
+                    <contract-transaction-list
+                        :SelectedContractID="contractData.id"
+                        @contractSelected="selectTransaction"
+                        >
+                    </contract-transaction-list>
                 </div>
             </template>
         </w-tabs>
@@ -173,12 +188,15 @@
     import VueCal from 'vue-cal';
     import 'vue-cal/dist/vuecal.css';
     import NewCRMTransaction from '../components/NewCRMTransaction.vue';
+    import ContractTransactionList from '../components/ContractTransactionList.vue';
+    import axios from 'axios';
     
     export default {
         name:"ContractDetail",
         components:{
             'vue-cal':VueCal,
             'new-crm-transaction':NewCRMTransaction,
+            'contract-transaction-list':ContractTransactionList,
         },
         props:{
             selectedContractData: Object
@@ -196,6 +214,8 @@
                 showStartDate:false,
                 newTransactionMode:false,
                 editTransactionMode:false,
+                isLoading:false,
+                isError:false,
                 validators: {
                     required: value => !!value || 'This field is required',
                 },
@@ -212,8 +232,27 @@
             }
         },
         methods:{
+            selectTransaction(transactionData){
+                console.log(transactionData);
+            },
             submitNewTransaction(transactionData){
                 console.log(transactionData);
+                this.isLoading = true;
+                axios
+                    .post('api/ContractTransactionData', transactionData)
+                    .then(response => {
+                        console.log(response.data);
+                    })
+                    .catch(error => {
+                        console.log(error);
+                        this.isError = true;
+                    })
+                    .then(() => {
+                        this.isLoading = false;
+                        if(!this.isError){
+                            this.newTransactionMode = false;
+                        }
+                    });
             },
             setStartDate(event){
                 console.log(event);

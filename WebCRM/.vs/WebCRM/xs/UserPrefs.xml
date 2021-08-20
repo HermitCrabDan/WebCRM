@@ -1,7 +1,9 @@
 ﻿<Properties StartupConfiguration="{4925F06C-80EB-4244-97D9-037BD339E6D5}|Default">
-  <MonoDevelop.Ide.Workbench ActiveDocument="src/WebCRM.Shared/ViewModels/ContractTransactionViewModel.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="src/WebCRM.Shared/CRMRepositoryBase.cs">
     <Files>
-      <File FileName="src/WebCRM.Shared/ViewModels/ContractTransactionViewModel.cs" Line="28" Column="40" />
+      <File FileName="src/WebCRM.Shared/ViewModels/ContractTransactionViewModel.cs" Line="61" Column="60" />
+      <File FileName="src/WebCRM.Shared/Repositories/ContractTransactionRepository.cs" Line="43" Column="30" />
+      <File FileName="src/WebCRM.Shared/CRMRepositoryBase.cs" Line="1" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -9,13 +11,10 @@
           <Node name="WebCRM" expanded="True">
             <Node name="src" expanded="True">
               <Node name="WebCRM.Shared" expanded="True">
-                <Node name="ViewModels" expanded="True">
-                  <Node name="ContractTransactionViewModel.cs" selected="True" />
-                </Node>
+                <Node name="Repositories" expanded="True" />
+                <Node name="CRMRepositoryBase.cs" selected="True" />
               </Node>
-              <Node name="WebCRM.WebApi" expanded="True">
-                <Node name="Controllers" expanded="True" />
-              </Node>
+              <Node name="WebCRM.WebApi" expanded="True" />
             </Node>
           </Node>
         </State>

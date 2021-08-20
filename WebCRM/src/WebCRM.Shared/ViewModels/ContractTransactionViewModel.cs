@@ -58,7 +58,7 @@ namespace WebCRM.Shared
             this.TransactionAmount = model.TransactionAmount;
             this.TransactionDate = model.TransactionDate;
 
-            this.TransactionAmountString = String.Format("{0:c2}", model.TransactionAmount);
+            this.TransactionAmountString = String.Format("${0:N2}", model.TransactionAmount);
             this.TransactionDateString = String.Format("{0:MM-dd-yyyy}", model.TransactionDate);
 
             base.SetModelValues(model);

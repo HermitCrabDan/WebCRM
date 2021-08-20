@@ -3,7 +3,8 @@
         <w-notification v-model="isError" error bg-color="white">
             An Error Occured
         </w-notification>
-        <w-flex justify-center>
+        <w-card title="Contract Transactions" title-class="blue-light5--bg pa3" style="min-width:400px">
+        <div>
             <w-input 
                 v-model="keyword"
                 placeholder="Search any column..."
@@ -11,7 +12,10 @@
                 class="mb3"
                 style="text-align:left"
                 >
-            </w-input>>
+            </w-input>
+        </div>
+        <br />
+        <w-flex justify-center>
             <w-table
                 :headers="transactionHeaders"
                 :items="transactionList"
@@ -22,6 +26,7 @@
                 @row-select="selectTransaction($event.item)">
             </w-table>
         </w-flex>
+        </w-card>
     </div>
 </template>
 
