@@ -10,6 +10,8 @@
   "dependencies": {
     "axios": "^0.21.1",
     "core-js": "^3.6.5",
+    "pug-plain-loader": "^1.1.0",
+    "sass-loader": "^12.1.0",
     "vue": "^3.0.0",
     "vue-axios": "^3.2.5",
     "vue-cal": "^4.2.0",

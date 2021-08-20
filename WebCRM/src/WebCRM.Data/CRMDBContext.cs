@@ -47,7 +47,7 @@ namespace WebCRM.Data
             modelBuilder.Entity<ContractTransaction>().HasIndex(k => k.ContractID);
             modelBuilder.Entity<ContractExpense>().HasIndex(k => k.ContractID);
             modelBuilder.Entity<MemberTestimonial>().HasIndex(k => k.MemberID);
-            modelBuilder.Entity<Contract>().HasKey(k => new { k.AccountID, k.MemberID });
+            modelBuilder.Entity<Contract>().HasIndex(k => new { k.AccountID, k.MemberID });
 
             modelBuilder.Entity<CRMAccount>().ToTable("CRMAccount");
             modelBuilder.Entity<AccountMembership>().ToTable("AccountMembership");

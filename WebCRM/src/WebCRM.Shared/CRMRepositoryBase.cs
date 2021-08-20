@@ -56,6 +56,7 @@ namespace WebCRM.Shared
                     if (_logger != null)
                     {
                         _logger.LogError(ex, $"Failed to create {typeof(Model).Name}");
+                        model.ValidationErrorMessages.Add(ex.ToString());
                     }
                 }
             }

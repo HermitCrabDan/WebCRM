@@ -120,6 +120,7 @@ export default {
                 .put(this.apiUrl, memberData)
                 .then(response => { 
                     console.log(response.data);
+                    this.editMode = false;
                 })
                 .catch(error => {
                     console.log(error);
@@ -127,7 +128,9 @@ export default {
                 })
                 .then(() => {
                     this.isLoading = false;
-                    this.getList();
+                    if (!this.isError){
+                        this.getList();
+                    }
                 });
         },
         submitNewMember(memberData){
@@ -137,6 +140,7 @@ export default {
                 .post(this.apiUrl, memberData)
                 .then(response => { 
                     console.log(response.data);
+                    this.newMode = false;
                 })
                 .catch(error => {
                     console.log(error);
@@ -144,14 +148,14 @@ export default {
                 })
                 .then(() => {
                     this.isLoading = false;
-                    this.getList();
+                    if (!this.isError){
+                        this.getList();
+                    }
                 });
         },
         getList(){
             this.isLoading = true;
             this.isError = false;
-            this.newMode = false;
-            this.editMode = false;
             axios
                 .get(this.apiUrl)
                 .then(response => { 

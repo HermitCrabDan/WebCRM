@@ -51,6 +51,9 @@ namespace WebCRM.Data
             this.ContractName = model.ContractName;
             this.LastPaymentRecievedDate = model.LastPaymentRecievedDate;
             this.TotalPaidAmount = model.TotalPaidAmount;
+            this.ContractAmount = model.ContractAmount;
+            this.ContractStartDate = model.ContractStartDate;
+            this.ContractEndDate = model.ContractEndDate;
             
             this.DeletionDate =  model.DeletionDate;
             this.DeletionBy = model.DeletionBy;

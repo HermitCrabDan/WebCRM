@@ -128,10 +128,11 @@ namespace WebCRM.Data.Migrations
 
             modelBuilder.Entity("WebCRM.Data.Contract", b =>
                 {
-                    b.Property<int>("AccountID")
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("MemberID")
+                    b.Property<int>("AccountID")
                         .HasColumnType("INTEGER");
 
                     b.Property<decimal>("ContractAmount")
@@ -158,10 +159,6 @@ namespace WebCRM.Data.Migrations
                     b.Property<DateTime?>("DeletionDate")
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
                     b.Property<DateTime?>("LastPaymentRecievedDate")
                         .HasColumnType("TEXT");
 
@@ -171,13 +168,16 @@ namespace WebCRM.Data.Migrations
                     b.Property<DateTime?>("LastUpdatedDate")
                         .HasColumnType("TEXT");
 
+                    b.Property<int>("MemberID")
+                        .HasColumnType("INTEGER");
+
                     b.Property<int?>("OriginalContractID")
                         .HasColumnType("INTEGER");
 
                     b.Property<decimal>("TotalPaidAmount")
                         .HasColumnType("TEXT");
 
-                    b.HasKey("AccountID", "MemberID");
+                    b.HasKey("Id");
 
                     b.HasIndex("AccountID", "MemberID");
 

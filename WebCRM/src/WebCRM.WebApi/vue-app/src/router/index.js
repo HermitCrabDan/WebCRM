@@ -3,7 +3,6 @@ import Home from "../views/Home.vue";
 import CRMAccounts from "../views/CRMAccounts.vue";
 import Contracts from "../views/Contracts.vue";
 import Members from "../views/Members.vue";
-import Transactions from "../views/Transactions.vue";
 import Totals from "../views/Totals.vue";
 
 const routes = [
@@ -26,11 +25,6 @@ const routes = [
     path: "/Members",
     name: "Members",
     component: Members,
-  },
-  {
-    path: "/Transactions",
-    name: "Transactions",
-    component: Transactions,
   },
   {
     path: "/Totals",

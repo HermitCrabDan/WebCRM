@@ -2,15 +2,6 @@
     <div>
         <w-flex justify-center fill-width>
             <w-card title="Selected Account" title-class="blue-light5--bg pa3" style="min-width:400px">
-                <div class="message-box">
-                    <w-alert
-                        class="my0 text-light"
-                        v-if="editFormValid === false"
-                        error
-                        no-border>
-                        The form has errors.
-                    </w-alert>
-                </div>
                 <div style="text-align:left; border:solid 1px silver; padding:5px">
                     <div>
                         Account Id: {{ crmAccountData.id }}
@@ -40,6 +31,15 @@
                         v-model="editFormValid"
                         @success="onEditSuccess"
                         >
+                        <div class="message-box">
+                            <w-alert
+                                class="my0 text-light"
+                                v-if="editFormValid === false"
+                                error
+                                no-border>
+                                The form has errors.
+                            </w-alert>
+                        </div>
                         <w-button
                             @click="detailCloseClick" 
                             sm 

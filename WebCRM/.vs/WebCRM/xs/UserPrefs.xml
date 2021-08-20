@@ -1,20 +1,11 @@
 ﻿<Properties StartupConfiguration="{4925F06C-80EB-4244-97D9-037BD339E6D5}|Default">
-  <MonoDevelop.Ide.Workbench ActiveDocument="src/WebCRM.WebApi/Controllers/CRMApiControllerBase.cs">
-    <Files>
-      <File FileName="src/WebCRM.WebApi/Controllers/CRMApiControllerBase.cs" Line="168" Column="1" />
-      <File FileName="src/WebCRM.WebApi/Controllers/AccountMembershipDataController.cs" Line="50" Column="33" />
-      <File FileName="src/WebCRM.Shared/Repositories/AccountMembershipRepository.cs" Line="38" Column="34" />
-    </Files>
+  <MonoDevelop.Ide.Workbench>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="WebCRM" expanded="True">
             <Node name="src" expanded="True">
-              <Node name="WebCRM.RoleSecurity" expanded="True">
-                <Node name="Helpers" expanded="True" />
-              </Node>
               <Node name="WebCRM.Shared" expanded="True">
-                <Node name="Repositories" expanded="True" />
                 <Node name="ViewModels" expanded="True" />
               </Node>
               <Node name="WebCRM.WebApi" expanded="True">
