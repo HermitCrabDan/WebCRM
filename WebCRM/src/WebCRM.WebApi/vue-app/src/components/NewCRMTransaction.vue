@@ -1,7 +1,7 @@
 <template>
     <div>
         <w-flex justify-center fill-width>
-            <w-card title="Transaction" title-class="blue-light5--bg pa3" style="min-width:400px">
+            <w-card title="New Transaction" title-class="blue-light5--bg pa3" style="min-width:400px">
                 <div class="message-box">
                     <w-alert
                         class="my0 text-light"
@@ -66,6 +66,16 @@
                         </w-button>
                         </w-flex>
                     </div>
+                    <br />
+                    <div>
+                        <w-input
+                            label="Transaction Amount"
+                            v-model="transactionData.transactionAmount"
+                            :validators="[validators.required]"
+                            >
+                        </w-input>
+                    </div>
+                    <br />
                     <div>
                         <w-button 
                             type="submit"
@@ -95,15 +105,13 @@
             return{
                 transactionData:{
                     contractID: 0,
-                    transactionDate:Date.now(),
-                    transactionDateString:'',
+                    transactionDate:null,
+                    transactionDateString: '',
                     transactionAmount:0
                 },
                 transactionValid:null,
 
                 showTransactionDate: false,
-                
-                transactionTitle:'New Transaction',
 
                 isLoading: false,
                 isError: false,
