@@ -4,6 +4,7 @@ import CRMAccounts from "../views/CRMAccounts.vue";
 import Contracts from "../views/Contracts.vue";
 import Members from "../views/Members.vue";
 import Totals from "../views/Totals.vue";
+import Remittance from '../views/Remittance.vue';
 
 const routes = [
   {
@@ -31,6 +32,11 @@ const routes = [
     name: "Totals",
     component: Totals,
   },
+  {
+    path:"/Remittance",
+    name:"Remittance",
+    component: Remittance
+  }
 ];
 
 const router = createRouter({

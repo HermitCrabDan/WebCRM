@@ -25,7 +25,7 @@
                                 absolute 
                                 icon="wi-cross" >
                             </w-button>
-                            <div style="text-align:left; border:solid 1px silver; padding:5px">
+                            <div style="min-width:600px; text-align:left; border:solid 1px silver; padding:5px">
                                 <div>
                                     Membership Id: {{ selectedAccountMembership.id }}
                                 </div>
@@ -61,7 +61,10 @@
                                 </div>
                             </div>
                             <br />
-                            <div>
+                            <div v-if="selectedAccountMembership.deletionDate">
+                                <w-button @click="unDeleteMembership">Reinstate Account Membership</w-button>
+                            </div>
+                            <div v-else>
                                 <w-button @click="removeMembership">Remove Account Membership</w-button>
                             </div>
                         </w-card>
@@ -209,6 +212,28 @@
                     .then(()=>{
                         this.isLoading = false;
                         if(!this.isError){
+                            this.loadAccountMemberships();
+                        }
+                    });
+            },
+            unDeleteMembership(){
+                this.isLoading = false;
+                this.isError = false;
+                this.selectedAccountMembership.deletionDate = null;
+                this.selectedAccountMembership.deletionBy = '';
+                axios
+                    .put('api/AccountMembershipData', this.selectedAccountMembership)
+                    .then(response => {
+                        console.log(response.data);
+                        this.editMembershipMode = false;
+                    })
+                    .catch(error => {
+                        console.log(error);
+                        this.isError = true;
+                    })
+                    .then(() => {
+                        this.isLoading = false;
+                        if (!this.isError){
                             this.loadAccountMemberships();
                         }
                     });

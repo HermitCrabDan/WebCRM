@@ -15,7 +15,7 @@ namespace WebCRM.WebApi.Controllers
 
     [ApiController]
     [Route("api/[controller]")]
-    public class ReportDataController
+    public class ReportDataController: ControllerBase
     {
         private IReportRepository _repo;
         private IAppSecurityService _security;

@@ -45,11 +45,8 @@ namespace WebCRM.Shared
             {
                 this.ValidationErrorMessages.Add("Cannot enter a transaction with a zero amount");
             }
-            if (this.TransactionDate <= DateTime.Now.AddYears(-5))
-            {
-                this.ValidationErrorMessages.Add("Transaction must be within the last 5 years to be entered or updated");
-            }
-            return this.ContractID > 0 && this.TransactionAmount != 0 && this.TransactionDate > DateTime.Now.AddYears(-5);
+            
+            return this.ContractID > 0 && this.TransactionAmount != 0;
         }
 
         public override void SetModelValues(ContractTransaction model)

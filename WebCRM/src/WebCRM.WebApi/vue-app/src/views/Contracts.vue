@@ -79,6 +79,7 @@ export default {
                 { label:'Total Amount Paid', key:'totalPaidAmountString', align:'center' },
                 { label:'Amount Remaining', key:'amountRemainingString', align:'center' },
                 { label:'Last Payment Recieved', key:'lastPaymentRecievedDateString', align:'center' },
+                { label:'Delinquent', key:'isContractDelinquentString', align:'center'}
             ],
             contractSort:'-contractEndDate',
             isError: false,
@@ -156,6 +157,7 @@ export default {
                 .get(this.apiUrl)
                 .then(response => {
                     this.contractList = response.data;
+                    console.log(response.data);
                 })
                 .catch(function (error) {
                     console.log(error);

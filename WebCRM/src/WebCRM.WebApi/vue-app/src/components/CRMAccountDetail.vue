@@ -1,92 +1,99 @@
 <template>
     <div>
+        <h3>
+            Account:
+        </h3>
+        <br />
         <w-flex justify-center fill-width>
-            <w-card title="Selected Account" title-class="blue-light5--bg pa3" style="min-width:400px">
-                <div style="text-align:left; border:solid 1px silver; padding:5px">
-                    <div>
-                        Account Id: {{ crmAccountData.id }}
+            <w-card title title-class="blue-light5--bg pa3" style="width:800px">
+                <template #title>
+                    <div class="title3">
+                        Selected Account:  {{ crmAccountData.id }} - {{ crmAccountData.accountName }}
                     </div>
-                    <div>
-                        Created: {{ crmAccountData.creationDateString }}
-                    </div>
-                    <div>
-                        Created By: {{ crmAccountData.createdBy }}
-                    </div>
-                    <div>
-                        Last Updated: {{ crmAccountData.lastUpdatedDateString }}
-                    </div>
-                    <div>
-                        Updated By: {{ crmAccountData.lastUpdatedBy }}
-                    </div>
-                    <div>
-                        Deleted: {{ crmAccountData.deletionDateString }}
-                    </div>
-                    <div>
-                        Deleted By: {{ crmAccountData.deletionBy }}
-                    </div>
-                </div>
+                </template>
+                <w-button
+                    @click="detailCloseClick" 
+                    sm 
+                    outline 
+                    round 
+                    absolute 
+                    icon="wi-cross" >
+                </w-button>
+                <model-details
+                    :modelData="crmAccountData">
+                </model-details>
                 <br />
-                <div style="border:solid 1px silver; padding:5px">
-                    <w-form
-                        v-model="editFormValid"
-                        @success="onEditSuccess"
-                        >
-                        <div class="message-box">
-                            <w-alert
-                                class="my0 text-light"
-                                v-if="editFormValid === false"
-                                error
-                                no-border>
-                                The form has errors.
-                            </w-alert>
-                        </div>
-                        <w-button
-                            @click="detailCloseClick" 
-                            sm 
-                            outline 
-                            round 
-                            absolute 
-                            icon="wi-cross" >
-                        </w-button>
-                        <w-input
-                            label="Account Name"
-                            v-model="crmAccountData.accountName"
-                            :validators="[validators.required]"
-                            >
-                        </w-input>
-                        <w-button
-                            class="my1"
-                            type="submit"
-                            >
-                            Edit Account Name
-                        </w-button>
-                    </w-form>
-                </div>
+                <w-tabs :items="tabs" card>
+                    <template #item-title.1>
+                        Edit Account
+                    </template>
+                    <template #item-content.1>
+                        <w-flex justify-center fill-width>
+                            <div style="border:solid 1px silver; padding:5px; min-width:400px">
+                                <w-form
+                                    v-model="editFormValid"
+                                    @success="onEditSuccess"
+                                    >
+                                    <div class="message-box">
+                                        <w-alert
+                                            class="my0 text-light"
+                                            v-if="editFormValid === false"
+                                            error
+                                            no-border>
+                                            The form has errors.
+                                        </w-alert>
+                                    </div>
+                                    <w-input
+                                        label="Account Name"
+                                        v-model="crmAccountData.accountName"
+                                        :validators="[validators.required]"
+                                        >
+                                    </w-input>
+                                    <w-button
+                                        class="my1"
+                                        type="submit"
+                                        >
+                                        Edit Account Name
+                                    </w-button>
+                                </w-form>
+                            </div>
+                        </w-flex>
+                    </template>
+                    <template #item-title.2>
+                        Memberships
+                    </template>
+                    <template #item-content.2>
+                        <w-flex  justify-center fill-width>
+                            <div>
+                                <account-member-list
+                                    :selectedAccountId="selectedAccountData.id"
+                                    >
+                                </account-member-list>
+                            </div>
+                        </w-flex>
+                    </template>
+                </w-tabs>
             </w-card>
-        </w-flex>
-        <br />
-        <br />
-        <w-flex  justify-center fill-width>
-            <div>
-                <account-member-list
-                    :selectedAccountId="selectedAccountData.id"
-                    >
-                </account-member-list>
-            </div>
         </w-flex>
     </div>
 </template>
 
 <script>
     import AccountMemberList from '../components/AccountMemberList.vue';
+    import ModelDetails from '../components/ModelDetails.vue';
 
     export default {
         name:"CRMAccountDetail",
         components:{
-            'account-member-list':AccountMemberList
+            'account-member-list':AccountMemberList,
+            'model-details':ModelDetails,
         },
         data(){
             return {
+                tabs: [
+                    { title: 'Account Details', content: 'Account Details' },
+                    { title: 'Memberships', content: 'Memberships' }
+                ],
                 editFormValid: null,
                 crmAccountData: { accountName: '' },
                 validators: {

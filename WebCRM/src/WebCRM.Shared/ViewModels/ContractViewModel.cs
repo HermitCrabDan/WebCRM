@@ -71,6 +71,10 @@ namespace WebCRM.Shared
 
         public string AmountRemainingString { get; set; }
 
+        public bool IsContractDelinquent { get; set; }
+
+        public string IsContractDelinquentString { get; set; }
+
         public override bool IsValid()
         {
             this.ValidationErrorMessages = new List<string>();
@@ -124,6 +128,11 @@ namespace WebCRM.Shared
             this.AmountRemaining = model.ContractAmount - model.TotalPaidAmount;
             this.AmountRemainingString = String.Format("${0:N2}", this.AmountRemaining);
 
+            var paymentDayOfMonth = this.ContractStartDate.Day;
+            var baseMonthDate = (DateTime.Now.Day > paymentDayOfMonth) ? DateTime.Now : DateTime.Now.AddMonths(-1);
+            var lastExpectedPayment = new DateTime(baseMonthDate.Year, baseMonthDate.Month, paymentDayOfMonth);
+            this.IsContractDelinquent = (this.AmountRemaining > 0 && this.LastPaymentRecievedDate < lastExpectedPayment);
+            this.IsContractDelinquentString = (this.IsContractDelinquent) ? "Yes" : "No";
             base.SetModelValues(model);
         }
         
