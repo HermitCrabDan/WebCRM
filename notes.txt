@@ -46,3 +46,31 @@
                     @newAccountClose="newAccountMode = false"
                     >
                 </new-crm-account>
+
+
+
+        <select v-model="SelectedMember">
+            <option disabled value="">Please select a member</option>
+            <option v-for="member in MemberList" :key="member.Id" :value="member.Id">
+                {{ member.MemberName }}
+            </option>
+        </select>
+
+
+                        <w-input 
+                            v-model="keyword"
+                            placeholder="Search any column..."
+                            inner-icon-left="wi-search"
+                            class="mb3"
+                            style="text-align:left"
+                            >
+                        </w-input>
+                        <w-table
+                        :headers="memberListHeaders"
+                        :items="memberList"
+                        :loading="isLoading"
+                        :sort="memberSort"
+                        :filter="keywordFilter(keyword)"
+                        :selectable-rows="1"
+                         @row-select="selectMember($event.item)">
+                        </w-table>

@@ -65,10 +65,10 @@
                     <template #item-content.2>
                         <w-flex  justify-center fill-width>
                             <div>
-                                <account-member-list
+                                <account-membership-manager
                                     :selectedAccountId="selectedAccountData.id"
                                     >
-                                </account-member-list>
+                                </account-membership-manager>
                             </div>
                         </w-flex>
                     </template>
@@ -79,13 +79,13 @@
 </template>
 
 <script>
-    import AccountMemberList from './AccountMemberList.vue';
+    import AccountMembershipManager from './AccountMembershipManager.vue';
     import ModelDetails from '../ModelDetails.vue';
 
     export default {
         name:"CRMAccountDetail",
         components:{
-            'account-member-list':AccountMemberList,
+            'account-membership-manager':AccountMembershipManager,
             'model-details':ModelDetails,
         },
         data(){

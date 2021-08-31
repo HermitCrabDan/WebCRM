@@ -30,6 +30,10 @@ namespace WebCRM.Shared
         public decimal ExpenseAmount { get; set; }
         #endregion
 
+        public string ExpenseAmountString { get; set; }
+
+        public string ExpenseDateString { get; set; }
+
         public override bool IsValid()
         {
             this.ValidationErrorMessages = new List<string>();     
@@ -41,11 +45,7 @@ namespace WebCRM.Shared
             {
                 this.ValidationErrorMessages.Add("Cannot enter a expense with a zero amount");
             }
-            if (this.ExpenseDate <= DateTime.Now.AddYears(-5))
-            {
-                this.ValidationErrorMessages.Add("Expense must be within the last 10 years to be entered or updated");
-            }
-            return this.ContractID > 0 && this.ExpenseAmount != 0 && this.ExpenseDate > DateTime.Now.AddYears(-5);
+            return this.ContractID > 0 && this.ExpenseAmount != 0;
         
         }
 
@@ -54,11 +54,14 @@ namespace WebCRM.Shared
             this.ContractID = model.ContractID;
             this.ExpenseAmount = model.ExpenseAmount;
             this.ExpenseDate = model.ExpenseDate;
+
+            this.ExpenseDateString = string.Format("{0:d}", model.ExpenseDate);
+            this.ExpenseAmountString = string.Format("${0:N2}", model.ExpenseAmount);
             
             base.SetModelValues(model);
         }
 
-        public ContractExpense GetBaseModel()
+        public override ContractExpense GetBaseModel()
         {
             var model = base.GetBaseModel();
 

@@ -193,9 +193,9 @@
                     <template #item-content.3>
                         <w-flex justify-center fill-width>
                             <div style="min-width:600px">
-                                <contract-expense-list
+                                <contract-expense-manager
                                     :selectedContractId="contractData.id">
-                                </contract-expense-list>
+                                </contract-expense-manager>
                             </div>
                         </w-flex>
                     </template>
@@ -212,11 +212,11 @@
 <script>
     import VueCal from 'vue-cal';
     import 'vue-cal/dist/vuecal.css';
-    import NewCRMTransaction from '../ContractTransactions/NewCRMTransaction.vue';
-    import ContractTransactionList from '../ContractTransactions/ContractTransactionList.vue';
+    import NewCRMTransaction from './ContractTransactions/NewCRMTransaction.vue';
+    import ContractTransactionList from './ContractTransactions/ContractTransactionList.vue';
     import axios from 'axios';
     import ModelDetails from '../ModelDetails.vue';
-    import ContractExpenseList from '../ContractExpenses/ContractExpenseList.vue';
+    import ContractExpenseManager from './ContractExpenses/ContractExpenseManager.vue';
     
     export default {
         name:"ContractDetail",
@@ -225,7 +225,7 @@
             'new-crm-transaction':NewCRMTransaction,
             'contract-transaction-list':ContractTransactionList,
             'model-details':ModelDetails,
-            'contract-expense-list':ContractExpenseList,
+            'contract-expense-manager':ContractExpenseManager,
         },
         props:{
             selectedContractData: Object

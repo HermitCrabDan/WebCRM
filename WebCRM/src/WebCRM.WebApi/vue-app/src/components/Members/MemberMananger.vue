@@ -39,122 +39,122 @@
 </template>
 
 <script>
-import axios from 'axios';
-import NewMember from '../components/Members/NewMember.vue';
-import MemberDetail from '../components/Members/MemberDetail.vue';
-import ModelListBase from '../components/ModelListBase.vue';
-    
-export default {
-    name:"MemberManager",
-    components:{
-        'new-member': NewMember,
-        'member-detail': MemberDetail,
-        'model-list-base':ModelListBase,
-    },
-    data(){
-        return {
-            memberList: [],
-            memberListHeaders: [
-                { label:'Member ID', key:'id', align:'left' },
-                { label:'Member Name', key:'memberName', align:'left' },
-                { label:'User ID', key:'userId', align:'left' },
-                { label:'Created by', key:'createdBy', align:'left' },
-                { label:'Date Entered', key:'creationDateString', align:'left' },
-                { label:'Updated by', key:'lastUpdatedBy', align:'left' },
-                { label:'Last Updated', key:'lastUpdatedDateString', align:'left' },
-            ],
-            memberSort:'-creationDate',
+    import axios from 'axios';
+    import NewMember from './NewMember.vue';
+    import MemberDetail from './MemberDetail.vue';
+    import ModelListBase from '../ModelListBase.vue';
+        
+    export default {
+        name:"MemberManager",
+        components:{
+            'new-member': NewMember,
+            'member-detail': MemberDetail,
+            'model-list-base':ModelListBase,
+        },
+        data(){
+            return {
+                memberList: [],
+                memberListHeaders: [
+                    { label:'Member ID', key:'id', align:'left' },
+                    { label:'Member Name', key:'memberName', align:'left' },
+                    { label:'User ID', key:'userId', align:'left' },
+                    { label:'Created by', key:'createdBy', align:'left' },
+                    { label:'Date Entered', key:'creationDateString', align:'left' },
+                    { label:'Updated by', key:'lastUpdatedBy', align:'left' },
+                    { label:'Last Updated', key:'lastUpdatedDateString', align:'left' },
+                ],
+                memberSort:'-creationDate',
 
-            isError: false,
-            isLoading: false,
+                isError: false,
+                isLoading: false,
 
-            newMode: false,
-            editMode: false,
+                newMode: false,
+                editMode: false,
 
-            apiUrl: "api/MemberData",
+                apiUrl: "api/MemberData",
 
-            selectedMember: {},
+                selectedMember: {},
+            }
+        },
+        methods:{
+            createNewMember(){
+                this.newMode = true;
+                this.editMode = false;
+            },
+            closeNewMember(){
+                this.newMode = false;
+            },
+            selectMember(selectedMemberData){
+                this.selectedMember = selectedMemberData;
+                this.newMode = false;
+                this.editMode = true;
+            },
+            closeMemberDetail(){
+                this.editMode = false;
+            },
+            updateMemberData(memberData){
+                this.isLoading = true;
+                this.isError = false;
+                axios
+                    .put(this.apiUrl, memberData)
+                    .then(response => { 
+                        console.log(response.data);
+                        this.editMode = false;
+                    })
+                    .catch(error => {
+                        console.log(error);
+                        this.isError = true;
+                    })
+                    .then(() => {
+                        this.isLoading = false;
+                        if (!this.isError){
+                            this.getList();
+                        }
+                    });
+            },
+            submitNewMember(memberData){
+                this.isLoading = true;
+                this.isError = false;
+                axios
+                    .post(this.apiUrl, memberData)
+                    .then(response => { 
+                        console.log(response.data);
+                        this.newMode = false;
+                    })
+                    .catch(error => {
+                        console.log(error);
+                        this.isError = true;
+                    })
+                    .then(() => {
+                        this.isLoading = false;
+                        if (!this.isError){
+                            this.getList();
+                        }
+                    });
+            },
+            getList(){
+                this.isLoading = true;
+                this.isError = false;
+                axios
+                    .get(this.apiUrl)
+                    .then(response => { 
+                        this.memberList = response.data; 
+                        console.log(response.data);
+                    })
+                    .catch(error => {
+                        console.log(error);
+                        this.isError = true;
+                    })
+                    .then(() => {
+                        this.isLoading = false;
+                    });
+            }
+        },
+        mounted(){
+            this.getList();
         }
-    },
-    methods:{
-        createNewMember(){
-            this.newMode = true;
-            this.editMode = false;
-        },
-        closeNewMember(){
-            this.newMode = false;
-        },
-        selectMember(selectedMemberData){
-            this.selectedMember = selectedMemberData;
-            this.newMode = false;
-            this.editMode = true;
-        },
-        closeMemberDetail(){
-            this.editMode = false;
-        },
-        updateMemberData(memberData){
-            this.isLoading = true;
-            this.isError = false;
-            axios
-                .put(this.apiUrl, memberData)
-                .then(response => { 
-                    console.log(response.data);
-                    this.editMode = false;
-                })
-                .catch(error => {
-                    console.log(error);
-                    this.isError = true;
-                })
-                .then(() => {
-                    this.isLoading = false;
-                    if (!this.isError){
-                        this.getList();
-                    }
-                });
-        },
-        submitNewMember(memberData){
-            this.isLoading = true;
-            this.isError = false;
-            axios
-                .post(this.apiUrl, memberData)
-                .then(response => { 
-                    console.log(response.data);
-                    this.newMode = false;
-                })
-                .catch(error => {
-                    console.log(error);
-                    this.isError = true;
-                })
-                .then(() => {
-                    this.isLoading = false;
-                    if (!this.isError){
-                        this.getList();
-                    }
-                });
-        },
-        getList(){
-            this.isLoading = true;
-            this.isError = false;
-            axios
-                .get(this.apiUrl)
-                .then(response => { 
-                    this.memberList = response.data; 
-                    console.log(response.data);
-                })
-                .catch(error => {
-                    console.log(error);
-                    this.isError = true;
-                })
-                .then(() => {
-                    this.isLoading = false;
-                });
-        }
-    },
-    mounted(){
-        this.getList();
+                
     }
-            
-}
 </script>
 
 <style lang="scss" scoped>

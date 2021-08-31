@@ -1,20 +1,27 @@
 ﻿<Properties StartupConfiguration="{4925F06C-80EB-4244-97D9-037BD339E6D5}|Default">
-  <MonoDevelop.Ide.Workbench ActiveDocument="src/WebCRM.WebApi/Controllers/ContractExpenseDataController.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="src/WebCRM.Shared/ViewModels/ContractExpenseViewModel.cs">
     <Files>
-      <File FileName="src/WebCRM.WebApi/Controllers/ContractExpenseDataController.cs" Line="11" Column="45" />
-      <File FileName="src/WebCRM.WebApi/Controllers/CRMApiControllerBase.cs" Line="68" Column="1" />
+      <File FileName="src/WebCRM.Shared/ViewModels/ContractExpenseViewModel.cs" Line="26" Column="1" />
+      <File FileName="src/WebCRM.WebApi/Controllers/CRMApiControllerBase.cs" Line="116" Column="1" />
+      <File FileName="src/WebCRM.Shared/CRMRepositoryBase.cs" Line="64" Column="1" />
+      <File FileName="src/WebCRM.WebApi/Controllers/ContractExpenseDataController.cs" Line="32" Column="60" />
+      <File FileName="src/WebCRM.Shared/CRMVIewModelBase.cs" Line="55" Column="57" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="WebCRM" expanded="True">
             <Node name="src" expanded="True">
-              <Node name="WebCRM.Data" expanded="True" />
-              <Node name="WebCRM.Shared" expanded="True" />
-              <Node name="WebCRM.WebApi" expanded="True">
-                <Node name="Controllers" expanded="True">
-                  <Node name="ContractExpenseDataController.cs" selected="True" />
+              <Node name="WebCRM.Data" expanded="True">
+                <Node name="Models" expanded="True" />
+              </Node>
+              <Node name="WebCRM.Shared" expanded="True">
+                <Node name="ViewModels" expanded="True">
+                  <Node name="ContractExpenseViewModel.cs" selected="True" />
                 </Node>
+              </Node>
+              <Node name="WebCRM.WebApi" expanded="True">
+                <Node name="Controllers" expanded="True" />
                 <Node name="vue-app" expanded="True">
                   <Node name="src" expanded="True" />
                 </Node>
@@ -29,9 +36,7 @@
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MonoDevelop.Ide.ItemProperties.src.WebCRM.WebApi PreferredExecutionTarget="/Applications/Google Chrome.app" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore>
-      <Breakpoint file="/Users/danielgraf/Documents/GitHub/WebCRM/WebCRM/src/WebCRM.WebApi/Controllers/ContractExpenseDataController.cs" relfile="src/WebCRM.WebApi/Controllers/ContractExpenseDataController.cs" line="25" column="1" />
-    </BreakpointStore>
+    <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MultiItemStartupConfigurations />
 </Properties>

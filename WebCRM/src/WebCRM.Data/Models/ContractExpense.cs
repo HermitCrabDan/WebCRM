@@ -37,13 +37,12 @@ namespace  WebCRM.Data
 
         public void RestrictedModelUpdate(ContractExpense model)
         {
+            this.ContractID = model.ContractID;
             this.ExpenseDate = model.ExpenseDate;
             this.ExpenseAmount = model.ExpenseAmount;
-            
+
             this.DeletionDate =  model.DeletionDate;
             this.DeletionBy = model.DeletionBy;
-            this.LastUpdatedBy = model.LastUpdatedBy;
-            this.LastUpdatedDate = model.LastUpdatedDate;
         }
     }
 }
