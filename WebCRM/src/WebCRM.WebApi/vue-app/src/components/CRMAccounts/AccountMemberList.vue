@@ -111,7 +111,7 @@
 
 <script>
     import axios from 'axios';
-    import NewAccountMembership from '../components/NewAccountMembership.vue';
+    import NewAccountMembership from './NewAccountMembership.vue';
 
     export default {
         components: { 

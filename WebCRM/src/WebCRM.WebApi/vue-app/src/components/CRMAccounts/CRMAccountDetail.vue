@@ -79,8 +79,8 @@
 </template>
 
 <script>
-    import AccountMemberList from '../components/AccountMemberList.vue';
-    import ModelDetails from '../components/ModelDetails.vue';
+    import AccountMemberList from './AccountMemberList.vue';
+    import ModelDetails from '../ModelDetails.vue';
 
     export default {
         name:"CRMAccountDetail",

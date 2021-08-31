@@ -79,7 +79,7 @@
 </template>
 
 <script>
-    import ModelDetails from './ModelDetails.vue';
+    import ModelDetails from '../ModelDetails.vue';
     export default {
         components: { 'model-details':ModelDetails },
         name:"MemberDetail",

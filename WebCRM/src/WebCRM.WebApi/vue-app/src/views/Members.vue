@@ -54,8 +54,8 @@
 
 <script>
 import axios from 'axios';
-import NewMember from '../components/NewMember.vue';
-import MemberDetail from '../components/MemberDetail.vue';
+import NewMember from '../components/Members/NewMember.vue';
+import MemberDetail from '../components/Members/MemberDetail.vue';
 
 export default {
     name:"Members",

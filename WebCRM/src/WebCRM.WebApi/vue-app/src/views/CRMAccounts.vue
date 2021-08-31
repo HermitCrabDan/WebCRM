@@ -54,8 +54,8 @@
 
 <script>
 import axios from 'axios';
-import NewCRMAccount from '../components/NewCRMAccount.vue';
-import CRMAccountDetail from '../components/CRMAccountDetail.vue';
+import NewCRMAccount from '../components/CRMAccounts/NewCRMAccount.vue';
+import CRMAccountDetail from '../components/CRMAccounts/CRMAccountDetail.vue';
 
 export default {
     components: { 

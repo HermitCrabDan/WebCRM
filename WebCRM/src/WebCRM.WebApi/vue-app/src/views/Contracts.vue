@@ -55,8 +55,8 @@
 
 <script>
 import axios from 'axios';
-import NewContract from '../components/NewContract.vue';
-import ContractDetail from '../components/ContractDetail.vue';
+import NewContract from '../components/Contracts/NewContract.vue';
+import ContractDetail from '../components/Contracts/ContractDetail.vue';
 
 export default {
     name:"Contracts",
