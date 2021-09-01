@@ -55,7 +55,7 @@ namespace WebCRM.Shared
             this.ExpenseAmount = model.ExpenseAmount;
             this.ExpenseDate = model.ExpenseDate;
 
-            this.ExpenseDateString = string.Format("{0:d}", model.ExpenseDate);
+            this.ExpenseDateString = string.Format("{0:MM-dd-yyyy}", model.ExpenseDate);
             this.ExpenseAmountString = string.Format("${0:N2}", model.ExpenseAmount);
             
             base.SetModelValues(model);

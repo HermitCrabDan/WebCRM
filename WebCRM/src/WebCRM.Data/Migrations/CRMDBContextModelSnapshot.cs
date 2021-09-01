@@ -97,8 +97,7 @@ namespace WebCRM.Data.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER")
-                        .HasColumnName("Id");
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("AccountName")
                         .HasColumnType("TEXT");
@@ -132,7 +131,7 @@ namespace WebCRM.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("AccountID")
+                    b.Property<int>("AccountMembershipID")
                         .HasColumnType("INTEGER");
 
                     b.Property<decimal>("ContractAmount")
@@ -159,6 +158,9 @@ namespace WebCRM.Data.Migrations
                     b.Property<DateTime?>("DeletionDate")
                         .HasColumnType("TEXT");
 
+                    b.Property<DateTime?>("LastExpensePaymentDate")
+                        .HasColumnType("TEXT");
+
                     b.Property<DateTime?>("LastPaymentRecievedDate")
                         .HasColumnType("TEXT");
 
@@ -168,18 +170,21 @@ namespace WebCRM.Data.Migrations
                     b.Property<DateTime?>("LastUpdatedDate")
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("MemberID")
-                        .HasColumnType("INTEGER");
-
                     b.Property<int?>("OriginalContractID")
                         .HasColumnType("INTEGER");
+
+                    b.Property<int>("PaymentDate")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<decimal>("TotalExpenseAmount")
+                        .HasColumnType("TEXT");
 
                     b.Property<decimal>("TotalPaidAmount")
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AccountID", "MemberID");
+                    b.HasIndex("AccountMembershipID");
 
                     b.ToTable("Contract");
                 });
@@ -188,8 +193,7 @@ namespace WebCRM.Data.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER")
-                        .HasColumnName("Id");
+                        .HasColumnType("INTEGER");
 
                     b.Property<int>("ContractID")
                         .HasColumnType("INTEGER");
@@ -298,55 +302,6 @@ namespace WebCRM.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Member");
-                });
-
-            modelBuilder.Entity("WebCRM.Data.MemberTestimonial", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<DateTime?>("ApprovalDate")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("ApprovedBy")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("CreatedBy")
-                        .HasColumnType("TEXT");
-
-                    b.Property<DateTime>("CreationDate")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("DeletionBy")
-                        .HasColumnType("TEXT");
-
-                    b.Property<DateTime?>("DeletionDate")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("LastUpdatedBy")
-                        .HasColumnType("TEXT");
-
-                    b.Property<DateTime?>("LastUpdatedDate")
-                        .HasColumnType("TEXT");
-
-                    b.Property<int>("MemberID")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int?>("TestimonialClipEnd")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int?>("TestimonialClipStart")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("TestimonialText")
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("MemberID");
-
-                    b.ToTable("MemberTestimonial");
                 });
 #pragma warning restore 612, 618
         }

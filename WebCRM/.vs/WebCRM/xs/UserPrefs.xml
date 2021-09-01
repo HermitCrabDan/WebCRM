@@ -1,12 +1,5 @@
 ﻿<Properties StartupConfiguration="{4925F06C-80EB-4244-97D9-037BD339E6D5}|Default">
-  <MonoDevelop.Ide.Workbench ActiveDocument="src/WebCRM.Shared/ViewModels/ContractExpenseViewModel.cs">
-    <Files>
-      <File FileName="src/WebCRM.Shared/ViewModels/ContractExpenseViewModel.cs" Line="26" Column="1" />
-      <File FileName="src/WebCRM.WebApi/Controllers/CRMApiControllerBase.cs" Line="116" Column="1" />
-      <File FileName="src/WebCRM.Shared/CRMRepositoryBase.cs" Line="64" Column="1" />
-      <File FileName="src/WebCRM.WebApi/Controllers/ContractExpenseDataController.cs" Line="32" Column="60" />
-      <File FileName="src/WebCRM.Shared/CRMVIewModelBase.cs" Line="55" Column="57" />
-    </Files>
+  <MonoDevelop.Ide.Workbench>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
@@ -16,8 +9,9 @@
                 <Node name="Models" expanded="True" />
               </Node>
               <Node name="WebCRM.Shared" expanded="True">
+                <Node name="Repositories" expanded="True" />
                 <Node name="ViewModels" expanded="True">
-                  <Node name="ContractExpenseViewModel.cs" selected="True" />
+                  <Node name="ReportSummaryViewModel.cs" selected="True" />
                 </Node>
               </Node>
               <Node name="WebCRM.WebApi" expanded="True">

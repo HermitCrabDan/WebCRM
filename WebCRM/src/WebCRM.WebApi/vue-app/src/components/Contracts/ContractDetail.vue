@@ -117,6 +117,14 @@
                                     </div>
                                     <br />
                                     <div>
+                                        <w-input
+                                            label="Payment Date"
+                                            v-model="contractData.paymentDate"
+                                            :validators="[validators.required]">
+                                        </w-input>
+                                    </div>
+                                    <br />
+                                    <div>
                                         <w-flex>
                                         <w-input 
                                             label="Start Date" 

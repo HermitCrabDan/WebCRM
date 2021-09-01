@@ -9,20 +9,16 @@ namespace WebCRM.Data
     /// CRM data model for contracts
     /// </summary>
     /// <author>Daniel Lee Graf</author>
-    [Index(nameof(AccountID),nameof(MemberID))]
-    public class Contract: ICRMDataModel<Contract>
-    {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Id { get; set; }
-        
-        public int AccountID { get; set; }
-
-        public int MemberID { get; set; }
+    [Index(nameof(AccountMembershipID))]
+    public class Contract:CRMDataModelBase<Contract> 
+    {   
+        public int AccountMembershipID { get; set; }
 
         public int? OriginalContractID { get; set; }
 
         public string ContractName { get; set; }
+
+        public int PaymentDate { get; set; }
 
         public DateTime ContractStartDate { get; set; }
 
@@ -34,19 +30,11 @@ namespace WebCRM.Data
 
         public DateTime? LastPaymentRecievedDate { get; set; }
 
-        public DateTime CreationDate { get; set; }
+        public decimal TotalExpenseAmount { get; set; }
 
-        public string CreatedBy { get; set; }
+        public DateTime? LastExpensePaymentDate { get; set; }
 
-        public DateTime? DeletionDate { get; set; }
-
-        public string DeletionBy { get; set; }
-
-        public DateTime? LastUpdatedDate { get; set; }
-
-        public string LastUpdatedBy { get; set; }
-
-        public void RestrictedModelUpdate(Contract model)
+        public override void RestrictedModelUpdate(Contract model)
         {
             this.ContractName = model.ContractName;
             this.LastPaymentRecievedDate = model.LastPaymentRecievedDate;
@@ -54,11 +42,10 @@ namespace WebCRM.Data
             this.ContractAmount = model.ContractAmount;
             this.ContractStartDate = model.ContractStartDate;
             this.ContractEndDate = model.ContractEndDate;
-            
-            this.DeletionDate =  model.DeletionDate;
-            this.DeletionBy = model.DeletionBy;
-            this.LastUpdatedBy = model.LastUpdatedBy;
-            this.LastUpdatedDate = model.LastUpdatedDate;
+            this.TotalExpenseAmount = model.TotalExpenseAmount;
+            this.LastExpensePaymentDate = model.LastExpensePaymentDate;
+            this.PaymentDate =  model.PaymentDate;
+            base.RestrictedModelUpdate(model);
         }
     }
 }

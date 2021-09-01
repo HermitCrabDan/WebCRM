@@ -9,7 +9,7 @@ using WebCRM.Data;
 namespace WebCRM.Data.Migrations
 {
     [DbContext(typeof(CRMDBContext))]
-    [Migration("20210901022801_InitialCreate")]
+    [Migration("20210901024652_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -173,6 +173,9 @@ namespace WebCRM.Data.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<int?>("OriginalContractID")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("PaymentDate")
                         .HasColumnType("INTEGER");
 
                     b.Property<decimal>("TotalExpenseAmount")

@@ -54,15 +54,17 @@ namespace WebCRM.Data.Migrations
                 {
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    AccountID = table.Column<int>(type: "INTEGER", nullable: false),
-                    MemberID = table.Column<int>(type: "INTEGER", nullable: false),
+                    AccountMembershipID = table.Column<int>(type: "INTEGER", nullable: false),
                     OriginalContractID = table.Column<int>(type: "INTEGER", nullable: true),
                     ContractName = table.Column<string>(type: "TEXT", nullable: true),
+                    PaymentDate = table.Column<int>(type: "INTEGER", nullable: false),
                     ContractStartDate = table.Column<DateTime>(type: "TEXT", nullable: false),
                     ContractEndDate = table.Column<DateTime>(type: "TEXT", nullable: false),
                     ContractAmount = table.Column<decimal>(type: "TEXT", nullable: false),
                     TotalPaidAmount = table.Column<decimal>(type: "TEXT", nullable: false),
                     LastPaymentRecievedDate = table.Column<DateTime>(type: "TEXT", nullable: true),
+                    TotalExpenseAmount = table.Column<decimal>(type: "TEXT", nullable: false),
+                    LastExpensePaymentDate = table.Column<DateTime>(type: "TEXT", nullable: true),
                     CreationDate = table.Column<DateTime>(type: "TEXT", nullable: false),
                     CreatedBy = table.Column<string>(type: "TEXT", nullable: true),
                     DeletionDate = table.Column<DateTime>(type: "TEXT", nullable: true),
@@ -156,30 +158,6 @@ namespace WebCRM.Data.Migrations
                     table.PrimaryKey("PK_Member", x => x.Id);
                 });
 
-            migrationBuilder.CreateTable(
-                name: "MemberTestimonial",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    MemberID = table.Column<int>(type: "INTEGER", nullable: false),
-                    TestimonialText = table.Column<string>(type: "TEXT", nullable: true),
-                    TestimonialClipStart = table.Column<int>(type: "INTEGER", nullable: true),
-                    TestimonialClipEnd = table.Column<int>(type: "INTEGER", nullable: true),
-                    ApprovalDate = table.Column<DateTime>(type: "TEXT", nullable: true),
-                    ApprovedBy = table.Column<string>(type: "TEXT", nullable: true),
-                    CreationDate = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    CreatedBy = table.Column<string>(type: "TEXT", nullable: true),
-                    DeletionDate = table.Column<DateTime>(type: "TEXT", nullable: true),
-                    DeletionBy = table.Column<string>(type: "TEXT", nullable: true),
-                    LastUpdatedDate = table.Column<DateTime>(type: "TEXT", nullable: true),
-                    LastUpdatedBy = table.Column<string>(type: "TEXT", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_MemberTestimonial", x => x.Id);
-                });
-
             migrationBuilder.CreateIndex(
                 name: "IX_AccountMembership_AccountID_MemberID",
                 table: "AccountMembership",
@@ -191,9 +169,9 @@ namespace WebCRM.Data.Migrations
                 column: "AccountID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Contract_AccountID_MemberID",
+                name: "IX_Contract_AccountMembershipID",
                 table: "Contract",
-                columns: new[] { "AccountID", "MemberID" });
+                column: "AccountMembershipID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ContractExpense_ContractID",
@@ -204,11 +182,6 @@ namespace WebCRM.Data.Migrations
                 name: "IX_ContractTransaction_ContractID",
                 table: "ContractTransaction",
                 column: "ContractID");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_MemberTestimonial_MemberID",
-                table: "MemberTestimonial",
-                column: "MemberID");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -233,9 +206,6 @@ namespace WebCRM.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "Member");
-
-            migrationBuilder.DropTable(
-                name: "MemberTestimonial");
         }
     }
 }

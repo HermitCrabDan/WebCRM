@@ -56,7 +56,6 @@ namespace WebCRM.WebApi
             services.AddScoped<ICRMRepository<ContractTransaction, ContractTransactionViewModel>, ContractTransactionRepository>();
             services.AddScoped<ICRMRepository<CRMAccount, CRMAccountViewModel>, CRMAccountRepository>();
             services.AddScoped<ICRMRepository<Member, MemberViewModel>, MemberRepository>();
-            services.AddScoped<ICRMRepository<MemberTestimonial, MemberTestimonialViewModel>, MemberTestimonialRepository>();
             services.AddScoped<IReportRepository, ReportRepository>();
             services.AddScoped<IAppSecurityService, AppSecurityService>();
         }

@@ -30,9 +30,7 @@ namespace WebCRM.Shared
         }
 
         #region  Contract
-        public int AccountID { get; set; }
-
-        public int MemberID { get; set; }
+        public int AccountMembershipID { get; set; }
 
         public int? OriginalContractID { get; set; }
 
@@ -47,6 +45,12 @@ namespace WebCRM.Shared
         public decimal TotalPaidAmount { get; set; }
 
         public DateTime? LastPaymentRecievedDate { get; set; }
+
+        public decimal TotalExpenseAmount { get; set; }
+
+        public DateTime? LastExpensePaymentDate { get; set; }
+
+        public int PaymentDate { get; set; }
         #endregion
 
         public string ContractStartDateString { get; set; }
@@ -58,6 +62,10 @@ namespace WebCRM.Shared
         public string TotalPaidAmountString { get; set; }
 
         public string LastPaymentRecievedDateString { get; set; }
+
+        public string TotalExpenseAmountString { get; set; }
+
+        public string LastExpensePaymentDateString { get; set; }
 
         public string MemberName { get; set; }
 
@@ -79,47 +87,50 @@ namespace WebCRM.Shared
         {
             this.ValidationErrorMessages = new List<string>();
             bool valid = true;
-            if (this.AccountID <= 0)
+            if (this.AccountMembershipID <= 0)
             {
                 valid = false;
-                this.ValidationErrorMessages.Add("Invalid Account Id");
-            }
-            if (this.MemberID <= 0)
-            {
-                valid = false;
-                this.ValidationErrorMessages.Add("Invalid Member Id");
+                this.ValidationErrorMessages.Add("Invalid Account Membership Id");
             }
             if (String.IsNullOrWhiteSpace(this.ContractName))
             {
                 valid = false;
                 this.ValidationErrorMessages.Add("Contract Name cannot be blank");
             }
-            if(this.ContractEndDate < this.ContractStartDate)
+            if (this.ContractEndDate < this.ContractStartDate)
             {
                 valid = false;
                 this.ValidationErrorMessages.Add("End Date must be before Start Date");
             }
+            if (this.PaymentDate < 1 || this.PaymentDate > 31)
+            {
+                valid = false;
+                this.ValidationErrorMessages.Add("Payment date must be between 1 and 31");
+            }
             return valid;
-                //this.AccountID > 0 && this.MemberID > 0 && !String.IsNullOrWhiteSpace(this.ContractName);
         }
 
         public override void SetModelValues(Contract model)
         {
-            this.AccountID = model.AccountID;
+            this.AccountMembershipID = model.AccountMembershipID;
             this.ContractAmount = model.ContractAmount;
             this.ContractEndDate = model.ContractEndDate;
             this.ContractName = XSSFilterHelper.FilterForXSS(model.ContractName);
             this.ContractStartDate = model.ContractStartDate;
             this.LastPaymentRecievedDate = model.LastPaymentRecievedDate;
-            this.MemberID = model.MemberID;
             this.OriginalContractID = model.OriginalContractID;
             this.TotalPaidAmount = model.TotalPaidAmount;
+            this.LastExpensePaymentDate = model.LastExpensePaymentDate;
+            this.TotalExpenseAmount = model.TotalExpenseAmount;
+            this.PaymentDate = model.PaymentDate;
 
             this.ContractAmountString = String.Format("${0:N2}", model.ContractAmount);
             this.TotalPaidAmountString = String.Format("${0:N2}", model.TotalPaidAmount);
             this.LastPaymentRecievedDateString = String.Format("{0:MM-dd-yyyy}", model.LastPaymentRecievedDate);
             this.ContractStartDateString = String.Format("{0:MM-dd-yyyy}", model.ContractStartDate);
             this.ContractEndDateString = String.Format("{0:MM-dd-yyyy}", model.ContractEndDate);
+            this.TotalExpenseAmountString = String.Format("${0:N2}", model.TotalExpenseAmount);
+            this.LastExpensePaymentDateString = String.Format("{0:MM-dd-yyyy}", model.LastExpensePaymentDate);
 
             var monthDiff = model.ContractEndDate.Subtract(model.ContractStartDate).TotalDays / 30.0;
             this.MonthlyEstimate = Math.Round((model.ContractAmount / (decimal)monthDiff), 2);
@@ -138,22 +149,24 @@ namespace WebCRM.Shared
         
         public override string ToString()
         {
-            return $"ContractID:{this.Id},Account:{this.AccountID},Member:{this.MemberID},ContractName:{this.ContractName}";
+            return $"ContractID:{this.Id},AccountMembership:{this.AccountMembershipID},ContractName:{this.ContractName}";
         }
 
         public override Contract GetBaseModel()
         {
             var model = base.GetBaseModel();
 
-            model.AccountID = this.AccountID;
+            model.AccountMembershipID = this.AccountMembershipID;
             model.ContractAmount = this.ContractAmount;
             model.ContractEndDate = this.ContractEndDate;
             model.ContractName = this.ContractName;
             model.ContractStartDate = this.ContractStartDate;
             model.LastPaymentRecievedDate = this.LastPaymentRecievedDate;
-            model.MemberID = this.MemberID;
             model.OriginalContractID = this.OriginalContractID;
             model.TotalPaidAmount = this.TotalPaidAmount;
+            model.LastExpensePaymentDate = this.LastExpensePaymentDate;
+            model.TotalExpenseAmount = this.TotalExpenseAmount;
+            model.PaymentDate = this.PaymentDate;
 
             return model;
         }

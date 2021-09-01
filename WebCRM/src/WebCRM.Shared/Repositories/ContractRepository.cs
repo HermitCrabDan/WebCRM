@@ -27,10 +27,12 @@ namespace WebCRM.Shared
         {
             //var data = this._ctx.Contracts.Where(selector).ToList();
             var data = (from c in this._ctx.Contracts
-                        join m in this._ctx.Members
-                        on c.MemberID equals m.Id
+                        join am in this._ctx.AccountMemberships
+                        on c.AccountMembershipID equals am.Id
                         join a in this._ctx.CRMAccounts
-                        on c.AccountID equals a.Id
+                        on am.AccountID equals a.Id
+                        join m in this._ctx.Members
+                        on am.MemberID equals m.Id
                         select new { contract = c, accountName = a.AccountName, memberName = m.MemberName })
                         .ToList();
             return data

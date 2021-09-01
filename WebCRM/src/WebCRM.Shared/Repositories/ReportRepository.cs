@@ -52,6 +52,7 @@ namespace WebCRM.Shared
             summaryData.ActiveContractValueToBeCollected = summaryData.ActiveContractAmount - summaryData.ActiveContractValueCollected;
             summaryData.ActiveCurrentContracts = activeContractData.Where(w => !w.IsContractDelinquent).Count();
             summaryData.ActiveDelinquentContracts = activeContractData.Where(w => w.IsContractDelinquent).Count();
+            
             summaryData.ActiveContractExpensesPaid = 0;
 
             return summaryData;

@@ -87,19 +87,9 @@
                     <br />
                     <div>
                          <w-select
-                            label="Account" 
-                            v-model="newContractData.accountID"
-                            :items="viewableAccounts"
-                            :validators="[validators.required]"
-                            >
-                         </w-select>
-                    </div>
-                    <br />
-                    <div>
-                         <w-select 
-                            label="Member" 
-                            v-model="newContractData.memberID"
-                            :items="viewableMembers"
+                            label="Account Membership" 
+                            v-model="newContractData.accountMembershipID"
+                            :items="viewableAccountMemberships"
                             :validators="[validators.required]"
                             >
                          </w-select>
@@ -149,6 +139,15 @@
                     </div>
                     <br />
                     <div>
+                         <w-input 
+                            label="Payment Date" 
+                            v-model="newContractData.paymentDate"
+                            :validators="[validators.required]"
+                            >
+                        </w-input>
+                    </div>
+                    <br />
+                    <div>
                         <w-button type="submit">Submit Contract</w-button>
                     </div>
                 </w-form>
@@ -168,17 +167,16 @@
         },
         name:"NewContract",
         props:{
-            selectedMemberID: Number,
-            selectedAccountID: Number,
+            selectedAccountMembershipID: Number,
         },
         data(){
             return{
                 newContractData:{ 
-                    accountID:0, 
-                    memberID: 0,
+                    accountMembershipID:0, 
                     contractName:'',
                     contractStartDate: '',
                     contractEndDate: '',
+                    paymentDate:0,
                     contractAmount: 0.00 
                 },
                 newContractValid:null,
@@ -186,10 +184,8 @@
                 showStartDate: false,
                 showEndDate: false,
 
-                availableMembers:[],
-                viewableMembers: [],
-                availableAccounts:[],
-                viewableAccounts:[],
+                availableAccountMemberships:[],
+                viewableAccountMemberships:[],
 
                 isLoading: false,
                 isError: false,
@@ -200,49 +196,31 @@
             }
         },
         watch:{
-            selectedMemberID:{
+            selectedAccountMembershipID:{
                 immediate:true,
                 deep:true,
-                handeler(newVal, oldVal){
-                    this.newContractData.accountID = newVal;
-                    console.log(oldVal);
+                handeler(newVal){
+                    this.newContractData.accountMembershipID = newVal;
                 }
             },
-            selectedAccountID:{
-                immediate:true,
-                deep:true,
-                handeler(newVal, oldVal){
-                    this.newContractData.accountID = newVal;
-                    console.log(oldVal);
-                }
-            }
         },
         emits:["newContractValidated","newContractClose"],
         methods:{
-            updateViewableMembers(){
-                const filteredMembers = [];
-                this.availableMembers.forEach(element => {
+            updateViewableAccountMemberships(){
+                const filteredAccountMemberships = [];
+                this.availableAccountMemberships.forEach(element => {
                     if(!element.deletionDate){
-                        filteredMembers.push({ label:element.memberName, value: element.id})
+                        filteredAccountMemberships.push({ label:element.memberName, value: element.id})
                     }
                 });
-                this.viewableMembers = filteredMembers;
+                this.viewableAccountMemberships = filteredAccountMemberships;
             },
-            updateViewableAccounts(){
-                const filteredAccounts = [];
-                this.availableAccounts.forEach(element => {
-                    if(!element.deletionDate){
-                        filteredAccounts.push({ label:element.accountName, value: element.id})
-                    }
-                });
-                this.viewableAccounts = filteredAccounts;
-            },
-            loadAvailableMembers(){
+            loadAvailableAccountMemberships(){
                 this.isError = false;
                 this.isLoading = true;
-                axios.get('api/MemberData')
+                axios.get('api/AccountMembershipData')
                     .then(response => {
-                        this.availableMembers = response.data;
+                        this.availableAccountMemberships = response.data;
                     })
                     .catch(error => {
                         console.log(error);
@@ -251,25 +229,7 @@
                     .then(() => {
                         this.isLoading = false;
                         if(!this.isError){
-                            this.updateViewableMembers();
-                        }
-                    });
-            },
-            loadAvailableAccounts(){
-                this.isError = false;
-                this.isLoading = true;
-                axios.get('api/CRMAccountData')
-                    .then(response => {
-                        this.availableAccounts = response.data;
-                    })
-                    .catch(error => {
-                        console.log(error);
-                        this.isError = true;
-                    })
-                    .then(() => {
-                        this.isLoading = false;
-                        if(!this.isError){
-                            this.updateViewableAccounts();
+                            this.updateViewableAccountMemberships();
                         }
                     });
             },
@@ -293,8 +253,7 @@
             }
         },
         mounted(){
-            this.loadAvailableMembers();
-            this.loadAvailableAccounts();
+            this.loadAvailableAccountMemberships();
         }
     }
 </script>

@@ -28,7 +28,7 @@ namespace WebCRM.WebApi.Controllers
         {
             if (this._security.IsMember)
             {
-                return n => n.MemberID == this._security.MemberId;
+                //return n => n.MemberID == this._security.MemberId;
             }
             return base.RestrictedSelection();
         }
