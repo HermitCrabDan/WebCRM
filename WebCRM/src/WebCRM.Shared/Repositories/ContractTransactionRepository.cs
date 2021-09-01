@@ -1,5 +1,6 @@
 namespace WebCRM.Shared
 {
+    using System;
     using System.Linq;
     using WebCRM.Data;
     using Microsoft.Extensions.Logging;
@@ -53,6 +54,61 @@ namespace WebCRM.Shared
                 }
             }
             return (success, viewModel);
+        }
+
+        public override (bool, ContractTransactionViewModel) Update(ContractTransactionViewModel model, string userID)
+        {
+            if (model != null)
+            {
+                try
+                {
+                    var modelToUpdate = 
+                        this._ctx
+                            .ContractTransactions
+                            .Where(w => w.Id == model.Id)
+                            .FirstOrDefault();
+                    if (modelToUpdate != null)
+                    {
+                        var amountDiff = model.TransactionAmount - modelToUpdate.TransactionAmount;
+                        modelToUpdate.RestrictedModelUpdate(model.GetBaseModel());
+                        modelToUpdate.LastUpdatedDate = DateTime.Now;
+                        modelToUpdate.LastUpdatedBy = userID;
+
+                        this._ctx.ContractTransactions.Update(modelToUpdate);
+                        
+                        if (amountDiff != 0)
+                        {
+                            var contractToUpdate = this._ctx
+                                .Contracts
+                                .Where(w => w.Id == model.ContractID)
+                                .FirstOrDefault();
+                            if (contractToUpdate != null)
+                            {
+                                contractToUpdate.TotalPaidAmount += amountDiff;
+
+                                if (!contractToUpdate.LastPaymentRecievedDate.HasValue
+                                    || model.TransactionDate > contractToUpdate.LastPaymentRecievedDate.Value)
+                                    {
+                                        contractToUpdate.LastPaymentRecievedDate = model.TransactionDate;
+                                    }
+                                this._ctx.Contracts.Update(contractToUpdate);
+                            }
+                        }
+                        var success = _ctx.SaveChanges() > 0;
+                        var viewModel = new ContractTransactionViewModel();
+                        viewModel.SetModelValues(modelToUpdate);
+                        return (success, viewModel);
+                    }
+                }
+                catch (Exception ex) 
+                { 
+                    if (_logger != null)
+                    {
+                        _logger.LogError(ex, $"Failed to update Contract Transaction, Id:{model?.Id}");
+                    }
+                }
+            }
+            return (false, model);
         }
     }
 }

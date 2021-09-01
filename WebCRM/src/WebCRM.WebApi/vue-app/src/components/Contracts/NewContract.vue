@@ -210,7 +210,14 @@
                 const filteredAccountMemberships = [];
                 this.availableAccountMemberships.forEach(element => {
                     if(!element.deletionDate){
-                        filteredAccountMemberships.push({ label:element.memberName, value: element.id})
+                        filteredAccountMemberships.push({ 
+                            label: element.accountID + ':' 
+                                + element.accountName 
+                                + ' - '
+                                + element.memberID + ':'
+                                + element.memberName, 
+                            value: element.id
+                        })
                     }
                 });
                 this.viewableAccountMemberships = filteredAccountMemberships;

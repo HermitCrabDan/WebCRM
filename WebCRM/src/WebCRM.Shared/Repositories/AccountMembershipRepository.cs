@@ -27,26 +27,31 @@ namespace WebCRM.Shared
 
         public override IEnumerable<AccountMembershipViewModel> Retrieve(Func<AccountMembership, bool> selector)
         {
-            var data = this._ctx.AccountMemberships.Where(selector).ToList();
-
-            var members = this._ctx.Members.ToList();
-            var membershiplist = (from d in data
-                                join m in members
-                                on d.MemberID equals m.Id
-                                select new AccountMembershipViewModel(d, m.MemberName)
-                                ).ToList();
-            return membershiplist;
+            var data = (from am in this._ctx.AccountMemberships
+                        join a in this._ctx.CRMAccounts
+                        on am.AccountID equals a.Id
+                        join m in this._ctx.Members
+                        on am.MemberID equals m.Id
+                        select new { membership = am, accountName = a.AccountName, memberName = m.MemberName })
+                        .ToList();
+            return data
+                .Where(w => selector.Invoke(w.membership))
+                .Select(s => new AccountMembershipViewModel(s.membership, s.memberName, s.accountName))
+                .ToList();
         }
 
-        public override async Task<IEnumerable<AccountMembershipViewModel>> RetrieveAsync(Func<AccountMembership, bool> selector)
+        public override (bool, AccountMembershipViewModel) RetrieveById(int id)
         {
-            var data = this._ctx.AccountMemberships.Where(selector).AsQueryable();
-            var membershipList = await (from d in data
-                                  join m in _ctx.Members
-                                  on d.MemberID equals m.Id
-                                  select new AccountMembershipViewModel(d, m.MemberName)
-                                  ).ToListAsync();
-            return membershipList;
+            var contract = (from am in this._ctx.AccountMemberships
+                            join a in this._ctx.CRMAccounts
+                            on am.AccountID equals a.Id
+                            join m in this._ctx.Members
+                            on am.MemberID equals m.Id
+                            where am.Id == id
+                            select new AccountMembershipViewModel(am, m.MemberName, a.AccountName))
+                    .FirstOrDefault();
+
+            return ((contract != null), contract);
         }
     }
 }

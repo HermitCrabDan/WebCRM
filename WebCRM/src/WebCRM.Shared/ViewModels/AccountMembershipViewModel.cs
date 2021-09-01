@@ -21,10 +21,11 @@ namespace WebCRM.Shared
             SetModelValues(model);
         }
 
-        public AccountMembershipViewModel(AccountMembership model, string memberName)
+        public AccountMembershipViewModel(AccountMembership model, string memberName, string accountName)
             :base()
         {
             SetModelValues(model);
+            this.AccountName = XSSFilterHelper.FilterForXSS(accountName);
             this.MemberName = XSSFilterHelper.FilterForXSS(memberName);
         }
 
@@ -35,6 +36,8 @@ namespace WebCRM.Shared
 
         public bool IsPrimaryAccountMember { get; set; }
         #endregion
+
+        public string AccountName { get; set; }
 
         public string MemberName { get; set; }
 

@@ -102,6 +102,7 @@
                 crmAccountMemberList:[],
                 accountMemberHeaders:[
                     { label:'Account ID', key:'accountID', align:'left' },
+                    { label:'Account Name', key:'accountName', align:'left' },
                     { label:'Member ID', key:'memberID', align:'left' },
                     { label:'Member Name', key:'memberName', align:'left' },
                     { label:'Created by', key:'createdBy', align:'left' },

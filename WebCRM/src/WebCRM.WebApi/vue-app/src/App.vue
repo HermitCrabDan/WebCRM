@@ -2,8 +2,8 @@
   <div>
     <div id="nav">
       <router-link to="/">Home</router-link> | 
-      <router-link to="/CRMAccounts">Accounts</router-link> | 
       <router-link to="/Members">Members</router-link> |
+      <router-link to="/CRMAccounts">Accounts</router-link> | 
       <router-link to="/Contracts">Contracts</router-link> |
       <router-link to="/Totals">Totals</router-link> |
       <router-link to="/Remittance">Remittance</router-link> 

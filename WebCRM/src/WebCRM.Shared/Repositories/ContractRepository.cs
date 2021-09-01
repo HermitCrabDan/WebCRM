@@ -25,7 +25,6 @@ namespace WebCRM.Shared
 
         public override IEnumerable<ContractViewModel> Retrieve(Func<Contract, bool> selector)
         {
-            //var data = this._ctx.Contracts.Where(selector).ToList();
             var data = (from c in this._ctx.Contracts
                         join am in this._ctx.AccountMemberships
                         on c.AccountMembershipID equals am.Id
@@ -39,6 +38,22 @@ namespace WebCRM.Shared
                 .Where(w => selector.Invoke(w.contract))
                 .Select(s => new ContractViewModel(s.contract, s.memberName, s.accountName))
                 .ToList();
+        }
+
+        public override (bool, ContractViewModel) RetrieveById(int id)
+        {
+            var contract = (from c in this._ctx.Contracts
+                        join am in this._ctx.AccountMemberships
+                        on c.AccountMembershipID equals am.Id
+                        join a in this._ctx.CRMAccounts
+                        on am.AccountID equals a.Id
+                        join m in this._ctx.Members
+                        on am.MemberID equals m.Id
+                        where c.Id == id
+                        select new ContractViewModel(c, m.MemberName, a.AccountName))
+                    .FirstOrDefault();
+
+            return ((contract != null), contract);
         }
     }
 }
