@@ -114,7 +114,6 @@
                 
                 editMembershipMode: false,
                 selectedAccountMembership: {},
-                showDeletedMemberships: false,
 
                 newMembershipMode: false,
                 
@@ -145,7 +144,6 @@
                         this.crmAccountMemberList = response.data;
                         this.memberIdList = this.crmAccountMemberList.map(x => x.memberID);
                         console.log(response.data);
-                        this.updateViewableMemberships();
                     })
                     .catch(error => { 
                         console.log(error);

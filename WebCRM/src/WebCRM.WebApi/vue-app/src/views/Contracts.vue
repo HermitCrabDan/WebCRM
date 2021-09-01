@@ -138,8 +138,10 @@ export default {
                 .then(response => {
                     console.log(response.data);
                 })
-                .catch(function (error) {
+                .catch(error => {
                     console.log(error);
+                    console.log(error.response);
+                    console.log(error.response.data);
                     this.isError = true;
                 })
                 .then(() => {
