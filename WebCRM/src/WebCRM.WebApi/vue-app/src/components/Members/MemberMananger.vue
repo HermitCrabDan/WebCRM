@@ -22,7 +22,7 @@
             </member-detail>
         </div>
         <div v-else>
-            <w-button @click="createNewMember">Create New Member</w-button>
+            <w-button @click="newMode = true">Create New Member</w-button>
             <div class="--bg pa12">
                 <w-card title="Existing Members" title-class="blue-light5--bg pa3">
                     <model-list-base
@@ -77,10 +77,6 @@
             }
         },
         methods:{
-            createNewMember(){
-                this.newMode = true;
-                this.editMode = false;
-            },
             closeNewMember(){
                 this.newMode = false;
             },

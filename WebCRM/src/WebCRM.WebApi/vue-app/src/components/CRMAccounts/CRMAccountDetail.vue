@@ -79,7 +79,7 @@
 </template>
 
 <script>
-    import AccountMembershipManager from './AccountMembershipManager.vue';
+    import AccountMembershipManager from './AccountMemberships/AccountMembershipManager.vue';
     import ModelDetails from '../ModelDetails.vue';
 
     export default {

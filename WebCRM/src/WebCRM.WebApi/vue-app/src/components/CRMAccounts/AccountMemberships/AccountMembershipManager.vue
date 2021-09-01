@@ -86,8 +86,8 @@
 
 <script>
     import axios from 'axios';
-    import ModelDetails from '../ModelDetails.vue';
-    import ModelListBase from '../ModelListBase.vue';
+    import ModelDetails from '../../ModelDetails.vue';
+    import ModelListBase from '../../ModelListBase.vue';
     import NewAccountMembership from './NewAccountMembership.vue'
 
     export default {

@@ -21,15 +21,17 @@
                     absolute 
                     icon="wi-cross" >
                 </w-button>
-                <model-details 
-                    :modelData="contractData">
-                </model-details>
-                <br />
                 <w-tabs :items="tabs" card>
                     <template #item-title.1>
                         Edit Contract
                     </template>
                     <template #item-content.1>
+                        <w-flex justify-center fill-width >
+                            <model-details
+                                :modelData="contractData">
+                            </model-details>
+                        </w-flex>
+                        <br />
                         <w-flex justify-center fill-width>
                             <div style="min-width:600px; border:solid 1px silver; padding:10px">
                                 <w-drawer
@@ -174,26 +176,13 @@
                         Transactions
                     </template>
                     <template #item-content.2>
-                        <div v-if="newTransactionMode">
-                            <new-crm-transaction
-                                :SelectedContractID="contractData.id"
-                                @transactionClose="newTransactionMode = false"
-                                @transactionValidated="submitNewTransaction"
-                                >
-                            </new-crm-transaction>
-                        </div>
-                        <div v-else>
-                            <br />
-                            <div>
-                                <w-button @click="newTransactionMode = true">New Transaction</w-button>
+                        <w-flex justify-center fill-width>
+                            <div style="min-width:600px">
+                                <contract-transaction-manager
+                                    :SelectedContractId="contractData.id">
+                                </contract-transaction-manager>
                             </div>
-                            <br />
-                            <contract-transaction-list
-                                :SelectedContractID="contractData.id"
-                                @contractSelected="selectTransaction"
-                                >
-                            </contract-transaction-list>
-                        </div>
+                        </w-flex>
                     </template>
                     <template #item-title.3>
                         Expenses
@@ -220,20 +209,17 @@
 <script>
     import VueCal from 'vue-cal';
     import 'vue-cal/dist/vuecal.css';
-    import NewCRMTransaction from './ContractTransactions/NewCRMTransaction.vue';
-    import ContractTransactionList from './ContractTransactions/ContractTransactionList.vue';
-    import axios from 'axios';
     import ModelDetails from '../ModelDetails.vue';
     import ContractExpenseManager from './ContractExpenses/ContractExpenseManager.vue';
+    import ContractTransactionManager from './ContractTransactions/ContractTransactionManager.vue';
     
     export default {
         name:"ContractDetail",
         components:{
             'vue-cal':VueCal,
-            'new-crm-transaction':NewCRMTransaction,
-            'contract-transaction-list':ContractTransactionList,
             'model-details':ModelDetails,
             'contract-expense-manager':ContractExpenseManager,
+            'contract-transaction-manager':ContractTransactionManager,
         },
         props:{
             selectedContractData: Object
@@ -270,28 +256,6 @@
             }
         },
         methods:{
-            selectTransaction(transactionData){
-                console.log(transactionData);
-            },
-            submitNewTransaction(transactionData){
-                console.log(transactionData);
-                this.isLoading = true;
-                axios
-                    .post('api/ContractTransactionData', transactionData)
-                    .then(response => {
-                        console.log(response.data);
-                    })
-                    .catch(error => {
-                        console.log(error);
-                        this.isError = true;
-                    })
-                    .then(() => {
-                        this.isLoading = false;
-                        if(!this.isError){
-                            this.newTransactionMode = false;
-                        }
-                    });
-            },
             setStartDate(event){
                 console.log(event);
                 this.contractData.contractStartDateString = event.format('MM-DD-YYYY'); 

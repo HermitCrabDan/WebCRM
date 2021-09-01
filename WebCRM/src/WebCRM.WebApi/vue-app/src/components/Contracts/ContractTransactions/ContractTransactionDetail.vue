@@ -1,7 +1,7 @@
 <template>
     <div>
         <w-flex justify-center fill-width>
-            <w-card title="Edit Transaction" title-class="blue-light5--bg pa3" style="min-width:400px">
+            <w-card title="Edit Transaction" title-class="blue-light5--bg pa3" style="min-width:600px">
                 <div class="message-box">
                     <w-alert
                         class="my0 text-light"

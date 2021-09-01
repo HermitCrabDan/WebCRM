@@ -1,6 +1,10 @@
 <template>
     <div>
-        <div style="text-align:left; border:solid 1px silver; padding:5px">
+        <div style="text-align:left; border:solid 1px silver; padding:5px; min-width:400px">
+            <div style="text-align:center">
+                <h3>Details</h3>
+            </div>
+            <hr />
             <div>
                 Id: {{ modelData.id }}
             </div>
