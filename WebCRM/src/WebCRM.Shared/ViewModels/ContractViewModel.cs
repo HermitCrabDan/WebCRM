@@ -83,6 +83,14 @@ namespace WebCRM.Shared
 
         public string IsContractDelinquentString { get; set; }
 
+        public int PaymentsRemaining { get; set; }
+
+        public string FirstPaymentDateString { get; set; }
+
+        public string LastPaymentDateString { get; set; }
+
+        public string NextPaymentDateString { get; set; }
+
         public override bool IsValid()
         {
             this.ValidationErrorMessages = new List<string>();
@@ -132,18 +140,88 @@ namespace WebCRM.Shared
             this.TotalExpenseAmountString = String.Format("${0:N2}", model.TotalExpenseAmount);
             this.LastExpensePaymentDateString = String.Format("{0:MM-dd-yyyy}", model.LastExpensePaymentDate);
 
-            var monthDiff = model.ContractEndDate.Subtract(model.ContractStartDate).TotalDays / 30.0;
-            this.MonthlyEstimate = Math.Round((model.ContractAmount / (decimal)monthDiff), 2);
-            this.MonthlyEstimateString = String.Format("${0:N2}", this.MonthlyEstimate);
-
             this.AmountRemaining = model.ContractAmount - model.TotalPaidAmount;
             this.AmountRemainingString = String.Format("${0:N2}", this.AmountRemaining);
 
-            var paymentDayOfMonth = this.ContractStartDate.Day;
-            var baseMonthDate = (DateTime.Now.Day > paymentDayOfMonth) ? DateTime.Now : DateTime.Now.AddMonths(-1);
-            var lastExpectedPayment = new DateTime(baseMonthDate.Year, baseMonthDate.Month, paymentDayOfMonth);
-            this.IsContractDelinquent = (this.AmountRemaining > 0 && this.LastPaymentRecievedDate < lastExpectedPayment);
+            var firstExpectedPaymentDate =
+                (this.ContractStartDate.Day >= this.PaymentDate) ?
+                    new DateTime(
+                        this.ContractStartDate.AddMonths(1).Year,
+                        this.ContractStartDate.AddMonths(1).Month,
+                        this.PaymentDate
+                    )
+                    : new DateTime(
+                        this.ContractStartDate.Year,
+                        this.ContractStartDate.Month,
+                        this.PaymentDate
+                    );
+            var finalPaymentDate =
+                (this.ContractEndDate.Day >= this.PaymentDate) ?
+                    new DateTime(
+                            this.ContractEndDate.Year,
+                            this.ContractEndDate.Month,
+                            this.PaymentDate
+                        )
+                    : new DateTime(
+                            this.ContractEndDate.AddMonths(-1).Year,
+                            this.ContractEndDate.AddMonths(-1).Month,
+                            this.PaymentDate
+                        );
+
+            var nextPaymentDate =
+                (this.LastPaymentRecievedDate.HasValue)?
+                    new DateTime(
+                            this.LastPaymentRecievedDate.Value.AddMonths(1).Year,
+                            this.LastPaymentRecievedDate.Value.AddMonths(1).Month,
+                            this.PaymentDate
+                        )
+                    :firstExpectedPaymentDate;
+
+            if (nextPaymentDate > finalPaymentDate)
+            {
+                nextPaymentDate = finalPaymentDate;
+            }
+
+            this.FirstPaymentDateString = String.Format("{0:MM-dd-yyyy}", firstExpectedPaymentDate);
+            this.LastPaymentDateString = String.Format("{0:MM-dd-yyyy}", finalPaymentDate);
+            this.NextPaymentDateString = String.Format("{0:MM-dd-yyyy}", nextPaymentDate);
+
+            if (finalPaymentDate.Year == nextPaymentDate.Year)
+            {
+                this.PaymentsRemaining = finalPaymentDate.Month - nextPaymentDate.Month + 1;
+            }
+            else
+            {
+                this.PaymentsRemaining = finalPaymentDate.Month
+                                + (12 - nextPaymentDate.Month + 1)
+                                + 12 * (finalPaymentDate.Year - (nextPaymentDate.Year) - 1);
+            }
+
+            var lastExpectedPayment =
+                (DateTime.Now.Day > this.PaymentDate) ?
+                    new DateTime(
+                            DateTime.Now.Year,
+                            DateTime.Now.Month,
+                            this.PaymentDate
+                        )
+                    : new DateTime(
+                            DateTime.Now.AddMonths(-1).Year,
+                            DateTime.Now.AddMonths(-1).Month,
+                            this.PaymentDate
+                        );
+
+            this.IsContractDelinquent = (
+                    this.AmountRemaining > 0
+                    && (
+                        ((this.LastPaymentRecievedDate ?? firstExpectedPaymentDate) < lastExpectedPayment
+                            && DateTime.Now > firstExpectedPaymentDate)
+                        || DateTime.Now > finalPaymentDate
+                       ));
             this.IsContractDelinquentString = (this.IsContractDelinquent) ? "Yes" : "No";
+
+            this.MonthlyEstimate = Math.Round((this.AmountRemaining / (decimal)this.PaymentsRemaining), 2);
+            this.MonthlyEstimateString = String.Format("${0:N2}", this.MonthlyEstimate);
+
             base.SetModelValues(model);
         }
         

@@ -18,8 +18,16 @@ namespace WebCRM.Data
 
         public decimal TransactionAmount { get; set; }
 
+        public bool IsFee { get; set; }
+
+        public int PaymentMonth { get; set; }
+
+        public int PaymentYear { get; set; }
+
         public override void RestrictedModelUpdate(ContractTransaction model)
         {
+            this.PaymentMonth = model.PaymentMonth;
+            this.IsFee = model.IsFee;
             this.TransactionDate = model.TransactionDate;
             this.TransactionAmount = model.TransactionAmount;
             base.RestrictedModelUpdate(model);

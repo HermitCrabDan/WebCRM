@@ -70,6 +70,9 @@
                     { label:'Transaction ID', key:'id', align:'center' },
                     { label:'Transaction Date', key:'transactionDateString', align:'center' },
                     { label:'Transaction Amount', key:'transactionAmountString', align:'center' },
+                    { label:'Fee', key:'isFeeString', align:'center' },
+                    { label:'Payment Year', key:'paymentYear', align:'center'},
+                    { label:'Payment Month', key:'paymentMonth', align:'center'},
                     { label:'Entered by', key:'createdBy', align:'left' },
                     { label:'Date Entered', key:'creationDateString', align:'left' },
                     { label:'Updated by', key:'lastUpdatedBy', align:'left' },
@@ -77,9 +80,7 @@
                 ],
                 transactionSort:'-creationDate',
 
-                errorData:{
-                    ValidationErrorMessages:[],
-                },
+                errorData:{ validationErrorMessages:[] },
 
                 newMode:false,
                 editMode:false,
@@ -102,10 +103,11 @@
             submitTransaction(transactionData){
                 this.isError = false;
                 this.isLoading = true;
+                this.errorData = { validationErrorMessages:[] };
                 axios
                     .post('api/ContractTransactionData', transactionData)
                     .then(response => {
-                        console.log(response.data);
+                        this.errorData = response.data;
                     })
                     .catch(error => {
                         if (error.response.data){
@@ -116,7 +118,8 @@
                     .then(() => {
                         this.isLoading = false;
                         if(!this.isError){
-                            this.newTransactionMode = false;
+                            this.newMode = false;
+                            this.loadTransactions();
                         }
                     });
 
@@ -124,10 +127,11 @@
             updateTransaction(transactionToUpdate){
                 this.isError = false;
                 this.isLoading = true;
+                this.errorData = { validationErrorMessages:[] };
                 axios
                     .put('api/ContractTransactionData', transactionToUpdate)
                     .then(response => {
-                        console.log(response.data);
+                        this.errorData = response.data;
                     })
                     .catch(error => {
                         console.log(error);
@@ -148,6 +152,8 @@
             },
             loadTransactions(){
                 this.transactionList = [];
+                this.errorData = { validationErrorMessages:[] };
+                this.isError = false;
                 if (this.contractID > 0){
                     this.isLoading = false;
                     axios

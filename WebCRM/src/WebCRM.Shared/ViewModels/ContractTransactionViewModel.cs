@@ -28,11 +28,19 @@ namespace WebCRM.Shared
         public DateTime TransactionDate { get; set; }
 
         public decimal TransactionAmount { get; set; }
+
+        public bool IsFee { get; set; }
+
+        public int PaymentMonth { get; set; }
+
+        public int PaymentYear { get; set; }
         #endregion
 
         public string TransactionDateString { get; set; }
 
         public string TransactionAmountString { get; set; }
+
+        public string IsFeeString { get; set; }
 
         public override bool IsValid()
         {
@@ -54,6 +62,9 @@ namespace WebCRM.Shared
             this.ContractID = model.ContractID;
             this.TransactionAmount = model.TransactionAmount;
             this.TransactionDate = model.TransactionDate;
+            this.IsFee = model.IsFee;
+            this.PaymentMonth = model.PaymentMonth;
+            this.PaymentYear = model.PaymentYear;
 
             this.TransactionAmountString = String.Format("${0:N2}", model.TransactionAmount);
             this.TransactionDateString = String.Format("{0:MM-dd-yyyy}", model.TransactionDate);
@@ -74,6 +85,9 @@ namespace WebCRM.Shared
             model.ContractID = this.ContractID;
             model.TransactionAmount = this.TransactionAmount;
             model.TransactionDate = this.TransactionDate;
+            model.PaymentYear = this.PaymentYear;
+            model.PaymentMonth = this.PaymentMonth;
+            model.IsFee = this.IsFee;
 
             return model;
         }

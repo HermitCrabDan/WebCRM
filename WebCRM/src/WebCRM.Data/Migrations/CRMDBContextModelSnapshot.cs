@@ -250,11 +250,20 @@ namespace WebCRM.Data.Migrations
                     b.Property<DateTime?>("DeletionDate")
                         .HasColumnType("TEXT");
 
+                    b.Property<bool>("IsFee")
+                        .HasColumnType("INTEGER");
+
                     b.Property<string>("LastUpdatedBy")
                         .HasColumnType("TEXT");
 
                     b.Property<DateTime?>("LastUpdatedDate")
                         .HasColumnType("TEXT");
+
+                    b.Property<int>("PaymentMonth")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("PaymentYear")
+                        .HasColumnType("INTEGER");
 
                     b.Property<decimal>("TransactionAmount")
                         .HasColumnType("TEXT");

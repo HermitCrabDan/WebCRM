@@ -25,7 +25,7 @@ namespace WebCRM.Shared
         public override (bool, ContractTransactionViewModel) Create(ContractTransactionViewModel model, string userID)
         {
             var (success, viewModel) = base.Create(model, userID);
-            if (success && viewModel != null && viewModel.ContractID != 0)
+            if (success && viewModel != null && viewModel.ContractID != 0 && !model.IsFee)
             {
                 var contractToUpdate = this._ctx
                     .Contracts
@@ -33,10 +33,11 @@ namespace WebCRM.Shared
                     .FirstOrDefault();
                 if (contractToUpdate != null)
                 {
+                    var paymentDate = new DateTime(model.PaymentYear, model.PaymentMonth, contractToUpdate.PaymentDate);
                     if (!contractToUpdate.LastPaymentRecievedDate.HasValue
-                        || viewModel.TransactionDate > contractToUpdate.LastPaymentRecievedDate.Value)
+                        || paymentDate > contractToUpdate.LastPaymentRecievedDate.Value)
                     {
-                        contractToUpdate.LastPaymentRecievedDate = viewModel.TransactionDate;
+                        contractToUpdate.LastPaymentRecievedDate = paymentDate;
                     }
                     contractToUpdate.TotalPaidAmount += viewModel.TransactionAmount;
                     contractToUpdate.LastUpdatedBy = userID;

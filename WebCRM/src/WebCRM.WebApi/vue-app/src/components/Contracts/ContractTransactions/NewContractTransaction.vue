@@ -68,6 +68,32 @@
                     </div>
                     <br />
                     <div>
+                        <w-checkbox
+                            label="Fee"
+                            v-model="transactionData.isFee"
+                            >
+                        </w-checkbox>
+                    </div>
+                    <br />
+                    <div>
+                        <w-input
+                            label="Payment Year"
+                            v-model="transactionData.paymentYear"
+                            :validators="[validators.required]"
+                            >
+                        </w-input>
+                    </div>
+                    <br />
+                    <div>
+                        <w-input
+                            label="Payment Month"
+                            v-model="transactionData.paymentMonth"
+                            :validators="[validators.required]"
+                            >
+                        </w-input>
+                    </div>
+                    <br />
+                    <div>
                         <w-input
                             label="Transaction Amount"
                             v-model="transactionData.transactionAmount"
@@ -107,7 +133,10 @@
                     contractID: 0,
                     transactionDate:null,
                     transactionDateString: '',
-                    transactionAmount:0
+                    paymentMonth:'',
+                    paymentYear:'',
+                    isFee:false,
+                    transactionAmount:''
                 },
                 transactionValid:null,
 
@@ -125,9 +154,8 @@
             SelectedContractID:{
                 immediate:true,
                 deep:true,
-                handler(newVal, oldVal){
+                handler(newVal){
                     this.transactionData.contractID = newVal;
-                    console.log(oldVal);
                 }
             }
         },

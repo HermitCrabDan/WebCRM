@@ -30,6 +30,35 @@
                             <model-details
                                 :modelData="contractData">
                             </model-details>
+                            <div style="border:solid 1px silver; padding:5px">
+                                <h3>Payment Schedule</h3>
+                                <hr />
+                                <br />
+                                <div>
+                                    First Payment Date:
+                                    {{ contractData.firstPaymentDateString }}
+                                </div>
+                                <div>
+                                    Next Payment Date:
+                                    {{ contractData.nextPaymentDateString }}
+                                </div>
+                                <div>
+                                    Payments Reamining:
+                                    {{ contractData.paymentsRemaining }}
+                                </div>
+                                <div>
+                                    Final Payment Date:
+                                    {{ contractData.lastPaymentDateString }}
+                                </div>
+                                <div>
+                                    Last Payment Recieved:
+                                    {{ contractData.lastPaymentRecievedDateString }}
+                                </div>
+                                <div>
+                                    Contract Delinquent: 
+                                    {{ contractData.isContractDelinquentString }}
+                                </div>
+                            </div>
                         </w-flex>
                         <br />
                         <w-flex justify-center fill-width>
@@ -249,9 +278,8 @@
             selectedContractData:{
                 immediate:true,
                 deep:true,
-                handler(newVal, oldVal){
+                handler(newVal){
                     this.contractData = newVal;
-                    console.log(oldVal);
                 }
             }
         },
