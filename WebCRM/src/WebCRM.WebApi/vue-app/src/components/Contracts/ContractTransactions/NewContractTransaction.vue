@@ -79,7 +79,6 @@
                         <w-input
                             label="Payment Year"
                             v-model="transactionData.paymentYear"
-                            :validators="[validators.required]"
                             >
                         </w-input>
                     </div>
@@ -88,7 +87,6 @@
                         <w-input
                             label="Payment Month"
                             v-model="transactionData.paymentMonth"
-                            :validators="[validators.required]"
                             >
                         </w-input>
                     </div>

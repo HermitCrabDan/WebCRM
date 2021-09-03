@@ -45,16 +45,33 @@ namespace WebCRM.Shared
         public override bool IsValid()
         {
             this.ValidationErrorMessages = new List<string>();
+            bool valid = true;
+
             if (this.ContractID <= 0)
             {
+                valid = false;
                 this.ValidationErrorMessages.Add("Invalid Contract Id");
             }
             if (this.TransactionAmount == 0)
             {
+                valid = false;
                 this.ValidationErrorMessages.Add("Cannot enter a transaction with a zero amount");
             }
-            
-            return this.ContractID > 0 && this.TransactionAmount != 0;
+            if (!this.IsFee)
+            {
+                if (this.PaymentYear <= (DateTime.Now.Year - 10) || this.PaymentYear > (DateTime.Now.Year + 10))
+                {
+                    valid = false;
+                    this.ValidationErrorMessages.Add("Payment Year must be within the last 10 years");
+                }
+                if (this.PaymentMonth < 1 || this.PaymentMonth > 12)
+                {
+                    valid = false;
+                    this.ValidationErrorMessages.Add("Payment Month must be between 1 and 12");
+                }
+            }
+
+            return valid;
         }
 
         public override void SetModelValues(ContractTransaction model)
@@ -65,6 +82,7 @@ namespace WebCRM.Shared
             this.IsFee = model.IsFee;
             this.PaymentMonth = model.PaymentMonth;
             this.PaymentYear = model.PaymentYear;
+            this.IsFeeString = this.IsFee ? "Yes" : "No";
 
             this.TransactionAmountString = String.Format("${0:N2}", model.TransactionAmount);
             this.TransactionDateString = String.Format("{0:MM-dd-yyyy}", model.TransactionDate);

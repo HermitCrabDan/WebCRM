@@ -26,6 +26,7 @@ namespace WebCRM.Data
 
         public override void RestrictedModelUpdate(ContractTransaction model)
         {
+            this.PaymentYear = model.PaymentYear;
             this.PaymentMonth = model.PaymentMonth;
             this.IsFee = model.IsFee;
             this.TransactionDate = model.TransactionDate;

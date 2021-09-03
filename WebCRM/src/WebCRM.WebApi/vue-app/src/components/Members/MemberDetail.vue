@@ -15,14 +15,14 @@
                     absolute 
                     icon="wi-cross" >
                 </w-button>
-                <model-details :modelData="memberData">
-                </model-details>
-                <br />
                 <w-tabs :items="tabs" card>
                     <template #item-title.1>
-                        Edit Member
+                        Member Details
                     </template>
                     <template #item-content.1>
+                        <model-details :modelData="memberData">
+                        </model-details>
+                        <br />
                         <div style="min-width:600px; border:solid 1px silver; padding:10px">
                             <div class="message-box">
                                 <w-alert

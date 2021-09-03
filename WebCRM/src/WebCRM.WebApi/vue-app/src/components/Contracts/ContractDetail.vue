@@ -23,7 +23,7 @@
                 </w-button>
                 <w-tabs :items="tabs" card>
                     <template #item-title.1>
-                        Edit Contract
+                        Contract Details
                     </template>
                     <template #item-content.1>
                         <w-flex justify-center fill-width >

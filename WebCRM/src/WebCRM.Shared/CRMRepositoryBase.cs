@@ -110,47 +110,12 @@ namespace WebCRM.Shared
             return (success, viewModel);
         }
 
-        public virtual async Task<(bool, ViewModel)> RetrieveByIdAsync(int id)
-        {
-            var model = await _ctx
-                .Set<Model>()
-                .Where(w => w.Id == id)
-                .AsQueryable()
-                .FirstOrDefaultAsync();
-
-            var viewModel = new ViewModel();
-            bool success = false;
-            if (model != null)
-            {
-                viewModel.SetModelValues(model);
-                success = true;
-            }
-            return (success, viewModel);
-        }
-
         public virtual IEnumerable<ViewModel> Retrieve(Func<Model, bool> selector)
         {
             var data = _ctx
                 .Set<Model>()
                 .Where(selector)
                 .ToList();
-            var viewModelList = new List<ViewModel>();
-            foreach (var model in data)
-            {
-                var viewModel = new ViewModel();
-                viewModel.SetModelValues(model);
-                viewModelList.Add(viewModel);
-            }
-            return viewModelList;
-        }
-
-        public virtual async Task<IEnumerable<ViewModel>> RetrieveAsync(Func<Model, bool> selector)
-        {
-            var data = await _ctx
-                .Set<Model>()
-                .Where(selector)
-                .AsQueryable()
-                .ToListAsync();
             var viewModelList = new List<ViewModel>();
             foreach (var model in data)
             {
@@ -198,44 +163,6 @@ namespace WebCRM.Shared
             return (false, model);
         }
 
-        public virtual async Task<(bool, ViewModel)> UpdateAsync(ViewModel model, string userID)
-        {
-            if (model != null)
-            {
-                try
-                {
-                    var modelToUpdate = 
-                        _ctx
-                            .Set<Model>()
-                            .Where(w => w.Id == model.Id)
-                            .FirstOrDefault();
-                    if (modelToUpdate != null)
-                    {
-                        modelToUpdate.RestrictedModelUpdate(model.GetBaseModel());
-                        modelToUpdate.LastUpdatedDate = DateTime.Now;
-                        modelToUpdate.LastUpdatedBy = userID;
-                        _ctx
-                            .Set<Model>()
-                            .Update(modelToUpdate);
-                        var savedRecords = await _ctx.SaveChangesAsync();
-
-                        var success = savedRecords > 0;
-                        var viewModel = new ViewModel();
-                        viewModel.SetModelValues(modelToUpdate);
-                        return (success, viewModel);
-                    }
-                }
-                catch (Exception ex) 
-                { 
-                    if (_logger != null)
-                    {
-                        _logger.LogError(ex, $"Failed to update {typeof(Model).Name}, Id:{model?.Id}");
-                    }
-                }
-            }
-            return (false, model);
-        }
-
         public virtual bool Delete(int id, string UserID)
         {
             if (id > 0)
@@ -267,39 +194,5 @@ namespace WebCRM.Shared
             }
             return false;
         }
-
-        public virtual async Task<bool> DeleteAsync(int id, string UserID)
-        {
-            if (id > 0)
-            {
-                try
-                {
-                    var modelToDelete = 
-                        _ctx
-                            .Set<Model>()
-                            .Where(w => w.Id == id)
-                            .FirstOrDefault();
-                    if (modelToDelete != null)
-                    {
-                        modelToDelete.DeletionDate = DateTime.Now;
-                        modelToDelete.DeletionBy = UserID;
-                        _ctx
-                            .Set<Model>()
-                            .Update(modelToDelete);
-                        var deletedRecords = await _ctx.SaveChangesAsync();
-                        return (deletedRecords > 0);
-                    }
-                }
-                catch (Exception ex)
-                {
-                    if (_logger != null)
-                    {
-                        _logger.LogError(ex, $"Failed to delete {typeof(Model).Name}, Id:{id}");
-                    }
-                }
-            }
-            return false;
-        }
-
     }
 }

@@ -71,6 +71,10 @@ namespace WebCRM.Shared
                     if (modelToUpdate != null)
                     {
                         var amountDiff = model.TransactionAmount - modelToUpdate.TransactionAmount;
+                        if (modelToUpdate.DeletionDate.HasValue && !model.DeletionDate.HasValue)
+                        {
+                            amountDiff = model.TransactionAmount;
+                        }
                         modelToUpdate.RestrictedModelUpdate(model.GetBaseModel());
                         modelToUpdate.LastUpdatedDate = DateTime.Now;
                         modelToUpdate.LastUpdatedBy = userID;
@@ -87,10 +91,11 @@ namespace WebCRM.Shared
                             {
                                 contractToUpdate.TotalPaidAmount += amountDiff;
 
+                                var paymentDate = new DateTime(model.PaymentYear, model.PaymentMonth, contractToUpdate.PaymentDate);
                                 if (!contractToUpdate.LastPaymentRecievedDate.HasValue
-                                    || model.TransactionDate > contractToUpdate.LastPaymentRecievedDate.Value)
+                                    || paymentDate > contractToUpdate.LastPaymentRecievedDate.Value)
                                     {
-                                        contractToUpdate.LastPaymentRecievedDate = model.TransactionDate;
+                                        contractToUpdate.LastPaymentRecievedDate = paymentDate;
                                     }
                                 this._ctx.Contracts.Update(contractToUpdate);
                             }
@@ -110,6 +115,46 @@ namespace WebCRM.Shared
                 }
             }
             return (false, model);
+        }
+
+        public override bool Delete(int id, string UserID)
+        {
+            var modelToDelete = this._ctx.ContractTransactions.Where(w => w.Id == id).FirstOrDefault();
+            if (modelToDelete != null)
+            {
+                try
+                {
+                    modelToDelete.DeletionDate = DateTime.Now;
+                    modelToDelete.DeletionBy = UserID;
+                    this._ctx.ContractTransactions.Update(modelToDelete);
+
+                    if (modelToDelete.TransactionAmount != 0 && !modelToDelete.IsFee)
+                    {
+                        var contractToUpdate = this._ctx.Contracts.Where(w => w.Id == modelToDelete.ContractID).FirstOrDefault();
+                        if (contractToUpdate != null)
+                        {
+                            contractToUpdate.TotalPaidAmount -= modelToDelete.TransactionAmount;
+                            var paymentDate = new DateTime(modelToDelete.PaymentYear, modelToDelete.PaymentMonth, contractToUpdate.PaymentDate);
+                            if (contractToUpdate.LastPaymentRecievedDate.HasValue
+                                && contractToUpdate.LastPaymentRecievedDate.Value == paymentDate)
+                            {
+                                contractToUpdate.LastPaymentRecievedDate = null;
+                            }
+                            this._ctx.Contracts.Update(contractToUpdate);
+                        }
+                    }
+
+                    return this._ctx.SaveChanges() > 0;
+                }
+                catch (Exception ex)
+                {
+                    if (this._logger != null)
+                    {
+                        this._logger.LogError(ex, $"Failed to delete Contract Transaction, Id:{ id }");
+                    }
+                }
+            }
+            return false;
         }
     }
 }

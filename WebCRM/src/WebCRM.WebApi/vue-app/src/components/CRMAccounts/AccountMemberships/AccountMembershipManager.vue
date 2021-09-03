@@ -1,8 +1,16 @@
 <template>
     <div>
+        <w-notification v-model="isLoading" success bg-color="white">
+            ....loading
+        </w-notification>
         <w-notification v-model="isError" error bg-color="white">
             An Error Occured
         </w-notification>
+        <div v-if="isError">
+            <model-validation-error-list
+                :errorList="errorData.validationErrorMessages">
+            </model-validation-error-list>
+        </div>
         <w-flex justify-center fill-width>
             <div v-if="newMembershipMode">
                 <new-account-membership
@@ -14,48 +22,13 @@
                 </new-account-membership>
             </div>
             <div v-else-if="editMembershipMode">
-                <div>
-                    <w-flex justify-center fill-width>
-                        <w-card title="Selected Membership" title-class="blue-light5--bg pa3" >
-                            <w-button
-                                @click="editMembershipMode = false" 
-                                sm 
-                                outline 
-                                round 
-                                absolute 
-                                icon="wi-cross" >
-                            </w-button>
-                            <model-details
-                                :modelData="selectedAccountMembership"
-                                >
-                            </model-details>
-                            <div style="min-width:600px; text-align:left; border:solid 1px silver; padding:5px">
-                                <div>
-                                    Membership Id: {{ selectedAccountMembership.id }}
-                                </div>
-                                <div>
-                                    Account Id: {{ selectedAccountMembership.accountID }}
-                                </div>
-                                <div>
-                                    Member Name: {{ selectedAccountMembership.memberName }}
-                                </div>
-                                <div>
-                                    Member ID: {{ selectedAccountMembership.memberID }}
-                                </div>
-                                <div>
-                                    Primary Account Membership: {{ selectedAccountMembership.isPrimaryAccountMember }}
-                                </div>
-                            </div>
-                            <br />
-                            <div v-if="selectedAccountMembership.deletionDate">
-                                <w-button @click="unDeleteMembership">Reinstate Account Membership</w-button>
-                            </div>
-                            <div v-else>
-                                <w-button @click="removeMembership">Remove Account Membership</w-button>
-                            </div>
-                        </w-card>
-                    </w-flex>
-                </div>
+                <account-membership-detail
+                    :SelectedAccountMembershipData="selectedAccountMembership"
+                    @closeMembershipDetail="closeMembershipDetailClick"
+                    @removeMembership="removeMembershipData"
+                    @unDeleteMembership="unDeleteMembershipData"
+                    >
+                </account-membership-detail>
             </div>
             <div v-else>
                 <div>
@@ -86,16 +59,18 @@
 
 <script>
     import axios from 'axios';
-    import ModelDetails from '../../ModelDetails.vue';
     import ModelListBase from '../../ModelListBase.vue';
+    import ModelValidationErrorList from '../../ModelValidationErrorList.vue';
     import NewAccountMembership from './NewAccountMembership.vue'
+    import AccountMembershipDetail from './AccountMembershipDetail.vue';
 
     export default {
         name:"AccountMembershipManager",
         components:{
             'model-list-base':ModelListBase,
             'new-account-membership':NewAccountMembership,
-            'model-details':ModelDetails,
+            'account-membership-detail':AccountMembershipDetail,
+            'model-validation-error-list':ModelValidationErrorList,
         },
         data(){
             return{
@@ -105,6 +80,7 @@
                     { label:'Account Name', key:'accountName', align:'left' },
                     { label:'Member ID', key:'memberID', align:'left' },
                     { label:'Member Name', key:'memberName', align:'left' },
+                    { label:'Primary Membership', key:'isPrimaryAccountMemberString', align:'center' },
                     { label:'Created by', key:'createdBy', align:'left' },
                     { label:'Date Entered', key:'creationDateString', align:'left' },
                     { label:'Updated by', key:'lastUpdatedBy', align:'left' },
@@ -115,6 +91,10 @@
                 
                 editMembershipMode: false,
                 selectedAccountMembership: {},
+
+                errorData:{
+                    validationErrorMessages:[]
+                },
 
                 newMembershipMode: false,
                 
@@ -144,17 +124,17 @@
                     .then(response => { 
                         this.crmAccountMemberList = response.data;
                         this.memberIdList = this.crmAccountMemberList.map(x => x.memberID);
-                        console.log(response.data);
                     })
-                    .catch(error => { 
-                        console.log(error);
+                    .catch(error => {
                         this.isError = true;
+                        console.log(error);
                     })
-                    .then(()=>{this.isLoading = false;});
+                    .then(()=>{
+                        this.isLoading = false;
+                    });
             },
             selectAccountMembership(accountMembership){
                 this.selectedAccountMembership = accountMembership;
-                console.log(this.selectedAccountMembership);
                 this.newMembershipMode = false;
                 this.editMembershipMode = true;
             },
@@ -165,17 +145,21 @@
             closeNewMembership(){
                 this.newMembershipMode = false;
             },
+            closeMembershipDetailClick(){
+                this.editMembershipMode = false;
+                this.loadAccountMemberships();
+            },
             submitNewMembership(membershipData){
                 this.isLoading = true;
                 this.isError = false;
                 axios
                     .post("api/AccountMembershipData", membershipData)
                     .then(response => { 
-                        console.log(response.data);
+                        this.errorData = response.data;
                         this.newMembershipMode = false;
                     })
                     .catch(error => { 
-                        console.log(error);
+                        this.errorData = error.response.data;
                         this.isError = true;
                     })
                     .then(()=>{
@@ -185,19 +169,19 @@
                         }
                     });
             },
-            unDeleteMembership(){
+            unDeleteMembershipData(membershipData){
                 this.isLoading = false;
                 this.isError = false;
-                this.selectedAccountMembership.deletionDate = null;
-                this.selectedAccountMembership.deletionBy = '';
+                membershipData.deletionDate = null;
+                membershipData.deletionBy = '';
                 axios
-                    .put('api/AccountMembershipData', this.selectedAccountMembership)
+                    .put('api/AccountMembershipData', membershipData)
                     .then(response => {
-                        console.log(response.data);
+                        this.errorData = response.data;
                         this.editMembershipMode = false;
                     })
                     .catch(error => {
-                        console.log(error);
+                        this.errorData = error.response.data;
                         this.isError = true;
                     })
                     .then(() => {
@@ -207,13 +191,13 @@
                         }
                     });
             },
-            removeMembership(){
+            removeMembershipData(membershipData){
                 this.isLoading = true;
                 this.isError = false;
                 axios
-                    .delete("api/AccountMembershipData/" + this.selectedAccountMembership.id)
+                    .delete("api/AccountMembershipData/" + membershipData.id)
                     .then(response => { 
-                        console.log(response.data);
+                        console.log(response);
                         this.editMembershipMode = false;
                     })
                     .catch(error => { 

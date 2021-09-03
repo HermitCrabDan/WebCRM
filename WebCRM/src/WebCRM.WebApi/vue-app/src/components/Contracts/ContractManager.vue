@@ -6,6 +6,11 @@
         <w-notification v-model="isError" error bg-color="white">
             An Error Occured
         </w-notification>
+        <div v-if="isError">
+            <model-validation-error-list
+                :errorList="errorData.validationErrorMessages">
+            </model-validation-error-list>
+        </div>
         <div v-if="newMode">
             <new-contract
                 @newContractClose="newMode = false"
@@ -16,7 +21,7 @@
         <div v-else-if="editMode">
             <contract-detail
                 :selectedContractData="selectedContract"
-                @contractDetailClose="editMode = false"
+                @contractDetailClose="closeContractDetail"
                 @contractEditValid="updateContract">
             </contract-detail>
         </div>
@@ -42,6 +47,7 @@
     import ContractDetail from './ContractDetail.vue';
     import NewContract from './NewContract.vue';
     import ModelListBase from '../ModelListBase.vue';
+    import ModelValidationErrorList from '../ModelValidationErrorList.vue';
 
     export default {
         name:"ContractManager",
@@ -49,6 +55,7 @@
             'contract-detail':ContractDetail,
             'new-contract':NewContract,
             'model-list-base':ModelListBase,
+            'model-validation-error-list':ModelValidationErrorList,
         },
         data(){
             return{
@@ -76,6 +83,7 @@
                 editMode:false,
 
                 selectedContract: {},
+                errorData:{validationErrorMessages:[]},
 
                 apiUrl:'api/ContractData',
             }
@@ -85,6 +93,10 @@
             this.selectedContract = contractData;
             console.log(contractData);
             this.editMode = true;
+        },
+        closeContractDetail(){
+            this.editMode = false;
+            this.getContractList();
         },
         submitNewContract(contractData){
             this.isError = false;
@@ -112,12 +124,10 @@
             axios
                 .put(this.apiUrl, contractData)
                 .then(response => {
-                    console.log(response.data);
+                    this.errorData = response.data;
                 })
                 .catch(error => {
-                    console.log(error);
-                    console.log(error.response);
-                    console.log(error.response.data);
+                    this.errorData = error.response.data;
                     this.isError = true;
                 })
                 .then(() => {

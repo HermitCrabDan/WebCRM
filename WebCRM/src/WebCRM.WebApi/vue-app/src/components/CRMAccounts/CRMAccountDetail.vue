@@ -19,15 +19,15 @@
                     absolute 
                     icon="wi-cross" >
                 </w-button>
-                <model-details
-                    :modelData="crmAccountData">
-                </model-details>
-                <br />
                 <w-tabs :items="tabs" card>
                     <template #item-title.1>
-                        Edit Account
+                        Account Details
                     </template>
                     <template #item-content.1>
+                        <model-details
+                            :modelData="crmAccountData">
+                        </model-details>
+                        <br />
                         <w-flex justify-center fill-width>
                             <div style="border:solid 1px silver; padding:5px; min-width:400px">
                                 <w-form

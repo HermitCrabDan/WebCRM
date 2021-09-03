@@ -70,6 +70,10 @@ namespace WebCRM.Shared
                     if (modelToUpdate != null)
                     {
                         var amountDiff = model.ExpenseAmount - modelToUpdate.ExpenseAmount;
+                        if (modelToUpdate.DeletionDate.HasValue && !model.DeletionDate.HasValue)
+                        {
+                            amountDiff = model.ExpenseAmount;
+                        }
                         modelToUpdate.RestrictedModelUpdate(model.GetBaseModel());
                         modelToUpdate.LastUpdatedDate = DateTime.Now;
                         modelToUpdate.LastUpdatedBy = userID;
@@ -110,6 +114,43 @@ namespace WebCRM.Shared
                 }
             }
             return (false, model);
-        } 
+        }
+
+        public override bool Delete(int id, string UserID)
+        {
+            var modelToDelete = this._ctx.ContractExpenses.Where(w => w.Id == id).FirstOrDefault();
+            if (modelToDelete != null)
+            {
+                try
+                {
+                    modelToDelete.DeletionDate = DateTime.Now;
+                    modelToDelete.DeletionBy = UserID;
+                    this._ctx.ContractExpenses.Update(modelToDelete);
+                    if (modelToDelete.ExpenseAmount != 0)
+                    {
+                        var contractToUpdate = this._ctx.Contracts.Where(w => w.Id == modelToDelete.ContractID).FirstOrDefault();
+                        if (contractToUpdate != null)
+                        {
+                            contractToUpdate.TotalPaidAmount -= modelToDelete.ExpenseAmount;
+                            if (contractToUpdate.LastExpensePaymentDate.HasValue
+                                && contractToUpdate.LastExpensePaymentDate.Value == modelToDelete.ExpenseDate)
+                            {
+                                contractToUpdate.LastExpensePaymentDate = null;
+                            }
+                            this._ctx.Contracts.Update(contractToUpdate);
+                        }
+                    }
+                    return this._ctx.SaveChanges() > 0;
+                }
+                catch (Exception ex)
+                {
+                    if (_logger != null)
+                    {
+                        this._logger.LogError(ex, $"Failed to delete Contract Expense, Id:{ id }");
+                    }
+                }
+            }
+            return false;
+        }
     }
 }

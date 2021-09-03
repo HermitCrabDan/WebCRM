@@ -41,6 +41,8 @@ namespace WebCRM.Shared
 
         public string MemberName { get; set; }
 
+        public string IsPrimaryAccountMemberString { get; set; }
+
         public override bool IsValid()
         {
             this.ValidationErrorMessages = new List<string>();
@@ -60,6 +62,8 @@ namespace WebCRM.Shared
             this.AccountID = model.AccountID;
             this.IsPrimaryAccountMember = model.IsPrimaryAccountMember;
             this.MemberID = model.MemberID;
+
+            this.IsPrimaryAccountMemberString = (this.IsPrimaryAccountMember)?"Yes":"No";
             
             base.SetModelValues(model);
         }
