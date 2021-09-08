@@ -22,7 +22,9 @@
             <contract-detail
                 :selectedContractData="selectedContract"
                 @contractDetailClose="closeContractDetail"
-                @contractEditValid="updateContract">
+                @contractEditValid="updateContract"
+                @reinstateContractData="reinstateContract"
+                @removeContractData="removeContract">
             </contract-detail>
         </div>
         <div v-else>
@@ -96,7 +98,7 @@
         },
         closeContractDetail(){
             this.editMode = false;
-            this.getContractList();
+            this.loadContractData();
         },
         submitNewContract(contractData){
             this.isError = false;
@@ -114,7 +116,7 @@
                     this.isLoading = false;
                     if (!this.isError){
                         this.newMode = false;
-                        this.getContractList();
+                        this.loadContractData();
                     }
                 })
         },
@@ -134,21 +136,62 @@
                     this.isLoading = false;
                     if (!this.isError){
                         this.editMode = false;
-                        this.getContractList();
+                        this.loadContractData();
                     }
                 });
         },
-        getContractList() {
+        removeContract(contractData){
+            this.isError = false;
+            this.isLoading = true;
+            axios
+                .delete(this.apiUrl + '/' + contractData.id)
+                .then(response => {
+                    this.errorData = response.data;
+                })
+                .catch(error => {
+                    this.errorData = error.response.data;
+                    this.isError = true;
+                })
+                .then(() =>{
+                    this.isLoading = false;
+                    if (!this.isError){
+                        this.editMode = false;
+                        this.loadContractData();
+                    }
+                });
+        },
+        reinstateContract(contractData){
+            this.isError = false;
+            this.isLoading = true;
+            contractData.deletionDate = null;
+            contractData.deletionBy = '';
+            axios
+                .put(this.apiUrl, contractData)
+                .then(response => {
+                    this.errorData = response.data;
+                })
+                .catch(error => {
+                    this.errorData = error.response.data;
+                    this.isError = true;
+                })
+                .then(() =>{
+                    this.isLoading = false;
+                    if (!this.isError){
+                        this.editMode = false;
+                        this.loadContractData();
+                    }
+                });
+        },
+        loadContractData() {
             this.isLoading = true;
             this.isError = false;
             axios
                 .get(this.apiUrl)
                 .then(response => {
                     this.contractList = response.data;
-                    console.log(response.data);
                 })
-                .catch(function (error) {
-                    console.log(error);
+                .catch(error => {
+                    this.errorData = error.response.data;
                     this.isError = true;
                 })
                 .then(() => {
@@ -157,7 +200,7 @@
         }
     },
     mounted(){
-        this.getContractList();
+        this.loadContractData();
     }
 
     }

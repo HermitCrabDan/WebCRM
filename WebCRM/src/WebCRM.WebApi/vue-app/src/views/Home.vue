@@ -29,7 +29,7 @@ export default {
           },
           {
             title:'Contracts',
-            content:'Contracts are tied to members and accounts and have associated transactions'
+            content:'Contracts are tied to account memberships and have associated transactions and expenses'
           },
         ],
       }

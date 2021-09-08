@@ -24,6 +24,8 @@
                 :SelectedTransactionData="selectedTransaction"
                 @editTransactionClose="editMode = false"
                 @editTransactionValidated="updateTransaction"
+                @reinstateTransactionClick="reinstateTransaction"
+                @removeTransactionClick="removeTransaction"
                 >
             </contract-transaction-detail>
         </div>
@@ -81,6 +83,7 @@
                 transactionSort:'-creationDate',
 
                 errorData:{ validationErrorMessages:[] },
+                apiUrl: 'api/ContractTransactionData',
 
                 newMode:false,
                 editMode:false,
@@ -105,7 +108,7 @@
                 this.isLoading = true;
                 this.errorData = { validationErrorMessages:[] };
                 axios
-                    .post('api/ContractTransactionData', transactionData)
+                    .post(this.apiUrl, transactionData)
                     .then(response => {
                         this.errorData = response.data;
                     })
@@ -129,12 +132,12 @@
                 this.isLoading = true;
                 this.errorData = { validationErrorMessages:[] };
                 axios
-                    .put('api/ContractTransactionData', transactionToUpdate)
+                    .put(this.apiUrl, transactionToUpdate)
                     .then(response => {
                         this.errorData = response.data;
                     })
                     .catch(error => {
-                        console.log(error);
+                        this.errorData = error.response.data;
                         this.isError = true;
                     })
                     .then(() =>{
@@ -142,6 +145,48 @@
                         if (!this.isError){
                             this.editMode = false;
                             this.loadTransactions();
+                        }
+                    });
+            },
+            removeTransaction(transactionData){
+                this.isLoading = true;
+                this.isError = false;
+                axios
+                    .delete(this.apiUrl + '/' + transactionData.id)
+                    .then(response => {
+                        this.errorData = response.data;
+                    })
+                    .catch(error => {
+                        this.errorData = error.response.data;
+                        this.isError = true;
+                    })
+                    .then(() => {
+                        this.isLoading = false;
+                        if (!this.isError){
+                            this.editMode = false;
+                            this.loadTransactions();
+                        }
+                    })
+            },
+            reinstateTransaction(transactionData){
+                this.isError = false;
+                this.isLoading = true;
+                transactionData.deletionDate = null;
+                transactionData.deletionBy = '';
+                axios
+                    .put(this.apiUrl, transactionData)
+                    .then(response => {
+                        this.errorData = response.data;
+                    })
+                    .catch(error => {
+                        this.errorData = error.response.data;
+                        this.isError = true;
+                    })
+                    .then(() =>{
+                        this.isLoading = false;
+                        if (!this.isError){
+                            this.editMode = false;
+                            this.loadContractData();
                         }
                     });
             },
@@ -157,13 +202,13 @@
                 if (this.contractID > 0){
                     this.isLoading = false;
                     axios
-                        .get('api/ContractTransactionData/' + this.contractID)
+                        .get(this.apiUrl + '/' + this.contractID)
                         .then(response => {
                             this.transactionList = response.data;
                         })
                         .catch(error => {
+                            this.errorData = error.response.data;
                             this.isError = true;
-                            console.log(error);
                         })
                         .then(() => {
                             this.isLoading = false;

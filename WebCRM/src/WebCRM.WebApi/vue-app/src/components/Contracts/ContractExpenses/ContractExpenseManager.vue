@@ -6,6 +6,11 @@
         <w-notification v-model="isError" error bg-color="white">
             An Error Occured
         </w-notification>
+        <div v-if="isError">
+            <model-validation-error-list
+                :errorList="errorData.validationErrorMessages">
+            </model-validation-error-list>
+        </div>
         <div v-if="newMode">
             <new-contract-expense
                 :selectedContractId="contractId"
@@ -19,6 +24,8 @@
                 :SelectedExpenseData="selectedContractExpense"
                 @closeExpenseDetails="closeExpenseDetails"
                 @editExpenseValidated="updateExpense"
+                @reinstateExpenseClick="reinstateExpense"
+                @removeExpenseClick="removeExpense"
                 >
             </contract-expense-detail>
         </div>
@@ -43,6 +50,7 @@
 <script>
     import axios from 'axios';
     import ModelListBase from '../../ModelListBase.vue';
+    import ModelValidationErrorList from '../../ModelValidationErrorList.vue';
     import NewContractExpense from './NewContractExpense.vue';
     import ContractExpenseDetail from './ContractExpenseDetail.vue';
 
@@ -55,6 +63,7 @@
             'model-list-base':ModelListBase,
             'new-contract-expense':NewContractExpense,
             'contract-expense-detail':ContractExpenseDetail,
+            'model-validation-error-list':ModelValidationErrorList,
         },
         data(){
             return{
@@ -75,6 +84,7 @@
                 isLoading:false,
                 isError:false,
 
+                errorData:{ validationErrorMessages:[] },
                 selectedContractExpense:{},
                 newMode:false,
                 editMode:false,
@@ -97,7 +107,7 @@
                         this.newMode = false;
                     })
                     .catch(error =>{
-                        console.log(error);
+                        this.errorData = error.response.data;
                         this.isError = true;
                     })
                     .then(() => {
@@ -107,23 +117,65 @@
                         }
                     });
             },
-            updateExpense(editedExpenseData){
+            updateExpense(expenseData){
                 this.isError = false;
                 this.isLoading = true;
                 axios
-                    .put('api/ContractExpenseData', editedExpenseData)
+                    .put('api/ContractExpenseData', expenseData)
                     .then(response =>{
-                        console.log(response.data);
-                        this.editMode = false;
+                        this.errorData = response.data;
                     })
                     .catch(error =>{
-                        console.log(error);
+                        this.errorData = error.response.data;
                         this.isError = true;
                     })
                     .then(() => {
                         this.isLoading = false;
                         if (!this.isError){
+                            this.editMode = false;
                             this.loadContractExpenses();
+                        }
+                    });
+            },
+            removeExpense(expenseData){
+                this.isLoading = true;
+                this.isError = false;
+                axios
+                    .delete(this.apiUrl + '/' + expenseData.id)
+                    .then(response => {
+                        this.errorData = response.data;
+                    })
+                    .catch(error => {
+                        this.errorData = error.response.data;
+                        this.isError = true;
+                    })
+                    .then(() => {
+                        this.isLoading = false;
+                        if (!this.isError){
+                            this.editMode = false;
+                            this.loadTransactions();
+                        }
+                    })
+            },
+            reinstateExpense(expenseData){
+                this.isError = false;
+                this.isLoading = true;
+                expenseData.deletionDate = null;
+                expenseData.deletionBy = '';
+                axios
+                    .put(this.apiUrl, expenseData)
+                    .then(response => {
+                        this.errorData = response.data;
+                    })
+                    .catch(error => {
+                        this.errorData = error.response.data;
+                        this.isError = true;
+                    })
+                    .then(() =>{
+                        this.isLoading = false;
+                        if (!this.isError){
+                            this.editMode = false;
+                            this.loadContractData();
                         }
                     });
             },

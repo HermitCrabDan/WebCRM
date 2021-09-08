@@ -190,12 +190,20 @@
                                     </div>
                                     <br />
                                     <br />
-                                    <div>
-                                        <w-button
-                                            class="my1"
-                                            type="submit">
-                                            Edit Contract
-                                        </w-button>
+                                    <div v-if="contractData.deletionDate">
+                                        <w-button @click="unDeleteClick">Reinstate Contract</w-button>
+                                    </div>
+                                    <div v-else>
+                                        <div>
+                                            <w-button class="my1"
+                                                type="submit">
+                                                Edit Contract
+                                            </w-button>
+                                        </div>
+                                        <br />
+                                        <div>
+                                            <w-button @click="removeClick">Remove Contract</w-button>
+                                        </div>
                                     </div>
                                 </w-form>
                             </div>
@@ -253,7 +261,7 @@
         props:{
             selectedContractData: Object
         },
-        emits:["contractDetailClose","contractEditValid"],
+        emits:["contractDetailClose","contractEditValid","reinstateContractData","removeContractData"],
         data(){
             return{
                 contractData:{},
@@ -301,7 +309,13 @@
             },
             onValidationSuccess(){
                 this.$emit("contractEditValid", this.contractData);
-            }
+            },
+            unDeleteClick(){
+                this.$emit("reinstateContractData", this.contractData);
+            },
+            removeClick(){
+                this.$emit("removeContractData", this.contractData);
+            },
         }
     }
 </script>

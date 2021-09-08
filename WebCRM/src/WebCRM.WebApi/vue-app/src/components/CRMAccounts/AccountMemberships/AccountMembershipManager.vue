@@ -178,7 +178,6 @@
                     .put('api/AccountMembershipData', membershipData)
                     .then(response => {
                         this.errorData = response.data;
-                        this.editMembershipMode = false;
                     })
                     .catch(error => {
                         this.errorData = error.response.data;
@@ -187,6 +186,7 @@
                     .then(() => {
                         this.isLoading = false;
                         if (!this.isError){
+                            this.editMembershipMode = false;
                             this.loadAccountMemberships();
                         }
                     });
@@ -198,15 +198,15 @@
                     .delete("api/AccountMembershipData/" + membershipData.id)
                     .then(response => { 
                         console.log(response);
-                        this.editMembershipMode = false;
                     })
                     .catch(error => { 
-                        console.log(error);
+                        this.errorData = error.response.data;
                         this.isError = true;
                     })
                     .then(()=>{
                         this.isLoading = false;
                         if(!this.isError){
+                            this.editMembershipMode = false;
                             this.loadAccountMemberships();
                         }
                     });

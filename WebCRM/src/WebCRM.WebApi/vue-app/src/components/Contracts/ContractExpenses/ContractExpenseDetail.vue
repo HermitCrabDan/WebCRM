@@ -79,12 +79,21 @@
                         </w-input>
                     </div>
                     <br />
-                    <div>
-                        <w-button 
-                            type="submit"
-                            >
-                            Edit Expense
-                        </w-button>
+                    <br />
+                    <div v-if="contractData.deletionDate">
+                        <w-button @click="unDeleteClick">Reinstate Expense</w-button>
+                    </div>
+                    <div v-else>
+                        <div>
+                            <w-button class="my1"
+                                type="submit">
+                                Edit Expense
+                            </w-button>
+                        </div>
+                        <br />
+                        <div>
+                            <w-button @click="removeClick">Remove Expense</w-button>
+                        </div>
                     </div>
                 </w-form>
             </w-card>
@@ -106,7 +115,7 @@
         props:{
             SelectedExpenseData:Object,
         },
-        emits:["editExpenseValidated","closeExpenseDetails"],
+        emits:["editExpenseValidated","closeExpenseDetails","removeExpenseClick","reinstateExpenseClick"],
         data(){
             return{
                 expenseData:{},
@@ -138,6 +147,12 @@
                 this.expenseData.expenseDate = selectedDate;
                 this.expenseData.expenseDateString = selectedDate.format('MM-DD-YYYY'); 
                 this.showExpenseDate = false;
+            },
+            unDeleteClick(){
+                this.$emit("reinstateExpenseClick", this.expenseData);
+            },
+            removeClick(){
+                this.$emit("removeExpenseClick", this.expenseData);
             }
         },
     }

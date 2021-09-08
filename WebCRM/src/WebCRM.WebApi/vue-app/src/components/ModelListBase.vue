@@ -57,7 +57,8 @@
             updateViewableData(){
                 this.viewableData = [];
                 this.listData.forEach(element => {
-                    if(this.showDeleted || !element.deletionDate){
+                    if((!this.showDeleted && !element.deletionDate)
+                        || (this.showDeleted && element.deletionDate)){
                         this.viewableData.push(element);
                     }
                 });

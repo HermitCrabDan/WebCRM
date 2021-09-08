@@ -87,11 +87,12 @@
                     </div>
                     <br />
                     <div>
-                        <w-input
-                            label="Payment Month"
+                         <w-select
+                            label="Payment Month" 
                             v-model="transactionData.paymentMonth"
+                            :items="availablePaymentMonths"
                             >
-                        </w-input>
+                         </w-select>
                     </div>
                     <br />
                     <div>
@@ -103,12 +104,20 @@
                         </w-input>
                     </div>
                     <br />
-                    <div>
-                        <w-button 
-                            type="submit"
-                            >
-                            Edit Transaction
-                        </w-button>
+                    <div v-if="transactionData.deletionDate">
+                        <w-button @click="unDeleteClick">Reinstate Transaction</w-button>
+                    </div>
+                    <div v-else>
+                        <div>
+                            <w-button class="my1"
+                                type="submit">
+                                Edit Transaction
+                            </w-button>
+                        </div>
+                        <br />
+                        <div>
+                            <w-button @click="removeClick">Remove Transaction</w-button>
+                        </div>
                     </div>
                 </w-form>
             </w-card>
@@ -126,7 +135,7 @@
         props:{
             SelectedTransactionData:Object
         },
-        emits:["editTransactionClose", "editTransactionValidated"],
+        emits:["editTransactionClose", "editTransactionValidated","removeTransactionClick","reinstateTransactionClick"],
         components:{
             'vue-cal':VueCal,
             'model-details':ModelDetails,
@@ -136,6 +145,20 @@
                 transactionData:{},
                 transactionValid:null,
                 showTransactionDate:false,
+                availablePaymentMonths:[
+                    { label:'January', value:1 },
+                    { label:'February', value:2 },
+                    { label:'March', value:3 },
+                    { label:'April', value:4 },
+                    { label:'May', value:5 },
+                    { label:'June', value:6 },
+                    { label:'July', value:7 },
+                    { label:'August', value:8 },
+                    { label:'September', value:9 },
+                    { label:'October', value:10 },
+                    { label:'November', value:11 },
+                    { label:'December', value:12 },
+                ],
                 
                 validators: {
                     required: value => !!value || 'This field is required',
@@ -162,6 +185,12 @@
             },
             onTransactionValidated(){
                 this.$emit("editTransactionValidated", this.transactionData);
+            },
+            removeClick(){
+                this.$emit("removeTransactionClick", this.transactionData);
+            },
+            unDeleteClick(){
+                this.$emit("reinstateTransactionClick", this.transactionData);
             }
         }
     }
