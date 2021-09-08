@@ -51,12 +51,21 @@
                                     >
                                 </w-input>
                                 <br />
-                                <w-button
-                                    class="my1"
-                                    type="submit"
-                                    >
-                                    Edit Member
-                                </w-button>
+                                <div v-if="memberData.deletionDate">
+                                    <w-button @click="unDeleteClick">Reinstate Member</w-button>
+                                </div>
+                                <div v-else>
+                                    <div>
+                                        <w-button class="my1"
+                                            type="submit">
+                                            Edit Member
+                                        </w-button>
+                                    </div>
+                                    <br />
+                                    <div>
+                                        <w-button @click="removeClick">Remove Member</w-button>
+                                    </div>
+                                </div>
                             </w-form>
                         </div>
                     </template>
@@ -86,7 +95,7 @@
         props:{
             selectedMemberData: Object
         },
-        emits:["memberDetailClose","memberEditSuccess"],
+        emits:["memberDetailClose","memberEditSuccess","removeMemberClick","reinstateMemberClick"],
         data(){
             return{
                 memberData: {},
@@ -104,10 +113,8 @@
             selectedMemberData:{
                 immediate:true,
                 deep:true,
-                handler(newVal, oldVal){
+                handler(newVal){
                     this.memberData = newVal;
-                    console.log(newVal);
-                    console.log(oldVal);
                 }
             }
         },
@@ -117,6 +124,12 @@
             },
             onEditSuccess(){
                 this.$emit("memberEditSuccess", this.memberData);
+            },
+            removeClick(){
+                this.$emit("removeMemberClick", this.memberData);
+            },
+            unDeleteClick(){
+                this.$emit("reinstateMemberClick", this.memberData);
             }
         }
     }

@@ -79,7 +79,9 @@
                     { label:'Updated by', key:'lastUpdatedBy', align:'left' },
                     { label:'Last Updated', key:'lastUpdatedDateString', align:'left' },
                 ],
-                contractExpenseSort:'',
+                contractExpenseSort:'-creationDate',
+
+                apiUrl:'api/ContractExpenseData',
 
                 isLoading:false,
                 isError:false,
@@ -101,10 +103,9 @@
                 this.isError = false;
                 this.isLoading = true;
                 axios
-                    .post('api/ContractExpenseData', expenseData)
+                    .post(this.apiUrl, expenseData)
                     .then(response =>{
-                        console.log(response.data);
-                        this.newMode = false;
+                        this.errorData = response.data;
                     })
                     .catch(error =>{
                         this.errorData = error.response.data;
@@ -113,6 +114,7 @@
                     .then(() => {
                         this.isLoading = false;
                         if (!this.isError){
+                            this.newMode = false;
                             this.loadContractExpenses();
                         }
                     });
@@ -121,7 +123,7 @@
                 this.isError = false;
                 this.isLoading = true;
                 axios
-                    .put('api/ContractExpenseData', expenseData)
+                    .put(this.apiUrl, expenseData)
                     .then(response =>{
                         this.errorData = response.data;
                     })
@@ -153,7 +155,7 @@
                         this.isLoading = false;
                         if (!this.isError){
                             this.editMode = false;
-                            this.loadTransactions();
+                            this.loadContractExpenses();
                         }
                     })
             },
@@ -175,7 +177,7 @@
                         this.isLoading = false;
                         if (!this.isError){
                             this.editMode = false;
-                            this.loadContractData();
+                            this.loadContractExpenses();
                         }
                     });
             },
@@ -190,10 +192,9 @@
                     this.isLoading = true;
                     this.isError = false;
                     axios
-                        .get('api/ContractExpenseData/' + this.contractId)
+                        .get(this.apiUrl + '/' + this.contractId)
                         .then(response =>{ 
                             this.contractExpenseList = response.data; 
-                            console.log(response.data);
                         })
                         .catch(error => { 
                             console.log(error); 

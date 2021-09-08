@@ -80,7 +80,7 @@
                     </div>
                     <br />
                     <br />
-                    <div v-if="contractData.deletionDate">
+                    <div v-if="expenseData.deletionDate">
                         <w-button @click="unDeleteClick">Reinstate Expense</w-button>
                     </div>
                     <div v-else>

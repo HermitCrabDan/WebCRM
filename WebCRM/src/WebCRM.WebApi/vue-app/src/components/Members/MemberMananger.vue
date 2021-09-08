@@ -6,6 +6,11 @@
         <w-notification v-model="isError" error bg-color="white">
             An Error Occured
         </w-notification>
+        <div v-if="isError">
+            <model-validation-error-list
+                :errorList="errorData.validationErrorMessages">
+            </model-validation-error-list>
+        </div>
         <div v-if="newMode">
             <new-member
                 @newMemberClose="closeNewMember"
@@ -18,6 +23,8 @@
                 :selectedMemberData="selectedMember"
                 @memberDetailClose="closeMemberDetail"
                 @memberEditSuccess="updateMemberData"
+                @removeMemberClick="removeMember"
+                @reinstateMemberClick="reinstateMember"
                 >
             </member-detail>
         </div>
@@ -43,6 +50,7 @@
     import NewMember from './NewMember.vue';
     import MemberDetail from './MemberDetail.vue';
     import ModelListBase from '../ModelListBase.vue';
+    import ModelValidationErrorList from '../ModelValidationErrorList.vue';
         
     export default {
         name:"MemberManager",
@@ -50,6 +58,7 @@
             'new-member': NewMember,
             'member-detail': MemberDetail,
             'model-list-base':ModelListBase,
+            'model-validation-error-list':ModelValidationErrorList,
         },
         data(){
             return {
@@ -64,6 +73,8 @@
                     { label:'Last Updated', key:'lastUpdatedDateString', align:'left' },
                 ],
                 memberSort:'-creationDate',
+
+                errorData:{ validationErrorMessages:[] },
 
                 isError: false,
                 isLoading: false,
@@ -94,17 +105,17 @@
                 axios
                     .put(this.apiUrl, memberData)
                     .then(response => { 
-                        console.log(response.data);
-                        this.editMode = false;
+                        this.errorData = response.data;
                     })
                     .catch(error => {
-                        console.log(error);
+                        this.errorData = error.response.data;
                         this.isError = true;
                     })
                     .then(() => {
                         this.isLoading = false;
                         if (!this.isError){
-                            this.getList();
+                            this.editMode = false;
+                            this.loadMemberData();
                         }
                     });
             },
@@ -114,28 +125,69 @@
                 axios
                     .post(this.apiUrl, memberData)
                     .then(response => { 
-                        console.log(response.data);
-                        this.newMode = false;
+                        this.errorData = response.data;
                     })
                     .catch(error => {
-                        console.log(error);
+                        this.errorData = error.response.data;
                         this.isError = true;
                     })
                     .then(() => {
                         this.isLoading = false;
                         if (!this.isError){
-                            this.getList();
+                            this.newMode = false;
+                            this.loadMemberData();
                         }
                     });
             },
-            getList(){
+            removeMember(memberData){
+                this.isLoading = true;
+                this.isError = false;
+                axios
+                    .delete(this.apiUrl + '/' + memberData.id)
+                    .then(response => {
+                        this.errorData = response.data;
+                    })
+                    .catch(error => {
+                        this.errorData = error.response.data;
+                        this.isError = true;
+                    })
+                    .then(() => {
+                        this.isLoading = false;
+                        if (!this.isError){
+                            this.editMode = false;
+                            this.loadMemberData();
+                        }
+                    })
+            },
+            reinstateMember(memberData){
+                this.isError = false;
+                this.isLoading = true;
+                memberData.deletionDate = null;
+                memberData.deletionBy = '';
+                axios
+                    .put(this.apiUrl, memberData)
+                    .then(response => {
+                        this.errorData = response.data;
+                    })
+                    .catch(error => {
+                        this.errorData = error.response.data;
+                        this.isError = true;
+                    })
+                    .then(() =>{
+                        this.isLoading = false;
+                        if (!this.isError){
+                            this.editMode = false;
+                            this.loadMemberData();
+                        }
+                    });
+            },
+            loadMemberData(){
                 this.isLoading = true;
                 this.isError = false;
                 axios
                     .get(this.apiUrl)
                     .then(response => { 
                         this.memberList = response.data; 
-                        console.log(response.data);
                     })
                     .catch(error => {
                         console.log(error);
@@ -147,7 +199,7 @@
             }
         },
         mounted(){
-            this.getList();
+            this.loadMemberData();
         }
                 
     }

@@ -23,6 +23,8 @@
                 :selectedAccountData="selectedCRMAccount"
                 @editValidationSuccess="onEditSuccess"
                 @accountDetailClose="closeAccountDetail"
+                @reinstateAccountClick="reinstateAccount"
+                @removeAccountClick="removeAccount"
                 >
             </crm-account-detail>
         </div>
@@ -71,6 +73,8 @@
                 ],
                 accountSort:'-creationDate',
 
+                apiUrl:'api/CRMAccountData',
+
                 isError:false,
                 isLoading:false,
 
@@ -91,9 +95,9 @@
                 this.isLoading = true;
                 this.isError = false;
                 axios
-                    .post("api/CRMAccountData", newAccountData)
+                    .post(this.apiUrl, newAccountData)
                     .then(response => { 
-                        console.log(response.data);
+                        this.errorData = response.data;
                     })
                     .catch(error => { 
                         this.errorData = error.response.data;
@@ -118,15 +122,57 @@
                 this.isLoading = true;
                 this.isError = false;
                 axios
-                    .put("api/CRMAccountData", accountData)
+                    .put(this.apiUrl, accountData)
                     .then(response => { 
-                        console.log(response.data);
+                        this.errorData = response.data;
                     })
                     .catch(error => { 
                         this.errorData = error.response.data;
                         this.isError = true;
                     })
                     .then(() => { 
+                        this.isLoading = false;
+                        if (!this.isError){
+                            this.editMode = false;
+                            this.loadAccountData();
+                        }
+                    });
+            },
+            removeAccount(accountData){
+                this.isLoading = true;
+                this.isError = false;
+                axios
+                    .delete(this.apiUrl + '/' + accountData.id)
+                    .then(response => {
+                        this.errorData = response.data;
+                    })
+                    .catch(error => {
+                        this.errorData = error.response.data;
+                        this.isError = true;
+                    })
+                    .then(() => {
+                        this.isLoading = false;
+                        if (!this.isError){
+                            this.editMode = false;
+                            this.loadAccountData();
+                        }
+                    })
+            },
+            reinstateAccount(accountData){
+                this.isError = false;
+                this.isLoading = true;
+                accountData.deletionDate = null;
+                accountData.deletionBy = '';
+                axios
+                    .put(this.apiUrl, accountData)
+                    .then(response => {
+                        this.errorData = response.data;
+                    })
+                    .catch(error => {
+                        this.errorData = error.response.data;
+                        this.isError = true;
+                    })
+                    .then(() =>{
                         this.isLoading = false;
                         if (!this.isError){
                             this.editMode = false;

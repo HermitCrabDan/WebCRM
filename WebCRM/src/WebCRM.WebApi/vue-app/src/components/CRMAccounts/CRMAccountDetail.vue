@@ -49,12 +49,22 @@
                                         :validators="[validators.required]"
                                         >
                                     </w-input>
-                                    <w-button
-                                        class="my1"
-                                        type="submit"
-                                        >
-                                        Edit Account Name
-                                    </w-button>
+                                    <br />
+                                    <div v-if="crmAccountData.deletionDate">
+                                        <w-button @click="unDeleteClick">Reinstate Account</w-button>
+                                    </div>
+                                    <div v-else>
+                                        <div>
+                                            <w-button class="my1"
+                                                type="submit">
+                                                Edit Account
+                                            </w-button>
+                                        </div>
+                                        <br />
+                                        <div>
+                                            <w-button @click="removeClick">Remove Account</w-button>
+                                        </div>
+                                    </div>
                                 </w-form>
                             </div>
                         </w-flex>
@@ -109,20 +119,24 @@
             selectedAccountData: {
                 immediate: true,
                 deep: true,
-                handler(newVal,oldVal){
+                handler(newVal){
                     this.crmAccountData = newVal;
-                    console.log(newVal);
-                    console.log(oldVal);
                 }
             }
         },
-        emits: ["editValidationSuccess", "accountDetailClose" ],
+        emits: ["editValidationSuccess", "accountDetailClose","removeAccountClick","reinstateAccountClick" ],
         methods:{
             onEditSuccess(){
                 this.$emit("editValidationSuccess", this.crmAccountData);
             },
             detailCloseClick(){
                 this.$emit("accountDetailClose");
+            },
+            removeClick(){
+                this.$emit("removeAccountClick", this.crmAccountData);
+            },
+            unDeleteClick(){
+                this.$emit("reinstateAccountClick", this.crmAccountData);
             },
         }
     }
