@@ -82,6 +82,16 @@
                             </div>
                         </w-flex>
                     </template>
+                    <template #item-title.3>
+                        Notes
+                    </template>
+                    <template #item-content.3>
+                        <w-flex justify-center fill-width>
+                            <div>
+                                <p><i>Under Construction</i></p>
+                            </div>
+                        </w-flex>
+                    </template>
                 </w-tabs>
             </w-card>
         </w-flex>
@@ -102,7 +112,8 @@
             return {
                 tabs: [
                     { title: 'Account Details', content: 'Account Details' },
-                    { title: 'Memberships', content: 'Memberships' }
+                    { title: 'Memberships', content: 'Memberships' },
+                    { title: 'Notes', content:'Notes' },
                 ],
                 editFormValid: null,
                 crmAccountData: { accountName: '' },

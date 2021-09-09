@@ -4,7 +4,9 @@
         <h1>Home</h1>
         <w-flex justify-center fill-width>
           <w-card title="About" style="min-width:600px; max-width:800px">
-            <w-accordion :items="items">
+            <w-accordion 
+              v-model="accordion"
+              :items="items">
             </w-accordion>
           </w-card>
         </w-flex>
@@ -32,6 +34,7 @@ export default {
             content:'Contracts are tied to account memberships and have associated transactions and expenses'
           },
         ],
+        accordion:[true,true,true]
       }
     }
 }
