@@ -75,9 +75,11 @@
                     <template #item-content.2>
                         <w-flex justify-center fill-width>
                             <div style="min-width:600px">
-                                <p>
-                                    <i>Under Construction</i>
-                                </p>
+                                <member-contract-manager
+                                    :selectedMemberId="memberData.id"
+                                    :selectedMemberName="memberData.memberName"
+                                    >
+                                </member-contract-manager>
                             </div>
                         </w-flex>
                     </template>
@@ -89,8 +91,12 @@
 
 <script>
     import ModelDetails from '../ModelDetails.vue';
+    import MemberContractManager from './MemberContracts/MemberContractManager.vue';
     export default {
-        components: { 'model-details':ModelDetails },
+        components: { 
+            'model-details':ModelDetails,
+            'member-contract-manager':MemberContractManager,
+        },
         name:"MemberDetail",
         props:{
             selectedMemberData: Object

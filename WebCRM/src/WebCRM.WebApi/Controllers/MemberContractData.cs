@@ -18,7 +18,7 @@ namespace WebCRM.WebApi.Controllers
     public class MemberContractDataController:ControllerBase
     {
         private CRMDBContext _ctx;
-        private IAppSecurityService _security
+        private IAppSecurityService _security;
 
         public MemberContractDataController(IAppSecurityService security, CRMDBContext ctx)
         {
@@ -27,7 +27,7 @@ namespace WebCRM.WebApi.Controllers
         }
 
         [HttpGet("{id}")]
-        public override IActionResult Get([FromRoute] int id)
+        public IActionResult Get([FromRoute] int id)
         {
             var memberId = (this._security.IsMember) ? this._security.MemberId : id;
 

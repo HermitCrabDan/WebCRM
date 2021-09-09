@@ -70,9 +70,9 @@
                     { label:'Start Date', key:'contractStartDateString', align:'center' },
                     { label:'End Date', key:'contractEndDateString', align:'center' },
                     { label:'Contract Amount', key:'contractAmountString', align:'center' },
-                    { label:'Monthly Estimate', key:'monthlyEstimateString', align:'center' },
                     { label:'Total Amount Paid', key:'totalPaidAmountString', align:'center' },
                     { label:'Amount Remaining', key:'amountRemainingString', align:'center' },
+                    { label:'Monthly Estimate', key:'monthlyEstimateString', align:'center' },
                     { label:'Last Payment Recieved', key:'lastPaymentRecievedDateString', align:'center' },
                     { label:'Delinquent', key:'isContractDelinquentString', align:'center'}
                 ],

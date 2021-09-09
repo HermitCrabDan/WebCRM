@@ -75,6 +75,10 @@ namespace WebCRM.Shared
                         {
                             amountDiff = model.TransactionAmount;
                         }
+                        else if (modelToUpdate.IsFee != model.IsFee)
+                        {
+                            amountDiff = (model.IsFee) ? -1 * modelToUpdate.TransactionAmount : model.TransactionAmount;
+                        }
                         modelToUpdate.RestrictedModelUpdate(model.GetBaseModel());
                         modelToUpdate.LastUpdatedDate = DateTime.Now;
                         modelToUpdate.LastUpdatedBy = userID;
@@ -91,7 +95,10 @@ namespace WebCRM.Shared
                             {
                                 contractToUpdate.TotalPaidAmount += amountDiff;
 
-                                var paymentDate = new DateTime(model.PaymentYear, model.PaymentMonth, contractToUpdate.PaymentDate);
+                                var paymentDate = new DateTime(
+                                    (modelToUpdate.PaymentYear > 0) ? modelToUpdate.PaymentYear : modelToUpdate.TransactionDate.Year,
+                                    (modelToUpdate.PaymentMonth > 0) ? modelToUpdate.PaymentMonth : modelToUpdate.TransactionDate.Month,
+                                    contractToUpdate.PaymentDate);
                                 if (!contractToUpdate.LastPaymentRecievedDate.HasValue
                                     || paymentDate > contractToUpdate.LastPaymentRecievedDate.Value)
                                     {
@@ -134,7 +141,10 @@ namespace WebCRM.Shared
                         if (contractToUpdate != null)
                         {
                             contractToUpdate.TotalPaidAmount -= modelToDelete.TransactionAmount;
-                            var paymentDate = new DateTime(modelToDelete.PaymentYear, modelToDelete.PaymentMonth, contractToUpdate.PaymentDate);
+                            var paymentDate = new DateTime(
+                                (modelToDelete.PaymentYear > 0)? modelToDelete.PaymentYear:modelToDelete.TransactionDate.Year,
+                                (modelToDelete.PaymentMonth > 0)? modelToDelete.PaymentMonth:modelToDelete.TransactionDate.Month,
+                                contractToUpdate.PaymentDate);
                             if (contractToUpdate.LastPaymentRecievedDate.HasValue
                                 && contractToUpdate.LastPaymentRecievedDate.Value == paymentDate)
                             {
