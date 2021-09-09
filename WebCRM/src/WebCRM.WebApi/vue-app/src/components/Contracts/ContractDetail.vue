@@ -81,11 +81,11 @@
                                             <vue-cal xsmall
                                                 :time="false"
                                                 active-view="month"
-                                                hide-view-selector
                                                 :disable-views="['week', 'day']"
+                                                :selected-date="contractData.contractStartDateString"
                                                 class="vuecal--blue-theme vuecal--rounded-theme"
                                                 @cell-focus="setStartDate($event)"
-                                                style="max-width: 270px;height: 290px">
+                                                style="max-width: 270px;height: 390px">
                                             </vue-cal>
                                         </w-flex>
                                     </div>
@@ -108,11 +108,11 @@
                                             <vue-cal xsmall
                                                 :time="false"
                                                 active-view="month"
-                                                hide-view-selector
                                                 :disable-views="['week', 'day']"
+                                                :selected-date="contractData.contractEndDateString"
                                                 class="vuecal--blue-theme vuecal--rounded-theme"
                                                 @cell-focus="setEndDate($event)"
-                                                style="max-width: 270px;height: 290px">
+                                                style="max-width: 270px;height: 390px">
                                             </vue-cal>
                                         </w-flex>
                                     </div>

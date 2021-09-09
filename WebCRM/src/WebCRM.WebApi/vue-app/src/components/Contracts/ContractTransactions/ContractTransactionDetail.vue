@@ -27,13 +27,18 @@
                     <div style="padding:50px">
                         <w-flex justify-center>
                             <vue-cal xsmall
+                                ref="transactionDateCal"
+                                click-to-navigate
                                 :time="false"
                                 active-view="month"
-                                hide-view-selector
                                 :disable-views="['week', 'day']"
+                                :selected-date="transactionData.transactionDateString"
                                 class="vuecal--blue-theme vuecal--rounded-theme"
-                                @cell-focus="setTransactionDate($event)"
-                                style="max-width: 270px;height: 290px">
+                                @cell-focus="setTransactionDate($refs.transactionDateCal.isMonthView, $event)"
+                                style="max-width: 270px;height: 390px"
+                                :min-date="new Date().addDays(-3650).format()"
+                                :max-date="new Date().addDays(365).format()"
+                                >
                             </vue-cal>
                         </w-flex>
                     </div>
@@ -71,19 +76,13 @@
                     </div>
                     <br />
                     <div>
-                        <w-checkbox
-                            label="Fee"
-                            v-model="transactionData.isFee"
-                            >
-                        </w-checkbox>
-                    </div>
-                    <br />
-                    <div>
-                        <w-input
+                        <w-select
                             label="Payment Year"
                             v-model="transactionData.paymentYear"
+                            :items="availablePaymentYears"
+                            :validators="[validators.required]"
                             >
-                        </w-input>
+                        </w-select>
                     </div>
                     <br />
                     <div>
@@ -91,6 +90,7 @@
                             label="Payment Month" 
                             v-model="transactionData.paymentMonth"
                             :items="availablePaymentMonths"
+                            :validators="[validators.required]"
                             >
                          </w-select>
                     </div>
@@ -99,7 +99,14 @@
                         <w-input
                             label="Transaction Amount"
                             v-model="transactionData.transactionAmount"
-                            :validators="[validators.required]"
+                            >
+                        </w-input>
+                    </div>
+                    <br />
+                    <div>
+                        <w-input
+                            label="Fee Amount"
+                            v-model="transactionData.feeAmount"
                             >
                         </w-input>
                     </div>
@@ -159,6 +166,9 @@
                     { label:'November', value:11 },
                     { label:'December', value:12 },
                 ],
+                availablePaymentYears:[
+                    { label:'',value:0 }
+                ],
                 
                 validators: {
                     required: value => !!value || 'This field is required',
@@ -170,15 +180,18 @@
                 immediate:true,
                 deep:true,
                 handler(newVal){
+                    this.loadPaymentYears();
                     this.transactionData = newVal;
                 }
             }
         },
         methods:{
-            setTransactionDate(selectedDate){
-                this.transactionData.transactionDate = selectedDate;
-                this.transactionData.transactionDateString = selectedDate.format('MM-DD-YYYY'); 
-                this.showTransactionDate = false;
+            setTransactionDate(isMonthView, selectedDate){
+                if (isMonthView){
+                    this.transactionData.transactionDate = selectedDate;
+                    this.transactionData.transactionDateString = selectedDate.format('MM-DD-YYYY'); 
+                    this.showTransactionDate = false;
+                }
             },
             closeClick(){
                 this.$emit("editTransactionClose");
@@ -191,7 +204,19 @@
             },
             unDeleteClick(){
                 this.$emit("reinstateTransactionClick", this.transactionData);
-            }
+            },
+            loadPaymentYears(){
+                var today = new Date();
+                var maxYear = today.getFullYear() + 1;
+                var paymentYears = new Array();
+                for (var indexYear = maxYear; indexYear > maxYear-12; indexYear--){
+                    paymentYears.push({ label:indexYear, value:indexYear });
+                }
+                this.availablePaymentYears = paymentYears;
+            },
+        },
+        mounted(){
+            this.loadPaymentYears();
         }
     }
 </script>

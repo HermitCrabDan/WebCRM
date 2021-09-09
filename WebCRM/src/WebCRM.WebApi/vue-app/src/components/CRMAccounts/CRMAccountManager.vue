@@ -66,12 +66,10 @@
                 accountHeaders:[
                     { label:'Account ID', key:'id', align:'left' },
                     { label:'Account Name', key:'accountName', align:'left' },
-                    { label:'Created by', key:'createdBy', align:'left' },
-                    { label:'Date Entered', key:'creationDateString', align:'left' },
                     { label:'Updated by', key:'lastUpdatedBy', align:'left' },
                     { label:'Last Updated', key:'lastUpdatedDateString', align:'left' },
                 ],
-                accountSort:'-creationDate',
+                accountSort:'-lastUpdatedDate',
 
                 apiUrl:'api/CRMAccountData',
 

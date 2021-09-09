@@ -12,10 +12,6 @@ namespace  WebCRM.Data
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
-        public DateTime CreationDate { get; set; }
-
-        public string CreatedBy { get; set; }
-
         public DateTime? DeletionDate { get; set; }
 
         public string DeletionBy { get; set; }

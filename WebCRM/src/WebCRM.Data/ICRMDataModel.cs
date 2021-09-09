@@ -10,10 +10,6 @@ namespace WebCRM.Data
     {
         int Id { get; set; }
 
-        DateTime CreationDate { get; set; }
-
-        string CreatedBy { get; set; }
-
         DateTime? LastUpdatedDate { get; set; }
 
         string LastUpdatedBy { get; set; }

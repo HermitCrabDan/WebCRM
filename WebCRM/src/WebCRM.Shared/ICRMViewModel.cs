@@ -10,12 +10,6 @@ namespace WebCRM.Shared
     {
         int Id { get; set; }
 
-        DateTime CreationDate { get; set; }
-
-        string CreationDateString { get; set; }
-
-        string CreatedBy { get; set; }
-
         DateTime? LastUpdatedDate { get; set; }
 
         string LastUpdatedDateString { get; set; }

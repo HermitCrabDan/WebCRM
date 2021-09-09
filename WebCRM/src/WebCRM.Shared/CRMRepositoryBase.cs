@@ -5,7 +5,6 @@ namespace WebCRM.Shared
     
     using WebCRM.Data;
     using System.Collections.Generic;
-    using System.Threading.Tasks;
     using Microsoft.Extensions.Logging;
     using Microsoft.EntityFrameworkCore;
     /// <summary>
@@ -41,8 +40,8 @@ namespace WebCRM.Shared
                 try
                 {
                     var modelToAdd = model.GetBaseModel();
-                    modelToAdd.CreationDate = DateTime.Now;
-                    modelToAdd.CreatedBy = userID;
+                    modelToAdd.LastUpdatedDate = DateTime.Now;
+                    modelToAdd.LastUpdatedBy = userID;
                     _ctx
                         .Set<Model>()
                         .Add(modelToAdd);
@@ -56,38 +55,8 @@ namespace WebCRM.Shared
                     if (_logger != null)
                     {
                         _logger.LogError(ex, $"Failed to create {typeof(Model).Name}");
-                        model.ValidationErrorMessages.Add(ex.ToString());
                     }
-                }
-            }
-            return (false, model);
-        }
-
-        public virtual async Task<(bool, ViewModel)> CreateAsync(ViewModel model, string userID)
-        {
-            if (model != null)
-            {
-                try
-                {
-                    var modelToAdd = model.GetBaseModel();
-                    modelToAdd.CreationDate = DateTime.Now;
-                    modelToAdd.CreatedBy = userID;
-
-                    await _ctx
-                        .Set<Model>()
-                        .AddAsync(modelToAdd);
-                    var savedRecords = await _ctx.SaveChangesAsync();
-                    var success = (savedRecords > 0);
-                    var viewModel = new ViewModel();
-                    viewModel.SetModelValues(modelToAdd);
-                    return (success, viewModel);
-                }
-                catch (Exception ex)
-                {
-                    if (_logger != null)
-                    {
-                        _logger.LogError(ex, $"Failed to create {typeof(Model).Name}");
-                    }
+                    model.ValidationErrorMessages.Add(ex.ToString());
                 }
             }
             return (false, model);

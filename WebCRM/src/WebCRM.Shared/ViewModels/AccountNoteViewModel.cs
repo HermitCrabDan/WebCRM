@@ -48,7 +48,7 @@ namespace WebCRM.Shared
 
         public override string ToString()
         {
-            return $"AccountNoteID:{this.Id},Account:{this.AccountID},By:{this.CreatedBy}-{this.CreationDate.ToShortDateString()}";
+            return $"AccountNoteID:{this.Id},Account:{this.AccountID},By:{this.LastUpdatedBy}-{this.LastUpdatedDate?.ToShortDateString()}";
         }
 
         public override AccountNote GetBaseModel()

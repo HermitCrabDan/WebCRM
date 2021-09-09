@@ -67,12 +67,10 @@
                     { label:'Member ID', key:'id', align:'left' },
                     { label:'Member Name', key:'memberName', align:'left' },
                     { label:'User ID', key:'userId', align:'left' },
-                    { label:'Created by', key:'createdBy', align:'left' },
-                    { label:'Date Entered', key:'creationDateString', align:'left' },
                     { label:'Updated by', key:'lastUpdatedBy', align:'left' },
                     { label:'Last Updated', key:'lastUpdatedDateString', align:'left' },
                 ],
-                memberSort:'-creationDate',
+                memberSort:'-lastUpdatedDate',
 
                 errorData:{ validationErrorMessages:[] },
 

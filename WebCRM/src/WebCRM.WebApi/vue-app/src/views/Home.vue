@@ -31,10 +31,22 @@ export default {
           },
           {
             title:'Contracts',
-            content:'Contracts are tied to account memberships and have associated transactions and expenses'
+            content:'Contracts have a contract amount with start and end dates, as well as a payment day of the month are tied to account memberships and have associated transactions and expenses'
+          },
+          {
+            title:'Contract Transactions',
+            content:'Transactions have a transaction amount, transaction date as well as a payment year and month'
+          },
+          {
+            title:'Transaction Fees',
+            content:'Transactions can have fees recorded for bookkeeping purposes. They are tracked and reported but do not impact the contact paid amounts'
+          },
+          {
+            title:'Contract Expenses',
+            content:'This is for bookkeeping and remittance purposes. Expenses are recorded and tracked on the contract, remittance and summary sections of the site but do not impact the contract paid amount'
           },
         ],
-        accordion:[true,true,true]
+        accordion:[true,true,true,true,true,true]
       }
     }
 }

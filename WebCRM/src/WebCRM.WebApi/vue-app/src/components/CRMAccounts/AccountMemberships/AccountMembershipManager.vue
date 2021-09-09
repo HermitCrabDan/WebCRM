@@ -81,12 +81,10 @@
                     { label:'Member ID', key:'memberID', align:'left' },
                     { label:'Member Name', key:'memberName', align:'left' },
                     { label:'Primary Membership', key:'isPrimaryAccountMemberString', align:'center' },
-                    { label:'Created by', key:'createdBy', align:'left' },
-                    { label:'Date Entered', key:'creationDateString', align:'left' },
                     { label:'Updated by', key:'lastUpdatedBy', align:'left' },
                     { label:'Last Updated', key:'lastUpdatedDateString', align:'left' },
                 ],
-                membershipSort:'-createdBy',
+                membershipSort:'-lastUpdatedDate',
                 memberIdList:[],
                 
                 editMembershipMode: false,

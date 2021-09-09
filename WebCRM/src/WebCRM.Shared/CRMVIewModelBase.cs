@@ -19,10 +19,6 @@ namespace WebCRM.Shared
         }
 
         public int Id { get; set; }
-        
-        public DateTime CreationDate { get; set; }
-
-        public string CreatedBy { get; set; }
 
         public DateTime? DeletionDate { get; set; }
 
@@ -31,8 +27,6 @@ namespace WebCRM.Shared
         public DateTime? LastUpdatedDate { get; set; }
 
         public string LastUpdatedBy { get; set; }
-
-        public string CreationDateString { get; set; }
 
         public string LastUpdatedDateString { get; set; }
 
@@ -43,14 +37,11 @@ namespace WebCRM.Shared
         public virtual void SetModelValues(Model model)
         {
             this.Id = model.Id;
-            this.CreationDate = model.CreationDate;
-            this.CreatedBy = XSSFilterHelper.FilterForXSS(model.CreatedBy);
             this.LastUpdatedBy = XSSFilterHelper.FilterForXSS(model.LastUpdatedBy);
             this.LastUpdatedDate = model.LastUpdatedDate;
             this.DeletionDate = model.DeletionDate;
             this.DeletionBy = XSSFilterHelper.FilterForXSS(model.DeletionBy);
 
-            this.CreationDateString = String.Format("{0:MM-dd-yyyy}", model.CreationDate);
             this.LastUpdatedDateString = String.Format("{0:MM-dd-yyyy}", model.LastUpdatedDate);
             this.DeletionDateString = String.Format("{0:MM-dd-yyyy}", model.DeletionDate);
         }
@@ -65,8 +56,6 @@ namespace WebCRM.Shared
             return new Model
             {
                 Id = this.Id,
-                CreatedBy = this.CreatedBy,
-                CreationDate = this.CreationDate,
                 DeletionBy = this.DeletionBy,
                 DeletionDate = this.DeletionDate,
                 LastUpdatedBy = this.LastUpdatedBy,

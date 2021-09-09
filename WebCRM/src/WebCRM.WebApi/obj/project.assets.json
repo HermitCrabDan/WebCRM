@@ -1812,7 +1812,7 @@
       "outputPath": "/Users/danielgraf/Documents/GitHub/WebCRM/WebCRM/src/WebCRM.WebApi/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "/Users/danielgraf/.config/NuGet/NuGet.Config"
+        "/Users/danielgraf/.nuget/NuGet/NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net5.0"

@@ -74,12 +74,10 @@
                     { label:'Contract Id', key:'contractID', align:'center' },
                     { label:'Expense Date', key:'expenseDateString', align:'left' },
                     { label:'Amount', key:'expenseAmountString', align:'center' },
-                    { label:'Created by', key:'createdBy', align:'left' },
-                    { label:'Date Entered', key:'creationDateString', align:'left' },
                     { label:'Updated by', key:'lastUpdatedBy', align:'left' },
                     { label:'Last Updated', key:'lastUpdatedDateString', align:'left' },
                 ],
-                contractExpenseSort:'-creationDate',
+                contractExpenseSort:'-lastUpdatedDate',
 
                 apiUrl:'api/ContractExpenseData',
 

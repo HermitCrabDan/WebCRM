@@ -9,12 +9,6 @@
                 Id: {{ modelData.id }}
             </div>
             <div>
-                Created: {{ modelData.creationDateString }}
-            </div>
-            <div>
-                Created By: {{ modelData.createdBy }}
-            </div>
-            <div>
                 Last Updated: {{ modelData.lastUpdatedDateString }}
             </div>
             <div>

@@ -25,7 +25,7 @@ namespace WebCRM.Shared
         public override (bool, ContractTransactionViewModel) Create(ContractTransactionViewModel model, string userID)
         {
             var (success, viewModel) = base.Create(model, userID);
-            if (success && viewModel != null && viewModel.ContractID != 0 && !model.IsFee)
+            if (success && viewModel != null && viewModel.ContractID != 0 && model.TransactionAmount != 0)
             {
                 var contractToUpdate = this._ctx
                     .Contracts
@@ -33,7 +33,11 @@ namespace WebCRM.Shared
                     .FirstOrDefault();
                 if (contractToUpdate != null)
                 {
-                    var paymentDate = new DateTime(model.PaymentYear, model.PaymentMonth, contractToUpdate.PaymentDate);
+                    var paymentDate = new DateTime(
+                            model.PaymentYear, 
+                            model.PaymentMonth, 
+                            contractToUpdate.PaymentDate
+                        );
                     if (!contractToUpdate.LastPaymentRecievedDate.HasValue
                         || paymentDate > contractToUpdate.LastPaymentRecievedDate.Value)
                     {
@@ -75,10 +79,6 @@ namespace WebCRM.Shared
                         {
                             amountDiff = model.TransactionAmount;
                         }
-                        else if (modelToUpdate.IsFee != model.IsFee)
-                        {
-                            amountDiff = (model.IsFee) ? -1 * modelToUpdate.TransactionAmount : model.TransactionAmount;
-                        }
                         modelToUpdate.RestrictedModelUpdate(model.GetBaseModel());
                         modelToUpdate.LastUpdatedDate = DateTime.Now;
                         modelToUpdate.LastUpdatedBy = userID;
@@ -96,14 +96,17 @@ namespace WebCRM.Shared
                                 contractToUpdate.TotalPaidAmount += amountDiff;
 
                                 var paymentDate = new DateTime(
-                                    (modelToUpdate.PaymentYear > 0) ? modelToUpdate.PaymentYear : modelToUpdate.TransactionDate.Year,
-                                    (modelToUpdate.PaymentMonth > 0) ? modelToUpdate.PaymentMonth : modelToUpdate.TransactionDate.Month,
-                                    contractToUpdate.PaymentDate);
+                                        model.PaymentYear, 
+                                        model.PaymentMonth, 
+                                        contractToUpdate.PaymentDate
+                                    );
                                 if (!contractToUpdate.LastPaymentRecievedDate.HasValue
                                     || paymentDate > contractToUpdate.LastPaymentRecievedDate.Value)
                                     {
                                         contractToUpdate.LastPaymentRecievedDate = paymentDate;
                                     }
+                                contractToUpdate.LastUpdatedBy = userID;
+                                contractToUpdate.LastUpdatedDate = System.DateTime.Now;
                                 this._ctx.Contracts.Update(contractToUpdate);
                             }
                         }
@@ -124,7 +127,7 @@ namespace WebCRM.Shared
             return (false, model);
         }
 
-        public override bool Delete(int id, string UserID)
+        public override bool Delete(int id, string userID)
         {
             var modelToDelete = this._ctx.ContractTransactions.Where(w => w.Id == id).FirstOrDefault();
             if (modelToDelete != null)
@@ -132,24 +135,37 @@ namespace WebCRM.Shared
                 try
                 {
                     modelToDelete.DeletionDate = DateTime.Now;
-                    modelToDelete.DeletionBy = UserID;
+                    modelToDelete.DeletionBy = userID;
                     this._ctx.ContractTransactions.Update(modelToDelete);
 
-                    if (modelToDelete.TransactionAmount != 0 && !modelToDelete.IsFee)
+                    if (modelToDelete.TransactionAmount != 0)
                     {
                         var contractToUpdate = this._ctx.Contracts.Where(w => w.Id == modelToDelete.ContractID).FirstOrDefault();
                         if (contractToUpdate != null)
                         {
                             contractToUpdate.TotalPaidAmount -= modelToDelete.TransactionAmount;
                             var paymentDate = new DateTime(
-                                (modelToDelete.PaymentYear > 0)? modelToDelete.PaymentYear:modelToDelete.TransactionDate.Year,
-                                (modelToDelete.PaymentMonth > 0)? modelToDelete.PaymentMonth:modelToDelete.TransactionDate.Month,
-                                contractToUpdate.PaymentDate);
+                                    modelToDelete.PaymentYear,
+                                    modelToDelete.PaymentMonth,
+                                    contractToUpdate.PaymentDate
+                                );
                             if (contractToUpdate.LastPaymentRecievedDate.HasValue
                                 && contractToUpdate.LastPaymentRecievedDate.Value == paymentDate)
                             {
-                                contractToUpdate.LastPaymentRecievedDate = null;
+                                var firstPaymentDate = new DateTime(
+                                        contractToUpdate.ContractStartDate.Year,
+                                        contractToUpdate.ContractStartDate.Month,
+                                        contractToUpdate.PaymentDate
+                                    );
+                                if (contractToUpdate.ContractStartDate.Day > contractToUpdate.PaymentDate)
+                                {
+                                    firstPaymentDate.AddMonths(1);
+                                }
+                                contractToUpdate.LastPaymentRecievedDate = 
+                                    (firstPaymentDate <= paymentDate.AddMonths(-1))? paymentDate.AddMonths(-1) : null;
                             }
+                            contractToUpdate.LastUpdatedBy = userID;
+                            contractToUpdate.LastUpdatedDate = System.DateTime.Now;
                             this._ctx.Contracts.Update(contractToUpdate);
                         }
                     }

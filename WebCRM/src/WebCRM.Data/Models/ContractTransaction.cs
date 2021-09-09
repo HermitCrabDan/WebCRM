@@ -18,7 +18,7 @@ namespace WebCRM.Data
 
         public decimal TransactionAmount { get; set; }
 
-        public bool IsFee { get; set; }
+        public decimal? FeeAmount { get; set; }
 
         public int PaymentMonth { get; set; }
 
@@ -28,7 +28,7 @@ namespace WebCRM.Data
         {
             this.PaymentYear = model.PaymentYear;
             this.PaymentMonth = model.PaymentMonth;
-            this.IsFee = model.IsFee;
+            this.FeeAmount = model.FeeAmount;
             this.TransactionDate = model.TransactionDate;
             this.TransactionAmount = model.TransactionAmount;
             base.RestrictedModelUpdate(model);
