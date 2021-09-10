@@ -82,7 +82,7 @@ namespace WebCRM.Shared
 
             this.TransactionAmountString = String.Format("${0:N2}", model.TransactionAmount);
             this.TransactionDateString = String.Format("{0:MM-dd-yyyy}", model.TransactionDate);
-            this.FeeAmountString = String.Format("${0:N2}", model.FeeAmount);
+            this.FeeAmountString = String.Format("${0:N2}", (model.FeeAmount ?? 0));
 
             base.SetModelValues(model);
         }

@@ -79,13 +79,18 @@
                                     <div style="padding:50px">
                                         <w-flex justify-center>
                                             <vue-cal xsmall
+                                                ref="startDateCal"
+                                                click-to-navigate
                                                 :time="false"
                                                 active-view="month"
                                                 :disable-views="['week', 'day']"
                                                 :selected-date="contractData.contractStartDateString"
                                                 class="vuecal--blue-theme vuecal--rounded-theme"
-                                                @cell-focus="setStartDate($event)"
-                                                style="max-width: 270px;height: 390px">
+                                                @cell-click="setStartDate($refs.startDateCal.isMonthView, $event)"
+                                                style="max-width: 270px;height: 390px"
+                                                :min-date="new Date().addDays(-3650).format()"
+                                                :max-date="new Date().addDays(3650).format()"
+                                                >
                                             </vue-cal>
                                         </w-flex>
                                     </div>
@@ -106,13 +111,18 @@
                                     <div style="padding:50px">
                                         <w-flex justify-center>
                                             <vue-cal xsmall
+                                                ref="endDateCal"
+                                                click-to-navigate
                                                 :time="false"
                                                 active-view="month"
                                                 :disable-views="['week', 'day']"
                                                 :selected-date="contractData.contractEndDateString"
                                                 class="vuecal--blue-theme vuecal--rounded-theme"
-                                                @cell-focus="setEndDate($event)"
-                                                style="max-width: 270px;height: 390px">
+                                                @cell-click="setEndDate($refs.endDateCal.isMonthView, $event)"
+                                                style="max-width: 270px;height: 390px"
+                                                :min-date="new Date().addDays(-3650).format()"
+                                                :max-date="new Date().addDays(3650).format()"
+                                                >
                                             </vue-cal>
                                         </w-flex>
                                     </div>
@@ -292,17 +302,19 @@
             }
         },
         methods:{
-            setStartDate(event){
-                console.log(event);
-                this.contractData.contractStartDateString = event.format('MM-DD-YYYY'); 
-                this.contractData.contractStartDate = event;
-                this.showStartDate = false;
+            setStartDate(isMonthView, event){
+                if (isMonthView){
+                    this.contractData.contractStartDateString = event.format('MM-DD-YYYY'); 
+                    this.contractData.contractStartDate = event;
+                    this.showStartDate = false;
+                }
             },
-            setEndDate(event){
-                console.log(event);
-                this.contractData.contractEndDateString = event.format('MM-DD-YYYY'); 
-                this.contractData.contractEndDate = event;
-                this.showEndDate = false;
+            setEndDate(isMonthView, event){
+                if (isMonthView){
+                    this.contractData.contractEndDateString = event.format('MM-DD-YYYY'); 
+                    this.contractData.contractEndDate = event;
+                    this.showEndDate = false;
+                }
             },
             closeClick(){
                 this.$emit("contractDetailClose");

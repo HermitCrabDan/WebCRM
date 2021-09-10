@@ -27,13 +27,19 @@
                     <div style="padding:50px">
                         <w-flex justify-center>
                             <vue-cal xsmall
+                                ref="expenseDateCal"
+                                click-to-navigate
                                 :time="false"
                                 active-view="month"
                                 hide-view-selector
                                 :disable-views="['week', 'day']"
+                                :selected-date="expenseDate.expenseDateString"
                                 class="vuecal--blue-theme vuecal--rounded-theme"
-                                @cell-focus="setExpenseDate($event)"
-                                style="max-width: 270px;height: 290px">
+                                @cell-click="setExpenseDate($refs.expenseDateCal.isMonthView, $event)"
+                                style="max-width: 270px;height: 290px"
+                                :min-date="new Date().addDays(-3650).format()"
+                                :max-date="new Date().addDays(730).format()"
+                                >
                             </vue-cal>
                         </w-flex>
                     </div>
@@ -139,10 +145,12 @@
                     expenseAmount:0
                 }
             },
-            setExpenseDate(selectedDate){
-                this.expenseData.expenseDate = selectedDate;
-                this.expenseData.expenseDateString = selectedDate.format('MM-DD-YYYY'); 
-                this.showExpenseDate = false;
+            setExpenseDate(isMonthView, selectedDate){
+                if (isMonthView){
+                    this.expenseData.expenseDate = selectedDate;
+                    this.expenseData.expenseDateString = selectedDate.format('MM-DD-YYYY'); 
+                    this.showExpenseDate = false;
+                }
             },
             closeClick(){
                 this.$emit("newExpenseClose");
