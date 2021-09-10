@@ -47,7 +47,7 @@
                 keyword:'',
                 keywordFilter: keyword => item => {
                     // Concatenate all the columns into a single string for a more performant lookup.
-                    const allTheColumns = `${item.id} ${item.contractName} ${item.memberName} ${item.accountName} ${item.lastUpdatedDateString} ${item.creationDateString} ${item.createdBy} ${item.lastUpdatedBy}`
+                    const allTheColumns = `${item.id} ${item.contractName} ${item.memberName} ${item.accountName} ${item.lastUpdatedDateString} ${item.creationDateString} ${item.noteText} ${item.createdBy} ${item.lastUpdatedBy}`
                     // Lookup the keyword variable in the string with case-insensitive flag.
                     return new RegExp(keyword, 'i').test(allTheColumns)
                 },

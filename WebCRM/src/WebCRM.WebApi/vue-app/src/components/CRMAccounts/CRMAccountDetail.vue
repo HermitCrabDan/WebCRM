@@ -1,11 +1,7 @@
 <template>
     <div>
-        <h3>
-            Account:
-        </h3>
-        <br />
         <w-flex justify-center fill-width>
-            <w-card title title-class="blue-light5--bg pa3" style="width:800px">
+            <w-card title title-class="blue-light5--bg pa3" style="min-width:800px">
                 <template #title>
                     <div class="title3">
                         Selected Account:  {{ crmAccountData.id }} - {{ crmAccountData.accountName }}
@@ -76,7 +72,7 @@
                         <w-flex  justify-center fill-width>
                             <div>
                                 <account-membership-manager
-                                    :selectedAccountId="selectedAccountData.id"
+                                    :selectedAccountId="crmAccountData.id"
                                     >
                                 </account-membership-manager>
                             </div>
@@ -88,7 +84,10 @@
                     <template #item-content.3>
                         <w-flex justify-center fill-width>
                             <div>
-                                <p><i>Under Construction</i></p>
+                                <account-note-manager
+                                    :selectedAccountId="crmAccountData.id"
+                                    >
+                                </account-note-manager>
                             </div>
                         </w-flex>
                     </template>
@@ -100,12 +99,14 @@
 
 <script>
     import AccountMembershipManager from './AccountMemberships/AccountMembershipManager.vue';
+    import AccountNoteManager from './AccountNotes/AccountNoteManager.vue';
     import ModelDetails from '../ModelDetails.vue';
 
     export default {
         name:"CRMAccountDetail",
         components:{
             'account-membership-manager':AccountMembershipManager,
+            'account-note-manager':AccountNoteManager,
             'model-details':ModelDetails,
         },
         data(){

@@ -154,7 +154,7 @@
                             this.editMode = false;
                             this.loadAccountData();
                         }
-                    })
+                    });
             },
             reinstateAccount(accountData){
                 this.isError = false;

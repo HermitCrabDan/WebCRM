@@ -1,8 +1,8 @@
 <template>
     <div>
-        <div v-if="errorList.length > 0">
+        <div>
             <w-list
-                :items="errorList"
+                :items="errorDataList"
                 color="red"
                 icon="wi-cross"
                 >
@@ -17,6 +17,25 @@
         props:{
             errorList: Array
         },
+        data(){
+            return{
+                errorDataList:[],
+            }
+        },
+        watch:{
+            errorList:{
+                immediate:true,
+                deep:true,
+                handler(newVal){
+                    this.errorDataList = newVal.map(x =>  { 
+                        var labelData = { label: x };
+                        return labelData; 
+                    });
+                        //this.memberIdList = this.crmAccountMemberList.map(x => x.memberID);;
+                    console.log(this.errorDataList);
+                }
+            }
+        }
     }
 </script>
 

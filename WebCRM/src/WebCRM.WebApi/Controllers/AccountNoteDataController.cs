@@ -21,5 +21,18 @@ namespace WebCRM.WebApi.Controllers
             {
 
             }
+
+        [HttpGet("{id}")]
+        public override IActionResult Get([FromRoute] int id)
+        {
+            if (id > 0)
+            {
+                return Ok(this._repo.Retrieve(n => n.AccountID == id));
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
     }
 }
