@@ -25,7 +25,7 @@
                         </model-details>
                         <br />
                         <w-flex justify-center fill-width>
-                            <div style="border:solid 1px silver; padding:5px; min-width:400px">
+                            <div style="border:solid 1px silver; padding:5px; min-width:600px">
                                 <w-form
                                     v-model="editFormValid"
                                     @success="onEditSuccess"
@@ -39,6 +39,9 @@
                                             The form has errors.
                                         </w-alert>
                                     </div>
+                                    <h3>Edit Account</h3>
+                                    <hr />
+                                    <br />
                                     <w-input
                                         label="Account Name"
                                         v-model="crmAccountData.accountName"

@@ -14,7 +14,7 @@
         <w-flex justify-center fill-width>
             <div v-if="newMembershipMode">
                 <new-account-membership
-                    :selectedAccountId="selectedAccountId"
+                    :selectedAccountId="accountId"
                     :existingMembershipIds="memberIdList"
                     @newMembershipSuccess="submitNewMembership"
                     @newMembershipClose="closeNewMembership"
@@ -24,6 +24,8 @@
             <div v-else-if="editMembershipMode">
                 <account-membership-detail
                     :SelectedAccountMembershipData="selectedAccountMembership"
+                    :existingMembershipIds="memberIdList"
+                    @editMembershipValidationSuccess="editMembership"
                     @closeMembershipDetail="closeMembershipDetailClick"
                     @removeMembership="removeMembershipData"
                     @unDeleteMembership="unDeleteMembershipData"
@@ -74,6 +76,7 @@
         },
         data(){
             return{
+                accountId:0,
                 crmAccountMemberList:[],
                 accountMemberHeaders:[
                     { label:'Account ID', key:'accountID', align:'left' },
@@ -108,28 +111,30 @@
                 immediate:true,
                 deep: true,
                 handler(newVal){
-                    console.log(newVal);
+                    this.accountId = newVal;
                     this.loadAccountMemberships();
                 }
             }
         },
         methods:{
             loadAccountMemberships(){
-                this.isLoading = true;
-                this.isError = false;
-                axios
-                    .get("api/AccountMembershipData/" + this.selectedAccountId)
-                    .then(response => { 
-                        this.crmAccountMemberList = response.data;
-                        this.memberIdList = this.crmAccountMemberList.map(x => x.memberID);
-                    })
-                    .catch(error => {
-                        this.isError = true;
-                        console.log(error);
-                    })
-                    .then(()=>{
-                        this.isLoading = false;
-                    });
+                if (this.accountId > 0){
+                    this.isLoading = true;
+                    this.isError = false;
+                    axios
+                        .get("api/AccountMembershipData/" + this.accountId)
+                        .then(response => { 
+                            this.crmAccountMemberList = response.data;
+                            this.memberIdList = this.crmAccountMemberList.map(x => x.memberID);
+                        })
+                        .catch(error => {
+                            this.isError = true;
+                            console.log(error);
+                        })
+                        .then(()=>{
+                            this.isLoading = false;
+                        });
+                }
             },
             selectAccountMembership(accountMembership){
                 this.selectedAccountMembership = accountMembership;
@@ -154,7 +159,6 @@
                     .post("api/AccountMembershipData", membershipData)
                     .then(response => { 
                         this.errorData = response.data;
-                        this.newMembershipMode = false;
                     })
                     .catch(error => { 
                         this.errorData = error.response.data;
@@ -163,6 +167,27 @@
                     .then(()=>{
                         this.isLoading = false;
                         if(!this.isError){
+                            this.newMembershipMode = false;
+                            this.loadAccountMemberships();
+                        }
+                    });
+            },
+            editMembership(membershipData){
+                this.isLoading = true;
+                this.isError = false;
+                axios
+                    .put('api/AccountMembershipData', membershipData)
+                    .then(response => {
+                        this.errorData = response.data;
+                    })
+                    .catch(error => {
+                        this.errorData = error.response.data;
+                        this.isError = true;
+                    })
+                    .then(() => {
+                        this.isLoading = false;
+                        if (!this.isError){
+                            this.editMembershipMode = false;
                             this.loadAccountMemberships();
                         }
                     });

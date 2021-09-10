@@ -81,9 +81,7 @@
             selectedAccountId:{
                 immediate: true,
                 deep: true,
-                handler(newVal, oldVal){
-                    console.log(newVal);
-                    console.log(oldVal);
+                handler(newVal){
                     this.accountMembershipData.accountID = newVal;
                     this.loadMemberships();
                 }
@@ -120,7 +118,6 @@
                     }
                 });
                 this.availableMemberList = filteredMemberList;
-                console.log(this.availableMemberList);
             },
         }
     }
