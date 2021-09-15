@@ -14,7 +14,7 @@
         "outputPath": "/Users/danielgraf/Documents/GitHub/WebCRM/WebCRM/src/WebCRM.Data/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/Users/danielgraf/.nuget/NuGet/NuGet.Config"
+          "/Users/danielgraf/.config/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net5.0"
@@ -78,7 +78,7 @@
         "outputPath": "/Users/danielgraf/Documents/GitHub/WebCRM/WebCRM/src/WebCRM.RoleSecurity/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/Users/danielgraf/.nuget/NuGet/NuGet.Config"
+          "/Users/danielgraf/.config/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net5.0"
@@ -148,7 +148,7 @@
         "outputPath": "/Users/danielgraf/Documents/GitHub/WebCRM/WebCRM/src/WebCRM.Shared/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/Users/danielgraf/.nuget/NuGet/NuGet.Config"
+          "/Users/danielgraf/.config/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net5.0"
@@ -210,7 +210,7 @@
         "outputPath": "/Users/danielgraf/Documents/GitHub/WebCRM/WebCRM/src/WebCRM.WebApi/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/Users/danielgraf/.nuget/NuGet/NuGet.Config"
+          "/Users/danielgraf/.config/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net5.0"

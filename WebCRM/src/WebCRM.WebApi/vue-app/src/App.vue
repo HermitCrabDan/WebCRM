@@ -6,7 +6,9 @@
       <router-link to="/CRMAccounts">Accounts</router-link> | 
       <router-link to="/Contracts">Contracts</router-link> |
       <router-link to="/Totals">Totals</router-link> |
-      <router-link to="/Remittance">Remittance</router-link> 
+      <router-link to="/Remittance">Remittance</router-link> |
+      <router-link to="/Forecast">Forecast</router-link> |
+      <router-link to="/UserManagement">User Management</router-link>
     </div>
     <router-view />
   </div>

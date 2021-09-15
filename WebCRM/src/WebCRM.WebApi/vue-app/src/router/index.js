@@ -5,6 +5,8 @@ import Contracts from "../views/Contracts.vue";
 import Members from "../views/Members.vue";
 import Totals from "../views/Totals.vue";
 import Remittance from '../views/Remittance.vue';
+import UserManagement from '../views/UserManagement.vue';
+import Forecast from '../views/Forecast.vue';
 
 const routes = [
   {
@@ -36,7 +38,17 @@ const routes = [
     path:"/Remittance",
     name:"Remittance",
     component: Remittance
-  }
+  },
+  {
+    path:"/Forecast",
+    name:"Forecast",
+    component: Forecast
+  },
+  {
+    path:"/UserManagement",
+    name:"UserManagement",
+    component: UserManagement
+  },
 ];
 
 const router = createRouter({

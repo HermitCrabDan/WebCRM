@@ -1,10 +1,8 @@
 ﻿<Properties StartupConfiguration="{4925F06C-80EB-4244-97D9-037BD339E6D5}|Default">
-  <MonoDevelop.Ide.Workbench ActiveDocument="src/WebCRM.Shared/ViewModels/AccountNoteViewModel.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="src/WebCRM.Shared/ViewModels/MonthlyRemittanceSummaryViewModel.cs">
     <Files>
-      <File FileName="src/WebCRM.Shared/ViewModels/ContractTransactionViewModel.cs" Line="88" Column="10" />
-      <File FileName="src/WebCRM.WebApi/Controllers/AccountNoteDataController.cs" Line="30" Column="72" />
-      <File FileName="src/WebCRM.WebApi/Controllers/CRMApiControllerBase.cs" Line="95" Column="68" />
-      <File FileName="src/WebCRM.Shared/ViewModels/AccountNoteViewModel.cs" Line="1" Column="1" />
+      <File FileName="src/WebCRM.Shared/ViewModels/MonthlyContractSummaryViewModel.cs" Line="15" Column="24" />
+      <File FileName="src/WebCRM.Shared/Repositories/RemittanceRepository.cs" Line="123" Column="31" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -12,24 +10,21 @@
           <Node name="WebCRM" expanded="True">
             <Node name="src" expanded="True">
               <Node name="WebCRM.Shared" expanded="True">
+                <Node name="Repositories" expanded="True" />
                 <Node name="ViewModels" expanded="True">
-                  <Node name="AccountNoteViewModel.cs" selected="True" />
+                  <Node name="MonthlyRemittanceSummaryViewModel.cs" selected="True" />
                 </Node>
               </Node>
               <Node name="WebCRM.WebApi" expanded="True">
                 <Node name="Controllers" expanded="True" />
-                <Node name="vue-app" expanded="True">
-                  <Node name="src" expanded="True">
-                    <Node name="components" expanded="True">
-                      <Node name="CRMAccounts" expanded="True">
-                        <Node name="AccountMemberships" expanded="True" />
-                      </Node>
-                    </Node>
-                  </Node>
-                </Node>
               </Node>
             </Node>
           </Node>
+        </State>
+      </Pad>
+      <Pad Id="MonoDevelop.Debugger.WatchPad">
+        <State>
+          <Value>activeContracts</Value>
         </State>
       </Pad>
     </Pads>
