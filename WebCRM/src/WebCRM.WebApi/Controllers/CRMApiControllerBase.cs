@@ -7,6 +7,7 @@ namespace WebCRM.WebApi.Controllers
     using WebCRM.RoleSecurity;
     using Microsoft.AspNetCore.Mvc;
     using System.Threading.Tasks;
+    using System.Linq.Expressions;
 
     /// <summary>
     /// Base Api data controller for CRM functions
@@ -29,7 +30,7 @@ namespace WebCRM.WebApi.Controllers
             this._security = security;
         }
 
-        protected virtual Func<Model, bool> RestrictedSelection()
+        protected virtual Expression<Func<Model, bool>> RestrictedSelection()
         {
             //Allways false
             return n => 1 == 0;
@@ -56,47 +57,52 @@ namespace WebCRM.WebApi.Controllers
         }
 
         [HttpGet]
-        public virtual IActionResult Get()
+        public virtual async Task<IActionResult> Get()
         {
             if (this.CanViewAll())
             {
-                var data = this._repo.Retrieve(n => 1 == 1);
+                var data = await this._repo.RetrieveAsync(n => 1 == 1);
                 return Ok(data);
             }
-            return Ok(this._repo.Retrieve(RestrictedSelection()));
+            var restrictedData = await this._repo.RetrieveAsync(RestrictedSelection());
+            return Ok(restrictedData);
         }
 
         [HttpGet("{id}")]
-        public virtual IActionResult Get([FromRoute] int id)
+        public virtual async Task<IActionResult> Get([FromRoute] int id)
         {
             if (id <= 0)
             {
                 return BadRequest();
             }
+
             if (CanViewAll())
             {
-                var (success, model) = this._repo.RetrieveById(id);
+                var (success, model) = await this._repo.RetrieveByIdAsync(id);
                 if (success)
                 {
                     return Ok(model);
                 }
                 return NotFound();
             }
-            var viewableData = this._repo.Retrieve(RestrictedSelection());
+
+            var viewableData = await this._repo.RetrieveAsync(RestrictedSelection());
             var selectedData = viewableData.Where(w => w.Id == id).FirstOrDefault();
+
             if (selectedData != null)
             {
                 return Ok(selectedData);
             }
+
             return BadRequest();
         }
 
         [HttpPost]
-        public virtual IActionResult Create([FromBody] ViewModel model)
+        public virtual async Task<IActionResult> Create([FromBody] ViewModel model)
         {
             if (model != null && CanCreate() && model.IsValid())
             {
-                var (success, viewModel) = this._repo.Create(model, this._security.UserID);
+                var (success, viewModel) = await this._repo.CreateAsync(model, this._security.UserID);
                 if (success)
                 {
                     return Ok(viewModel);
@@ -116,11 +122,11 @@ namespace WebCRM.WebApi.Controllers
         }
 
         [HttpPut]
-        public virtual IActionResult Update([FromBody] ViewModel model)
+        public virtual async Task<IActionResult> Update([FromBody] ViewModel model)
         {
             if (model != null && model.Id > 0 && CanUpdate() && model.IsValid())
             {
-                var (success, viewModel) = this._repo.Update(model, this._security.UserID);
+                var (success, viewModel) = await this._repo.UpdateAsync(model, this._security.UserID);
                 if (success)
                 {
                     return Ok(viewModel);
@@ -144,11 +150,11 @@ namespace WebCRM.WebApi.Controllers
         }
 
         [HttpDelete("{id}")]
-        public virtual IActionResult Delete([FromRoute] int id)
+        public virtual async Task<IActionResult> Delete([FromRoute] int id)
         {
-            if (CanDelete() && id > 0)
+            if (CanDelete() && id != default)
             {
-                var success = this._repo.Delete(id, this._security.UserID);
+                var success = await this._repo.DeleteAsync(id, this._security.UserID);
                 if (success)
                 {
                     return Ok();

@@ -3,7 +3,10 @@ namespace WebCRM.Shared
     using System;
     using System.Linq;
     using WebCRM.Data;
+    using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Logging;
+    using System.Threading.Tasks;
+
     /// <summary>
     /// CRM repository for contract transaction data
     /// </summary>
@@ -22,15 +25,16 @@ namespace WebCRM.Shared
             {
             }
 
-        public override (bool, ContractTransactionViewModel) Create(ContractTransactionViewModel model, string userID)
+        public override async Task<(bool, ContractTransactionViewModel)> CreateAsync(ContractTransactionViewModel model, string userID)
         {
-            var (success, viewModel) = base.Create(model, userID);
+            var (success, viewModel) = await base.CreateAsync(model, userID);
             if (success && viewModel != null && viewModel.ContractID != 0 && model.TransactionAmount != 0)
             {
-                var contractToUpdate = this._ctx
+                var contractToUpdate = await this._ctx
                     .Contracts
                     .Where(w => w.Id == viewModel.ContractID)
-                    .FirstOrDefault();
+                    .FirstOrDefaultAsync();
+
                 if (contractToUpdate != null)
                 {
                     var paymentDate = new DateTime(
@@ -46,8 +50,8 @@ namespace WebCRM.Shared
                     contractToUpdate.TotalPaidAmount += viewModel.TransactionAmount;
                     contractToUpdate.LastUpdatedBy = userID;
                     contractToUpdate.LastUpdatedDate = System.DateTime.Now;
-                    this._ctx.Contracts.Update(contractToUpdate);
-                    var updateCt = this._ctx.SaveChanges();
+                    
+                    var updateCt = await this._ctx.SaveChangesAsync();
                     if (updateCt == 0)
                     {
                         viewModel.ValidationErrorMessages.Add("Unable to update Contract");
@@ -61,17 +65,18 @@ namespace WebCRM.Shared
             return (success, viewModel);
         }
 
-        public override (bool, ContractTransactionViewModel) Update(ContractTransactionViewModel model, string userID)
+        public override async Task<(bool, ContractTransactionViewModel)> UpdateAsync(ContractTransactionViewModel model, string userID)
         {
             if (model != null)
             {
                 try
                 {
                     var modelToUpdate = 
-                        this._ctx
+                        await this._ctx
                             .ContractTransactions
                             .Where(w => w.Id == model.Id)
-                            .FirstOrDefault();
+                            .FirstOrDefaultAsync();
+
                     if (modelToUpdate != null)
                     {
                         var amountDiff = model.TransactionAmount - modelToUpdate.TransactionAmount;
@@ -83,14 +88,15 @@ namespace WebCRM.Shared
                         modelToUpdate.LastUpdatedDate = DateTime.Now;
                         modelToUpdate.LastUpdatedBy = userID;
 
-                        this._ctx.ContractTransactions.Update(modelToUpdate);
+                        var success = await _ctx.SaveChangesAsync();
                         
                         if (amountDiff != 0)
                         {
-                            var contractToUpdate = this._ctx
+                            var contractToUpdate = await this._ctx
                                 .Contracts
                                 .Where(w => w.Id == model.ContractID)
-                                .FirstOrDefault();
+                                .FirstOrDefaultAsync();
+
                             if (contractToUpdate != null)
                             {
                                 contractToUpdate.TotalPaidAmount += amountDiff;
@@ -107,13 +113,12 @@ namespace WebCRM.Shared
                                     }
                                 contractToUpdate.LastUpdatedBy = userID;
                                 contractToUpdate.LastUpdatedDate = System.DateTime.Now;
-                                this._ctx.Contracts.Update(contractToUpdate);
+                                success += await _ctx.SaveChangesAsync();
                             }
                         }
-                        var success = _ctx.SaveChanges() > 0;
                         var viewModel = new ContractTransactionViewModel();
                         viewModel.SetModelValues(modelToUpdate);
-                        return (success, viewModel);
+                        return (success > 0, viewModel);
                     }
                 }
                 catch (Exception ex) 
@@ -127,20 +132,21 @@ namespace WebCRM.Shared
             return (false, model);
         }
 
-        public override bool Delete(int id, string userID)
+        public override async Task<bool> DeleteAsync(int id, string userID)
         {
-            var modelToDelete = this._ctx.ContractTransactions.Where(w => w.Id == id).FirstOrDefault();
+            var modelToDelete = await this._ctx.ContractTransactions.Where(w => w.Id == id).FirstOrDefaultAsync();
             if (modelToDelete != null)
             {
                 try
                 {
                     modelToDelete.DeletionDate = DateTime.Now;
                     modelToDelete.DeletionBy = userID;
-                    this._ctx.ContractTransactions.Update(modelToDelete);
+                    var success = await this._ctx.SaveChangesAsync();
 
                     if (modelToDelete.TransactionAmount != 0)
                     {
-                        var contractToUpdate = this._ctx.Contracts.Where(w => w.Id == modelToDelete.ContractID).FirstOrDefault();
+                        var contractToUpdate = await this._ctx.Contracts.Where(w => w.Id == modelToDelete.ContractID).FirstOrDefaultAsync();
+
                         if (contractToUpdate != null)
                         {
                             contractToUpdate.TotalPaidAmount -= modelToDelete.TransactionAmount;
@@ -166,11 +172,11 @@ namespace WebCRM.Shared
                             }
                             contractToUpdate.LastUpdatedBy = userID;
                             contractToUpdate.LastUpdatedDate = System.DateTime.Now;
-                            this._ctx.Contracts.Update(contractToUpdate);
+                            success += await this._ctx.SaveChangesAsync();
                         }
                     }
 
-                    return this._ctx.SaveChanges() > 0;
+                    return success > 0;
                 }
                 catch (Exception ex)
                 {

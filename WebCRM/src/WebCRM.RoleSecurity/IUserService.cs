@@ -5,6 +5,6 @@ namespace WebCRM.RoleSecurity
     public interface IUserService
     {
         AuthenticateResponse Authenticate(AuthenticateRequest model);
-        User GetById(int id);
+        //User GetById(int id);
     }
 }

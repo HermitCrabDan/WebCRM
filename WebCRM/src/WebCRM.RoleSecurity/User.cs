@@ -1,15 +1,10 @@
 namespace WebCRM.RoleSecurity
 {
-    using System;
-    using Microsoft.EntityFrameworkCore;
-    using System.ComponentModel.DataAnnotations;
-    using System.ComponentModel.DataAnnotations.Schema;
-
-    [Index(nameof(Username),nameof(Password))]
+    /// <summary>
+    /// Represents the logged in user
+    /// </summary>
     public class User
     {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
         public string FirstName { get; set; }

@@ -12,11 +12,8 @@ namespace WebCRM.RoleSecurity
 
     public class UserService: IUserService
     {
-        private RoleSecurityDbContext _securityContext;
-
-        public UserService(RoleSecurityDbContext secrurityContext)
+        public UserService()
         {
-            this._securityContext = secrurityContext;
         }
 
         private readonly AuthSettings _authSettings;
@@ -24,20 +21,15 @@ namespace WebCRM.RoleSecurity
 
         public AuthenticateResponse Authenticate(AuthenticateRequest model)
         {
-            var user = _securityContext
-                .Users
-                .SingleOrDefault(u => u.Username == model.Username && u.Password == model.Password);
+            return null;
 
-            if (user == null)
-                return null;
+            //var token = GenerateJwtToken(user);
 
-            var token = GenerateJwtToken(user);
-
-            return new AuthenticateResponse(user, token);
+            //return new AuthenticateResponse(user, token);
         }
 
         
-        public User GetById(int id) => _securityContext.Users.FirstOrDefault(u => u.Id == id);
+        //public User GetById(int id) => _securityContext.Users.FirstOrDefault(u => u.Id == id);
 
         private string GenerateJwtToken(User user)
         {

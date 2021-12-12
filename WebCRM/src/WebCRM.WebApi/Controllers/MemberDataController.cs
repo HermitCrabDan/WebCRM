@@ -7,6 +7,7 @@ namespace WebCRM.WebApi.Controllers
     using Microsoft.Extensions.Logging;
     using System;
     using System.Threading.Tasks;
+    using System.Linq.Expressions;
 
     /// <summary>
     /// CRM Api controller for member data
@@ -23,7 +24,7 @@ namespace WebCRM.WebApi.Controllers
 
         }
 
-        protected override Func<Member, bool> RestrictedSelection()
+        protected override Expression<Func<Member, bool>> RestrictedSelection()
         {
             if (this._security.IsMember)
             {

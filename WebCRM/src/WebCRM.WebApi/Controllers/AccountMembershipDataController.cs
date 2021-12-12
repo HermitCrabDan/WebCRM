@@ -8,6 +8,7 @@ namespace WebCRM.WebApi.Controllers
     using Microsoft.AspNetCore.Mvc;
     using System;
     using System.Threading.Tasks;
+    using System.Linq.Expressions;
 
     /// <summary>
     /// CRM Api controller for Account Membership Data
@@ -24,7 +25,7 @@ namespace WebCRM.WebApi.Controllers
                 
             }
 
-        protected override Func<AccountMembership, bool> RestrictedSelection()
+        protected override Expression<Func<AccountMembership, bool>> RestrictedSelection()
         {
             if (this._security.IsMember)
             {
@@ -34,20 +35,21 @@ namespace WebCRM.WebApi.Controllers
         }
 
         [HttpGet("{id}")]
-        public override IActionResult Get([FromRoute] int id)
+        public override async Task<IActionResult> Get([FromRoute] int id)
         {
             if (CanViewAll())
             {
-                var data = this._repo.Retrieve(n => n.AccountID == id);
+                var data = await this._repo.RetrieveAsync(n => n.AccountID == id);
                 return Ok(data);
             }
             else
             {
-                var data = this
-                    ._repo.Retrieve(RestrictedSelection())
+                var restrictedData = await this
+                    ._repo.RetrieveAsync(RestrictedSelection());
+
+                return Ok(restrictedData
                     .Where(w => w.AccountID == id)
-                    .ToList();
-                return Ok(data);
+                    .ToList());
             }
         }
     }

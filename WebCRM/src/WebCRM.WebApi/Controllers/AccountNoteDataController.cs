@@ -23,16 +23,15 @@ namespace WebCRM.WebApi.Controllers
             }
 
         [HttpGet("{id}")]
-        public override IActionResult Get([FromRoute] int id)
+        public override async Task<IActionResult> Get([FromRoute] int id)
         {
-            if (id > 0)
-            {
-                return Ok(this._repo.Retrieve(n => n.AccountID == id));
-            }
-            else
+            if (id == default)
             {
                 return BadRequest();
             }
+
+            var data = await this._repo.RetrieveAsync(n => n.AccountID == id);
+            return Ok(data);
         }
     }
 }

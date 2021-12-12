@@ -2,11 +2,13 @@ namespace WebCRM.Shared
 {
     using System;
     using System.Linq;
-    
     using WebCRM.Data;
     using System.Collections.Generic;
     using Microsoft.Extensions.Logging;
     using Microsoft.EntityFrameworkCore;
+    using System.Threading.Tasks;
+    using System.Linq.Expressions;
+
     /// <summary>
     /// Base repository class for handling Create, Read, Update, and Delete operations
     /// </summary>
@@ -33,7 +35,7 @@ namespace WebCRM.Shared
             this._ctx = ctx;
         }
 
-        public virtual (bool, ViewModel) Create(ViewModel model, string userID)
+        public virtual async Task<(bool, ViewModel)> CreateAsync(ViewModel model, string userID)
         {
             if (model != null)
             {
@@ -42,13 +44,13 @@ namespace WebCRM.Shared
                     var modelToAdd = model.GetBaseModel();
                     modelToAdd.LastUpdatedDate = DateTime.Now;
                     modelToAdd.LastUpdatedBy = userID;
-                    _ctx
+                    await _ctx
                         .Set<Model>()
-                        .Add(modelToAdd);
-                    var success = (_ctx.SaveChanges() > 0);
+                        .AddAsync(modelToAdd);
+                    var success = await _ctx.SaveChangesAsync();
                     var viewModel = new ViewModel();
                     viewModel.SetModelValues(modelToAdd);
-                    return (success, viewModel);
+                    return (success > 0, viewModel);
                 }
                 catch (Exception ex)
                 {
@@ -62,12 +64,12 @@ namespace WebCRM.Shared
             return (false, model);
         }
 
-        public virtual (bool, ViewModel) RetrieveById(int id)
+        public virtual async Task<(bool, ViewModel)> RetrieveByIdAsync(int id)
         {
-            var model = _ctx
+            var model = await _ctx
                 .Set<Model>()
                 .Where(w => w.Id == id)
-                .FirstOrDefault();
+                .FirstOrDefaultAsync();
                 
             var viewModel = new ViewModel();
             bool success = false;
@@ -79,12 +81,13 @@ namespace WebCRM.Shared
             return (success, viewModel);
         }
 
-        public virtual IEnumerable<ViewModel> Retrieve(Func<Model, bool> selector)
+        public virtual async Task<IEnumerable<ViewModel>> RetrieveAsync(Expression<Func<Model, bool>> selector)
         {
-            var data = _ctx
+            var data = await _ctx
                 .Set<Model>()
                 .Where(selector)
-                .ToList();
+                .ToListAsync();
+
             var viewModelList = new List<ViewModel>();
             foreach (var model in data)
             {
@@ -95,30 +98,28 @@ namespace WebCRM.Shared
             return viewModelList;
         }
 
-        public virtual (bool, ViewModel) Update(ViewModel model, string userID)
+        public virtual async Task<(bool, ViewModel)> UpdateAsync(ViewModel model, string userID)
         {
             if (model != null)
             {
                 try
                 {
                     var modelToUpdate = 
-                        _ctx
+                        await _ctx
                             .Set<Model>()
                             .Where(w => w.Id == model.Id)
-                            .FirstOrDefault();
+                            .FirstOrDefaultAsync();
+
                     if (modelToUpdate != null)
                     {
                         modelToUpdate.RestrictedModelUpdate(model.GetBaseModel());
                         modelToUpdate.LastUpdatedDate = DateTime.Now;
                         modelToUpdate.LastUpdatedBy = userID;
 
-                        _ctx
-                            .Set<Model>()
-                            .Update(modelToUpdate);
-                        var success = _ctx.SaveChanges() > 0;
+                        var success = await _ctx.SaveChangesAsync();
                         var viewModel = new ViewModel();
                         viewModel.SetModelValues(modelToUpdate);
-                        return (success, viewModel);
+                        return (success > 0, viewModel);
                     }
                 }
                 catch (Exception ex) 
@@ -132,25 +133,24 @@ namespace WebCRM.Shared
             return (false, model);
         }
 
-        public virtual bool Delete(int id, string UserID)
+        public virtual async Task<bool> DeleteAsync(int id, string UserID)
         {
             if (id > 0)
             {
                 try
                 {
                     var modelToDelete = 
-                        _ctx
+                        await _ctx
                             .Set<Model>()
                             .Where(w => w.Id == id)
-                            .FirstOrDefault();
+                            .FirstOrDefaultAsync();
+
                     if (modelToDelete != null)
                     {
                         modelToDelete.DeletionDate = DateTime.Now;
                         modelToDelete.DeletionBy = UserID;
-                        _ctx
-                            .Set<Model>()
-                            .Update(modelToDelete);
-                        return (_ctx.SaveChanges() > 0);
+                        var success = await _ctx.SaveChangesAsync();
+                        return (success > 0);
                     }
                 }
                 catch (Exception ex)

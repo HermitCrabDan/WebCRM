@@ -4,6 +4,9 @@ namespace WebCRM.Shared
     using System.Linq;
     using WebCRM.Data;
     using Microsoft.Extensions.Logging;
+    using System.Threading.Tasks;
+    using Microsoft.EntityFrameworkCore;
+
     /// <summary>
     /// CRM repository for contract expense data
     /// </summary>
@@ -22,15 +25,16 @@ namespace WebCRM.Shared
             {
             }  
 
-        public override (bool, ContractExpenseViewModel) Create(ContractExpenseViewModel model, string userID)
+        public override async Task<(bool, ContractExpenseViewModel)> CreateAsync(ContractExpenseViewModel model, string userID)
         {
-            var (success, viewModel) = base.Create(model, userID);
+            var (success, viewModel) = await base.CreateAsync(model, userID);
             if (success && viewModel != null && viewModel.ContractID != 0)
             {
-                var contractToUpdate = this._ctx
+                var contractToUpdate = await this._ctx
                     .Contracts
                     .Where(w => w.Id == viewModel.ContractID)
-                    .FirstOrDefault();
+                    .FirstOrDefaultAsync();
+
                 if (contractToUpdate != null)
                 {
                     if (!contractToUpdate.LastExpensePaymentDate.HasValue
@@ -42,7 +46,7 @@ namespace WebCRM.Shared
                     contractToUpdate.LastUpdatedBy = userID;
                     contractToUpdate.LastUpdatedDate = System.DateTime.Now;
                     this._ctx.Contracts.Update(contractToUpdate);
-                    var updateCt = this._ctx.SaveChanges();
+                    var updateCt = await this._ctx.SaveChangesAsync();
                     if (updateCt == 0)
                     {
                         viewModel.ValidationErrorMessages.Add("Unable to update Contract");
@@ -56,17 +60,18 @@ namespace WebCRM.Shared
             return (success, viewModel);
         }
 
-        public override (bool, ContractExpenseViewModel) Update(ContractExpenseViewModel model, string userID)
+        public override async Task<(bool, ContractExpenseViewModel)> UpdateAsync(ContractExpenseViewModel model, string userID)
         {
             if (model != null)
             {
                 try
                 {
                     var modelToUpdate = 
-                        this._ctx
+                        await this._ctx
                             .ContractExpenses
                             .Where(w => w.Id == model.Id)
-                            .FirstOrDefault();
+                            .FirstOrDefaultAsync();
+
                     if (modelToUpdate != null)
                     {
                         var amountDiff = model.ExpenseAmount - modelToUpdate.ExpenseAmount;
@@ -78,14 +83,13 @@ namespace WebCRM.Shared
                         modelToUpdate.LastUpdatedDate = DateTime.Now;
                         modelToUpdate.LastUpdatedBy = userID;
 
-                        this._ctx.ContractExpenses.Update(modelToUpdate);
-                        
                         if (amountDiff != 0)
                         {
-                            var contractToUpdate = this._ctx
+                            var contractToUpdate = await this._ctx
                                 .Contracts
                                 .Where(w => w.Id == model.ContractID)
-                                .FirstOrDefault();
+                                .FirstOrDefaultAsync();
+
                             if (contractToUpdate != null)
                             {
                                 if (!contractToUpdate.LastExpensePaymentDate.HasValue
@@ -96,13 +100,12 @@ namespace WebCRM.Shared
                                 contractToUpdate.TotalExpenseAmount += amountDiff;
                                 contractToUpdate.LastUpdatedBy = userID;
                                 contractToUpdate.LastUpdatedDate = System.DateTime.Now;
-                                this._ctx.Contracts.Update(contractToUpdate);
                             }
                         }
-                        var success = _ctx.SaveChanges() > 0;
+                        var success = await _ctx.SaveChangesAsync();
                         var viewModel = new ContractExpenseViewModel();
                         viewModel.SetModelValues(modelToUpdate);
-                        return (success, viewModel);
+                        return (success > 0, viewModel);
                     }
                 }
                 catch (Exception ex) 
@@ -116,19 +119,20 @@ namespace WebCRM.Shared
             return (false, model);
         }
 
-        public override bool Delete(int id, string UserID)
+        public override async Task<bool> DeleteAsync(int id, string UserID)
         {
-            var modelToDelete = this._ctx.ContractExpenses.Where(w => w.Id == id).FirstOrDefault();
+            var modelToDelete = await this._ctx.ContractExpenses.Where(w => w.Id == id).FirstOrDefaultAsync();
             if (modelToDelete != null)
             {
                 try
                 {
                     modelToDelete.DeletionDate = DateTime.Now;
                     modelToDelete.DeletionBy = UserID;
-                    this._ctx.ContractExpenses.Update(modelToDelete);
+
                     if (modelToDelete.ExpenseAmount != 0)
                     {
-                        var contractToUpdate = this._ctx.Contracts.Where(w => w.Id == modelToDelete.ContractID).FirstOrDefault();
+                        var contractToUpdate = await this._ctx.Contracts.Where(w => w.Id == modelToDelete.ContractID).FirstOrDefaultAsync();
+
                         if (contractToUpdate != null)
                         {
                             contractToUpdate.TotalPaidAmount -= modelToDelete.ExpenseAmount;
@@ -137,10 +141,11 @@ namespace WebCRM.Shared
                             {
                                 contractToUpdate.LastExpensePaymentDate = null;
                             }
-                            this._ctx.Contracts.Update(contractToUpdate);
                         }
                     }
-                    return this._ctx.SaveChanges() > 0;
+
+                    var success = await this._ctx.SaveChangesAsync();
+                    return success > 0;
                 }
                 catch (Exception ex)
                 {

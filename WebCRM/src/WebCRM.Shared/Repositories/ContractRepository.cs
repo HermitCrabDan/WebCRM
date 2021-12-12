@@ -6,6 +6,8 @@ namespace WebCRM.Shared
     using Microsoft.Extensions.Logging;
     using System.Collections.Generic;
     using System;
+    using System.Threading.Tasks;
+    using System.Linq.Expressions;
 
     /// <summary>
     /// CRM repository for contract data
@@ -23,9 +25,10 @@ namespace WebCRM.Shared
             {
             }
 
-        public override IEnumerable<ContractViewModel> Retrieve(Func<Contract, bool> selector)
+        public override async Task<IEnumerable<ContractViewModel>> RetrieveAsync(Expression<Func<Contract, bool>> selector)
         {
-            var data = (from c in this._ctx.Contracts
+            var data = await (from c in this._ctx.Contracts
+                              .Where(selector)
                         join am in this._ctx.AccountMemberships
                         on c.AccountMembershipID equals am.Id
                         join a in this._ctx.CRMAccounts
@@ -33,16 +36,16 @@ namespace WebCRM.Shared
                         join m in this._ctx.Members
                         on am.MemberID equals m.Id
                         select new { contract = c, accountName = a.AccountName, memberName = m.MemberName })
-                        .ToList();
+                        .ToListAsync();
+
             return data
-                .Where(w => selector.Invoke(w.contract))
                 .Select(s => new ContractViewModel(s.contract, s.memberName, s.accountName))
                 .ToList();
         }
 
-        public override (bool, ContractViewModel) RetrieveById(int id)
+        public override async Task<(bool, ContractViewModel)> RetrieveByIdAsync(int id)
         {
-            var contract = (from c in this._ctx.Contracts
+            var contract = await (from c in this._ctx.Contracts
                         join am in this._ctx.AccountMemberships
                         on c.AccountMembershipID equals am.Id
                         join a in this._ctx.CRMAccounts
@@ -51,7 +54,7 @@ namespace WebCRM.Shared
                         on am.MemberID equals m.Id
                         where c.Id == id
                         select new ContractViewModel(c, m.MemberName, a.AccountName))
-                    .FirstOrDefault();
+                    .FirstOrDefaultAsync();
 
             return ((contract != null), contract);
         }

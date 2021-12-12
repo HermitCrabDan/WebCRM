@@ -26,24 +26,28 @@ namespace WebCRM.WebApi.Controllers
             }
         
         [HttpGet("{id}")]
-        public override IActionResult Get([FromRoute] int id)
+        public override async Task<IActionResult> Get([FromRoute] int id)
         {
-            if (id <= 0)
+            if (id == default)
             {
                 return BadRequest();
             }
+
             if (CanViewAll())
             {
-                var data = this._repo.Retrieve(n => n.ContractID == id);
+                var data = await this._repo.RetrieveAsync(n => n.ContractID == id);
                 return Ok(data);
             }
-            var viewableData = this._repo.Retrieve(RestrictedSelection());
+
+            var viewableData = await this._repo.RetrieveAsync(RestrictedSelection());
             var selectedData = viewableData.Where(w => w.ContractID == id).ToList();
+
             if (selectedData != null)
             {
                 return Ok(selectedData);
             }
-            return BadRequest();
+
+            return NotFound();
         }
     }
 }

@@ -25,16 +25,17 @@ namespace WebCRM.WebApi.Controllers
             }
 
         [HttpGet("{id}")]
-        public override IActionResult Get([FromRoute] int id)
+        public override async Task<IActionResult> Get([FromRoute] int id)
         {
             if (CanViewAll())
             {
-                return Ok(this._repo.Retrieve(n => n.ContractID == id));
+                var data = await this._repo.RetrieveAsync(n => n.ContractID == id);
+                return Ok(data);
             }
             else
             {
-                var data = this._repo.Retrieve(RestrictedSelection());
-                return Ok(data.Where(w => w.ContractID == id).ToList());
+                var restrictedData = await this._repo.RetrieveAsync(RestrictedSelection());
+                return Ok(restrictedData.Where(w => w.ContractID == id).ToList());
             }
         }
     }
