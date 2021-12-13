@@ -27,6 +27,8 @@ namespace WebCRM.Data
         public DbSet<ContractExpense> ContractExpenses { get; set; }
 
         public DbSet<Member> Members { get; set; }
+
+        public DbSet<CRMUser> CRMUsers { get; set; }
         
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -38,12 +40,14 @@ namespace WebCRM.Data
             modelBuilder.Entity<ContractTransaction>().HasKey(k => k.Id);
             modelBuilder.Entity<ContractExpense>().HasKey(k => k.Id);
             modelBuilder.Entity<Member>().HasKey(k => k.Id);
+            modelBuilder.Entity<CRMUser>().HasKey(k => k.Id);
 
             modelBuilder.Entity<AccountMembership>().HasIndex(k => new { k.AccountID, k.MemberID });
             modelBuilder.Entity<AccountNote>().HasIndex(k => k.AccountID);
             modelBuilder.Entity<ContractTransaction>().HasIndex(k => k.ContractID);
             modelBuilder.Entity<ContractExpense>().HasIndex(k => k.ContractID);
             modelBuilder.Entity<Contract>().HasIndex(k => new { k.AccountMembershipID });
+            modelBuilder.Entity<Member>().HasIndex(k => k.UserID);
 
             modelBuilder.Entity<CRMAccount>().ToTable("CRMAccount");
             modelBuilder.Entity<AccountMembership>().ToTable("AccountMembership");
@@ -52,6 +56,7 @@ namespace WebCRM.Data
             modelBuilder.Entity<ContractTransaction>().ToTable("ContractTransaction");
             modelBuilder.Entity<ContractExpense>().ToTable("ContractExpense");
             modelBuilder.Entity<Member>().ToTable("Member");
+            modelBuilder.Entity<CRMUser>().ToTable("CRMUser");
         }
     }    
 }

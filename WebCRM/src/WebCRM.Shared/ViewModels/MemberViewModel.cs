@@ -24,7 +24,7 @@ namespace WebCRM.Shared
         #region Member
         public string MemberName { get; set; }
 
-        public string UserID { get; set; }
+        public int? UserID { get; set; }
         #endregion
 
         public override string ToString()
@@ -35,7 +35,7 @@ namespace WebCRM.Shared
         public override void SetModelValues(Member model)
         {
             this.MemberName = XSSFilterHelper.FilterForXSS(model.MemberName);
-            this.UserID = XSSFilterHelper.FilterForXSS(model.UserID);
+            this.UserID = model.UserID;
             
             base.SetModelValues(model);
         }
@@ -44,6 +44,7 @@ namespace WebCRM.Shared
         {
             bool valid = true;
             this.ValidationErrorMessages = new List<string>();
+            
             if (String.IsNullOrWhiteSpace(this.MemberName))
             {
                 this.ValidationErrorMessages.Add("Member Name cannot be blank");

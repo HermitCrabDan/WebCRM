@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "l56J1voeMiJkSIPtL9auDiLKR6oNyVpxcZYemlZxF2lKCTMatWa7aGMSI1pCYlr+8VnngqPdBn1K6icS2WfR7w==",
+  "dgSpecHash": "aXoL3svySmtpzzit2kU/xK1PMM/3npeT1rvgB3IwHJAARJ3I0XGPq4mtjjW141eX+5LTfZ6c7znDMVkOTfn3JA==",
   "success": true,
   "projectFilePath": "/Users/danielgraf/Documents/GitHub/WebCRM/WebCRM/src/WebCRM.Shared/WebCRM.Shared.csproj",
   "expectedPackageFiles": [

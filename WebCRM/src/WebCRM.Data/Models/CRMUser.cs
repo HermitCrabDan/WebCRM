@@ -1,4 +1,4 @@
-﻿namespace WebCRM.Data.Models
+﻿namespace WebCRM.Data
 {
     using System;
     using System.Collections.Generic;
@@ -13,14 +13,18 @@
         {
         }
 
-        public string FirstName { get; set; }
-
-        public string LastName { get; set; }
-
         public string Username { get; set; }
 
         public string Password { get; set; }
 
         public string EmailAddress { get; set; }
+
+        public override void RestrictedModelUpdate(CRMUser model)
+        {
+            base.RestrictedModelUpdate(model);
+            this.Username = model.Username;
+            this.Password = model.Password;
+            this.EmailAddress = model.EmailAddress;
+        }
     }
 }
