@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "SdzUgHfwgeGAfpqo7HJcmEFzItPdebeakcHRd8zyXd2tzq4yiYCIaXiu51NuUiG0byJrsBUR6V272b54ZKql9A==",
+  "dgSpecHash": "WMByWl2B/DaSnTdy6LDE/g9NZaWEAaFCBKOUqppZBD4++Dvon0zwMR0Hu/H/kl+AK28X5gj3FVLYq697aVWivA==",
   "success": true,
   "projectFilePath": "/Users/danielgraf/Documents/GitHub/WebCRM/WebCRM/src/WebCRM.WebApi/WebCRM.WebApi.csproj",
   "expectedPackageFiles": [

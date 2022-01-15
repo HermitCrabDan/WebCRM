@@ -1351,7 +1351,7 @@
       "outputPath": "/Users/danielgraf/Documents/GitHub/WebCRM/WebCRM/src/WebCRM.RoleSecurity/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "/Users/danielgraf/.nuget/NuGet/NuGet.Config"
+        "/Users/danielgraf/.config/NuGet/NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net5.0"
@@ -1407,7 +1407,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/5.0.403/RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/5.0.404/RuntimeIdentifierGraph.json"
       }
     }
   }
